@@ -14,4 +14,6 @@ public class UserDAO {
 	public List<UserDTO> selectList(){
 		return sqlSession.selectList("user.user_list");
 	}
+	
+	
 }

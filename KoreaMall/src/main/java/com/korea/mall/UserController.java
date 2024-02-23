@@ -24,4 +24,8 @@ public static final String VIEW_PATH = "/WEB-INF/views/";
 		
 		return VIEW_PATH+"user_list.jsp";
 	}
+	
+	
+	
+	
 }
