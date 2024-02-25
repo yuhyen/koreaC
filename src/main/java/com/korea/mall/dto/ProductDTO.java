@@ -1,4 +1,4 @@
-package dto;
+package com.korea.mall.dto;
 
 import lombok.Data;
 
