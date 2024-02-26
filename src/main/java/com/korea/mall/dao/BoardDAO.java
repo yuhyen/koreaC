@@ -12,14 +12,11 @@ import com.korea.mall.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
-
 public class BoardDAO {
 	
 	private final SqlSession sqlSession;
 	
-	
 	public List<BoardDTO> selectList(BoardDTO param){
-
 		return sqlSession.selectList("board.selectList" , param);
 	}
 	
