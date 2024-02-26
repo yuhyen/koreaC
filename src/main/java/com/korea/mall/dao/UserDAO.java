@@ -2,7 +2,6 @@ package com.korea.mall.dao;
 
 import java.util.List;
 
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +16,15 @@ public class UserDAO {
 	public List<UserDTO> selectList(){
 		return sqlSession.selectList("user.user_list");
 	}
+	
+	//로그인 체크
+		public UserDTO selectOne(String u_id) {
+			return sqlSession.selectOne("user.loginCheck",u_id);
+		}
+		
+		public int insert(UserDTO dto) {
+			return sqlSession.insert("user.insert",dto);
+		}
 	
 	
 }

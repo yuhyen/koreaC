@@ -16,14 +16,14 @@ public class UserController {
 
 	private final UserDAO user_dao;
 	
-	@RequestMapping(value = {"/","list"})
+	@RequestMapping(value = {"/","user_list"})
 	public String list(Model model) {
 		
 		
 		model.addAttribute("list",user_dao.selectList());
 		
 //		return VIEW_PATH+"user_list.jsp";
-		return "user_list";
+		return "login/user_list";
 	}
 	
 	
