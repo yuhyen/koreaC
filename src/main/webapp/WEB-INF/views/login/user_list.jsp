@@ -16,6 +16,7 @@
 			<th>유저이름</th>
 			<th>유저이메일</th>
 			<th>유저전화번호</th>
+			<th>유저주소</th>
 		</tr>
 		<c:forEach var="u" items="${list }">
 		<tr>
@@ -26,6 +27,7 @@
 			<td>${u.u_email }</td>
 			<td>${u.u_tel }</td>
 			<td>${u.u_grade }</td>
+			<td>${u.u_ip}</td>
 		</tr>
 		</c:forEach>	
 	</table>
