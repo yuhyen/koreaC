@@ -10,6 +10,7 @@
 	
 	<typeAliases>
 		<typeAlias type="com.korea.mall.dto.UserDTO" alias="user"/>
+		<typeAlias type="com.korea.mall.dto.BoardDTO" alias="board"/>
 	</typeAliases>
 
 </configuration>
