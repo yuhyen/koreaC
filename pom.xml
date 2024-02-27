@@ -15,7 +15,15 @@
 	</properties>
 	<dependencies>
 	
-			<!--spring-jdbc -->
+		<!-- jackson-databind -->
+		<!-- Java Object를 JSON으로 변환하거나 JSON을 Java Object로 변환하는데 사용하는 라이브러리 -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.9.8</version>
+		</dependency>
+	
+		<!--spring-jdbc -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-jdbc</artifactId>

@@ -11,6 +11,7 @@
 	<typeAliases>
 		<typeAlias type="com.korea.mall.dto.UserDTO" alias="user"/>
 		<typeAlias type="com.korea.mall.dto.BoardDTO" alias="board"/>
+		<typeAlias type="com.korea.mall.dto.ProductDTO" alias="product"/>
 	</typeAliases>
 
 </configuration>

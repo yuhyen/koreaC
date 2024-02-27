@@ -1,5 +1,7 @@
 package com.korea.mall.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -15,4 +17,7 @@ public class ProductDTO {
 	private int p_num;
 	private int p_price;
 	private int p_id;
+	private int picture_count;
+	
+	private MultipartFile picture[];
 }
