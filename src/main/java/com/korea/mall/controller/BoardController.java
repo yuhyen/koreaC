@@ -21,7 +21,7 @@ public class BoardController {
 	
 	@RequestMapping(value = {"/boardList"})
 	public ModelAndView list() {
- 		ModelAndView mv = new ModelAndView("/board");
+ 		ModelAndView mv = new ModelAndView("/board/boardList");
 		return mv;
 		
 	}
