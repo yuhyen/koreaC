@@ -1,10 +1,10 @@
 package com.korea.mall.controller;
 
 import java.io.File;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +19,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MainController {
 	
-	ProductDAO product_dao;
+	@Autowired
+	final ProductDAO product_dao;
 	
+	@Autowired
 	HttpServletRequest request;
 	
 	int p_num;
+	String p_name;
 	
 	@RequestMapping(value = {"/","main"})
 	public String main(Model model) {
@@ -31,20 +34,38 @@ public class MainController {
 		return "main/main";
 	}
 	
-	// 카테고리별로 보기
-	@RequestMapping("category")
-	public String view_list(Model model, int p_id) {
-		List<ProductDTO> list = product_dao.selectList(p_id);
+//	// 카테고리별로 보기
+//	@RequestMapping("category")
+//	public String view_list(Model model, int p_id) {
+//		List<ProductDTO> list = product_dao.selectList(p_id);
+//		
+//		model.addAttribute("list", list);
+//		
+//		return "main/main";
+//	}
+	
+	// 상품 등록 페이지
+	@RequestMapping("p_add_form")
+	public String p_add_form() {
+		return "product/product_insert";
+	}
+	
+	// 상품 등록
+	@RequestMapping("p_add")
+	public String p_add(ProductDTO dto) {
+		photo_upload(dto);
+		int res = product_dao.p_add(dto);
 		
-		model.addAttribute("list", list);
-		
-		return "main/main";
+		if(res > 0) {
+			return "main/main";
+		}
+		return null;
 	}
 	
 	// 상품 수정 및 등록시 사진 업로드 
 	public ProductDTO photo_upload(ProductDTO dto) {
-		String webPath = "/resources/" + p_num + "/";
-		webPath = String.format("%s/%a", webPath, dto.getP_name());
+		String webPath = "/resources/product_img/";
+		webPath = String.format("%s/%s/", webPath, dto.getP_name());
 		String savePath = request.getServletContext().getRealPath(webPath);
 		
 		System.out.println(savePath);

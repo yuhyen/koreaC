@@ -8,6 +8,13 @@
 <script type="text/javascript">
 	function send_check(){
 		let f = document.f;
+		let name = f.p_name.value;
+		let id = f.p_id.value;
+		let price = f.p_price.value;
+		let explain = f.p_explain.value;
+		let size = f.p_size.value;
+		let pabric = f.p_pabric.value;
+		let picture = f.picture.files.length;
 		
 		f.submit();
 	}
@@ -16,7 +23,7 @@
 <body>
 	<div>
 		<h2>상품 등록하기</h2>
-		<form action="" name="f" method="post" enctype="multipart/form-data">
+		<form action="p_add" name="f" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="picture_count" value="-1">
 			<table border="1">
 				<tr>
@@ -30,7 +37,8 @@
 						     <option value="1">Outer</option>
 						     <option value="2">Top</option>
 						     <option value="3">Bottom</option>
-						     <option value="4">Shoes</option>
+						     <option value="4">Suit</option>
+						     <option value="5">Shoes & acc</option>
 					   	</select>
 					</td>
 				</tr>

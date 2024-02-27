@@ -8,6 +8,9 @@
 <title>main</title>
 </head>
 <body>
+	<div>
+		<a href="p_add_form">등록</a>
+	</div>
 	<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 	<div align="center">
 		<h1>New</h1>
