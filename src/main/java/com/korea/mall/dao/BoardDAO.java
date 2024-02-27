@@ -1,7 +1,7 @@
 package com.korea.mall.dao;
 
 import java.util.List;
-
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -16,7 +16,7 @@ public class BoardDAO {
 	
 	private final SqlSession sqlSession;
 	
-	public List<BoardDTO> selectList(BoardDTO param){
+	public Object selectList(BoardDTO param){
 		return sqlSession.selectList("board.selectList" , param);
 	}
 	
