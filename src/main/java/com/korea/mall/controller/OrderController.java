@@ -1,5 +1,7 @@
 package com.korea.mall.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.korea.mall.dao.LoginDAO;
 import com.korea.mall.dao.UserDAO;
+import com.korea.mall.dto.BasketDTO;
 import com.korea.mall.dto.UserDTO;
 import com.korea.mall.service.OrderService;
 
@@ -43,7 +46,14 @@ public class OrderController {
 	}
 	
 	@RequestMapping("basket_page")
-	public String basket_page() {
+	public String basket_page(Model model) {
+		BasketDTO dto = new BasketDTO();
+		List<BasketDTO> list = orderService.selectList();
+		
+		model.addAttribute("basket", list);
+		
+		
+		
 		
 		return "order/basket_page";
 	}
