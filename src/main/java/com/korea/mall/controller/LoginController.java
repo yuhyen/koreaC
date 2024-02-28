@@ -86,7 +86,12 @@ public class LoginController {
 	}
 	
 	@RequestMapping("user_insert")
-	public String user_insert(UserDTO dto) {
+	public String user_insert(UserDTO dto,String u_ipExtraAddr) {
+		
+		System.out.println(u_ipExtraAddr);
+		
+		String ip = dto.getU_ip() + u_ipExtraAddr;
+		dto.setU_ip(ip);
 		int res = user_dao.insert(dto);
 		
 		if(res>0) {

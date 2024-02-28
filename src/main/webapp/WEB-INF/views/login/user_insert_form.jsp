@@ -84,7 +84,7 @@
 		let u_username = f.u_username.value.trim();
 		let u_email = f.u_email.value.trim();
 		let u_tel = f.u_tel.value.trim();
-		let u_ip = f.u_ip.value.trim() + f.u_ipExtraAddr.value.trim();
+		let u_ip = f.u_ip.value.trim();
 		
 		if(u_id ==''){
 			alert('아이디를 입력해주세요')
