@@ -1,9 +1,11 @@
 package com.korea.mall.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,9 +34,11 @@ public class OrderController {
 	}
 	
 	@RequestMapping("/user_update")
-	public String user_update() {
+	public String user_update(HttpServletRequest req) {
 		
-		
+		UserDTO dto = (UserDTO) session.getAttribute("u_id");
+		req.setAttribute("dto", dto);
+	
 		return "user_update";
 	}
 	
@@ -56,21 +60,14 @@ public class OrderController {
 	return "user_update_login";
 	}
 	
-	@RequestMapping("user_mypage_login")
+	@RequestMapping("user_db_update")
 	@ResponseBody
-	public String user_mypage_login(String id, String pwd) {
-		UserDTO dto = user_dao.selectOne(id);
-		
-		if(dto == null) {
-			return "[{'param' : 'noid'}]";
+	public String user_db_update(UserDTO dto) {
+		int res = orderService.update(dto);
+		if(res >= 1) {
+			return "[{'param' : 'in'}]";
 		}
-		if(dto.getU_pwd().equals(pwd)) {
-			return "[{'param' : 'nopwd'}]";
-		}
-		
-		session.setAttribute("id", dto);
-		
-		return"[{'param' : 'clear'}]";
+			return "[{'param' : 'notin'}]";
 	}
 	
 	

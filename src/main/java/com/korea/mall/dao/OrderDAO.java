@@ -12,8 +12,8 @@ import lombok.RequiredArgsConstructor;
 public class OrderDAO {
 	private final SqlSession sqlSession;
 	
-	public UserDTO selectOne(String id) {
-		return sqlSession.selectOne("order.mypage_login", id);
+	
+	public int update(UserDTO dto) {
+		return sqlSession.update("order.user_update", dto);
 	}
-
 }
