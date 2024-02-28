@@ -1,6 +1,7 @@
 package com.korea.mall.controller;
 
 import java.io.File;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,9 +58,19 @@ public class MainController {
 		int res = product_dao.p_add(dto);
 		
 		if(res > 0) {
-			return "main/main";
+			return "redirect:p_list_form";
 		}
 		return null;
+	}
+	
+	// 상품 리스트 페이지
+	@RequestMapping("p_list_form")
+	public String pList_form(Model model) {
+		List<ProductDTO> list = product_dao.selectList(p_name);
+		
+		model.addAttribute("list",list);
+		
+		return "main/main";
 	}
 	
 	// 상품 수정 및 등록시 사진 업로드 

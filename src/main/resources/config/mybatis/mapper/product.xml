@@ -19,12 +19,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into tb_product values(
 			seq_product_num.nextval,
 			#{p_name},
-			#{p_id},
 			#{p_price},
 			#{p_explain},
 			#{p_size},
 			#{p_color},
 			#{p_pabric},
+			#{p_id},
 			#{p_picture},
 			#{picture_count}
 		)
