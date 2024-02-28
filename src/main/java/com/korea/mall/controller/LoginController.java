@@ -40,7 +40,7 @@ public class LoginController {
 		}
 		
 		//우리가 입력받은 pwd와 DB에 저장된 비밀번호를 비교하기
-		if(u_pwd.equals(dto.getU_pwd())){
+		if(!u_pwd.equals(dto.getU_pwd())){
 			return "[{'param':'no_u_pwd'}]";
 		}
 		
