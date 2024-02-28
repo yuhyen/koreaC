@@ -16,7 +16,7 @@ public class UserController {
 
 	private final UserDAO user_dao;
 	
-	@RequestMapping(value = {"/","user_list"})
+	@RequestMapping(value = {"user_list"})
 	public String list(Model model) {
 		
 		

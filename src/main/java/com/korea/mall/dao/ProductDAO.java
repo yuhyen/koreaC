@@ -21,8 +21,13 @@ public class ProductDAO {
 	}
 	
 	// 상품 전체 조회
-	public List<ProductDTO> selectList(String p_name) {
-		return sqlSession.selectList("p.product_list",p_name);
+	public List<ProductDTO> selectList() {
+		return sqlSession.selectList("p.product_list");
+	}
+	
+	// 상품 하나 조회
+	public ProductDTO selectOne(int p_num) {
+		return sqlSession.selectOne("p.p_selectOne", p_num);
 	}
 	
 //	// 상품 카테고리별 조회

@@ -17,7 +17,7 @@
 	</div>
 	<div>
 		<c:forEach var="dto" items="${list}">
-			<form action="" method="post">
+			<form action="detail" method="post">
 			<input type="hidden" name="p_num" value="${dto.p_num}">
 				<button>
 				<div>

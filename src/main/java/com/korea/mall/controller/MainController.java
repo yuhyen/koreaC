@@ -26,12 +26,11 @@ public class MainController {
 	@Autowired
 	HttpServletRequest request;
 	
-	int p_num;
-	String p_name;
-	
 	@RequestMapping(value = {"/","main"})
 	public String main(Model model) {
-		model.addAttribute(model);
+		List<ProductDTO> list = product_dao.selectList();
+
+		model.addAttribute("list",list);
 		return "main/main";
 	}
 	
@@ -58,19 +57,19 @@ public class MainController {
 		int res = product_dao.p_add(dto);
 		
 		if(res > 0) {
-			return "redirect:p_list_form";
+			return "redirect:main/main";
 		}
 		return null;
 	}
 	
-	// 상품 리스트 페이지
-	@RequestMapping("p_list_form")
-	public String pList_form(Model model) {
-		List<ProductDTO> list = product_dao.selectList(p_name);
+	
+	// 상품 상세보기
+	@RequestMapping("detail")
+	public String detail(Model model, int p_num) {
+		ProductDTO dto = product_dao.selectOne(p_num);
+		model.addAttribute("dto", dto);
 		
-		model.addAttribute("list",list);
-		
-		return "main/main";
+		return "main/p_detail";
 	}
 	
 	// 상품 수정 및 등록시 사진 업로드 
