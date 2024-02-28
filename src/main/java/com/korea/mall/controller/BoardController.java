@@ -33,6 +33,11 @@ public class BoardController {
 		return mv;
 	} 
 	
-	
+	@RequestMapping(value = {"/board_reg"})
+	public ModelAndView reg() {
+ 		ModelAndView mv = new ModelAndView("/board/board_reg");
+		return mv;
+		
+	}
 	
 }
