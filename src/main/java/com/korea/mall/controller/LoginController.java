@@ -40,7 +40,7 @@ public class LoginController {
 		}
 		
 		//우리가 입력받은 pwd와 DB에 저장된 비밀번호를 비교하기
-		if(u_pwd.equals(dto.getU_pwd())){
+		if(!u_pwd.equals(dto.getU_pwd())){
 			return "[{'param':'no_u_pwd'}]";
 		}
 		
@@ -86,7 +86,12 @@ public class LoginController {
 	}
 	
 	@RequestMapping("user_insert")
-	public String user_insert(UserDTO dto) {
+	public String user_insert(UserDTO dto,String u_ipExtraAddr) {
+		
+		System.out.println(u_ipExtraAddr);
+		
+		String ip = dto.getU_ip() + u_ipExtraAddr;
+		dto.setU_ip(ip);
 		int res = user_dao.insert(dto);
 		
 		if(res>0) {

@@ -38,7 +38,7 @@
 				alert('비밀번호가 틀립니다.');
 			}else{
 				alert('로그인 성공')
-				location.href='list';
+				location.href='user_list';
 			}
 		}
 	}

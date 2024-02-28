@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="resources/js/HttpRequest.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	let b_idCheck=false;
 	
@@ -39,6 +40,41 @@
 	}
 	function che(){
 		b_idCheck=false;
+	}
+	
+	function ipsearch(f){
+				
+		 new daum.Postcode({
+		        oncomplete: function(data) {
+		        	
+		        	console.log(data);
+		        	let u_ipNumber='';
+		        	let u_ipAddr='';
+		        	let u_ipExtraAddr='';
+		        	u_ipNumber = data.zonecode;
+		        	
+		        	if(data.userSelectedType === 'R'){
+		        		u_ipAddr = data.roadAddress;
+		        	}else{
+		        		u_ipAddr = data.jibunAddress;
+		        	}
+		        	
+		        	if(data.userSelectedType =='R'){
+		        		if(data.bname !== ''){
+		        			u_ipExtraAddr += data.bname;
+		        		}
+		        		if(data.buildingName !==''){
+		        			u_ipExtraAddr += (u_ipExtraAddr !== '' ?',' + data.buildingName : data.buildingName);	
+		        		}
+		        		u_ipAddr += (u_ipExtraAddr !=='' ?'(' + u_ipExtraAddr + ')' : '');	
+		        	}        	
+		   	
+		        	f.u_ip.value = '('+u_ipNumber+')' + u_ipAddr;
+		        	
+		            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+		            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+		        }
+		    }).open();
 	}
 	
 	function send(f) {
@@ -134,6 +170,13 @@
 				<th>주소</th>
 				<td>
 					<input name="u_ip">
+					<input type="button" value="우편번호검색" onclick="ipsearch(this.form)">
+				</td>
+			</tr>
+			<tr>
+			<th>상세주소</th>
+				<td>
+				<input name="u_ipExtraAddr">
 				</td>
 			</tr>	
 			<tr>

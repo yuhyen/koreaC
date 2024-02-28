@@ -7,12 +7,16 @@
     <!-- TUI 에디터 CSS CDN -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body>
-    <h2 style="text-align: center;">Hello, TOAST UI Editor!</h2>
-
     <!-- 에디터를 적용할 요소 (컨테이너) -->
     <div id="content">
+    
+    </div>
+    
+    
+    <div id="viewer">
     
     </div>
 
@@ -25,6 +29,13 @@
             initialValue: '내용을 입력해 주세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
             previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
         });
+        
+        const viewer = toastui.Editor.factory({
+            el : document.querySelector("#viewer"),
+            viewer : true,
+            initialValue : "Hello toast ui viewer~!"
+        }); 
+        
     </script>
 </body>
 </html>

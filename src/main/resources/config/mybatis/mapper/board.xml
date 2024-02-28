@@ -16,7 +16,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertBase">
 		INSERT INTO TB_BOARD_BASE
-		(B_SEQ, B_CATEGORY, B_USER, B_NOTICE_YN, B_IMG_PATH, B_TITLE, B_CRTR, B_REPLY, B_DEEP, B_REG_DATE, B_REG_USER, B_MOD_DATE, B_MOD_USER) 
+		(
+		  B_SEQ
+		, B_CATEGORY
+		, B_USER
+		, B_NOTICE_YN
+		, B_IMG_PATH
+		, B_TITLE
+		, B_CRTR
+		, B_REPLY
+		, B_DEEP
+		, B_REG_DATE
+		, B_REG_USER
+		, B_MOD_DATE
+		, B_MOD_USER
+		) 
 			VALUES 
 		( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );				
 	</insert>

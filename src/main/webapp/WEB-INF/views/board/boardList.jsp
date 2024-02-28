@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<html lang="en">
+<html lang="kr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -123,12 +123,16 @@
 //           alert('구매할 상품을 선택해주세요.');
 //         }
 //       },
-      subjectClicked(){
-    	alert("게시판 클릭");
-      },
-      registBoard(){
-      	alert("글쓰기 클릭");
-      }
+        subjectClicked :function () {
+        	alert("게시판 클릭");
+          },
+          registBoard:function(){
+          	alert("글쓰기 클릭");
+          	let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+          	let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+          	let path = contextPath+"/board_reg"
+          	location.href=path;
+          }
       
     }
   });

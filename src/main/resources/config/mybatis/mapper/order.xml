@@ -15,6 +15,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE U_IDX = #{u_idx}
 	</update>
 		
+	<select id="basket_list" resultType="basket">
+		SELECT * FROM TB_BASKET
+	</select>
 	
 </mapper>
 

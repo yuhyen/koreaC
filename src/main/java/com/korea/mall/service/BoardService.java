@@ -23,8 +23,7 @@ public class BoardService {
 	public BoardDTO selectOne(BoardDTO param) throws Exception {
 	
 		if("".equals( param.getSeq()) || null == param.getSeq()) {
-			//TODO:exception Å¬·¡½º ÃßÈÄ º¯°æ ÇÏ°Å³ª exception handler º¯°æ
-			throw new Exception("ÇÊ¼ö°ª seq°¡ ¾ø½À´Ï´Ù.");
+			throw new Exception("ï¿½Ê¼ï¿½ï¿½ï¿½ seqï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		}
 		
 		return boardDao.selectOne(param);

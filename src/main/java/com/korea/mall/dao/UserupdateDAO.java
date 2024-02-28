@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class OrderDAO {
+public class UserupdateDAO {
 	private final SqlSession sqlSession;
 	
 	
