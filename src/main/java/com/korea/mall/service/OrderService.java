@@ -3,6 +3,7 @@ package com.korea.mall.service;
 import org.springframework.stereotype.Service;
 
 import com.korea.mall.dao.LoginDAO;
+import com.korea.mall.dao.OrderDAO;
 import com.korea.mall.dao.UserDAO;
 import com.korea.mall.dto.UserDTO;
 
@@ -11,11 +12,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
- private final LoginDAO loginDAO;
+ private final OrderDAO orderDAO;
  
- //마이페이지 로그인
- public UserDTO selectOne(String id) {
-	 return loginDAO.selectOne(id);
+ //회원정보 수정
+ public int update(UserDTO dto) {
+	 return orderDAO.update(dto); 
  }
 	
  	

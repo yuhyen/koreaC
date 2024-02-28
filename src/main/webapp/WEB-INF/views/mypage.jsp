@@ -11,7 +11,7 @@
 	
 	<a></a>
 	
-	<input type="button" value="회원정보 수정" onclick="location.href='user_update_login'">
+	<input type="button" value="회원정보 수정" onclick="location.href='user_update'">
 	<input type="button" value="장바구니" onclick="location.href='basket_page'">
 	<input type="button" value="구매내역" onclick="location.href='orderhistory_page'">
 	

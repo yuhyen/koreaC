@@ -4,9 +4,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="order">
 
-	<select id="mypage_login" resultType="user" parameterType="String">
-		select * from TB_user where u_id=#{u_id}
-	</select>
+	<update id="user_update" >
+	UPDATE TB_USER SET
+	U_ID = #{u_id},
+	U_PWD = #{u_pwd},
+	U_USERNAME = #{u_username},
+	U_EMAIL = #{u_email},
+	U_TEL = #{u_tel},
+	U_IP = #{u_ip}
+	WHERE U_IDX = #{u_idx}
+	</update>
 		
 	
 </mapper>
