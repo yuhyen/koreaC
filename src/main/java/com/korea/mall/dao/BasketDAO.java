@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.korea.mall.dto.BasketDTO;
+import com.korea.mall.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,8 +15,12 @@ import lombok.RequiredArgsConstructor;
 public class BasketDAO {
  private final SqlSession sqlSession;
 	
- public List<BasketDTO> selectList() {
-	 return sqlSession.selectList("order.basket_list");
+ public List<BasketDTO> selectList(BasketDTO dto) {
+	 return sqlSession.selectList("order.basket_list", dto);
+ }
+
+ public int delete(int idx) {
+	 return sqlSession.delete("order.basket_del", idx);
  }
  
 	

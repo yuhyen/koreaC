@@ -27,6 +27,7 @@ public class OrderController {
 	
 	private final UserDAO user_dao;
 	
+	
 	@Autowired
 	HttpSession session;
 	
@@ -47,11 +48,12 @@ public class OrderController {
 	
 	@RequestMapping("basket_page")
 	public String basket_page(Model model) {
-		BasketDTO dto = new BasketDTO();
+		
 		List<BasketDTO> list = orderService.selectList();
+		UserDTO dto = (UserDTO) session.getAttribute("u_id");
 		
 		model.addAttribute("basket", list);
-		
+		model.addAttribute("user", dto);
 		
 		
 		
@@ -80,7 +82,18 @@ public class OrderController {
 			return "[{'param' : 'notin'}]";
 	}
 	
-	
+	@RequestMapping("basket_del")
+	@ResponseBody
+	public String basket_del(int idx) {
+		
+		
+		int res = orderService.delete(idx);
+		if(res >= 1) {
+			return "[{'param' : 'yes'}]";
+		}
+		return "[{'param' : 'no'}]";
+		
+	}
 	
 	
 	

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +9,35 @@
 <title>Shopping Cart</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="resources/js/HttpRequest.js"></script>
 <script>
-  
+  function basket_del(b){
+	  if(!confirm("삭제하시겠습니까?")){
+			return;
+		}
+	let url = "basket_del";
+	let param = "idx="+b;
+	
+	console.log("sendvalue " , param)
+	
+	sendRequest(url, param, delcallback, "POST");
+  }
+  function delcallback(){
+	  if(xhr.readyState == 4 && xhr.status == 200){
+			let data = xhr.responseText;
+			let json = (new Function('return' + data))();
+			
+			if(json[0].param == 'yes'){
+				alert("삭제 성공");
+				location.href = 'basket_page';
+			}
+			if(json[0].param == 'no'){
+				alert("삭제 실패");
+			}
+			
+			
+	  }
+  }
 </script>
 <style>
   .checkbox:checked + .check-icon {
@@ -21,7 +49,7 @@
 <div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
   <div class="flex items-center mb-4">
     <h1 class="text-xl font-semibold mr-auto">장바구니</h1>
-    <span class="text-gray-600">홍길동님</span>
+    <span class="text-gray-600">${user.u_username }님</span>
   </div>
   <table class="min-w-full table-fixed">
     <thead>
@@ -37,7 +65,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in cartItems" :key="index">
+    <c:forEach var="basket" items="${basket }">
+      <tr>
         <td class="border px-4 py-2 text-center">
           <input type="checkbox" class="checkbox" v-model="item.checked" @change="updateTotal">
           <span class="check-icon hidden justify-center items-center">
@@ -47,15 +76,16 @@
         <td class="border px-4 py-2">
           <img :src="item.image" alt="" class="h-16 mx-auto">
         </td>
-        <td class="border px-4 py-2">{{ item.name }}</td>
-        <td class="border px-4 py-2">{{ item.price.toLocaleString() }}</td>
-        <td class="border px-4 py-2 text-center">{{ item.quantity }}</td>
-        <td class="border px-4 py-2">{{ item.shipping.toLocaleString() }}</td>
-        <td class="border px-4 py-2">{{ (item.price * item.quantity + item.shipping).toLocaleString() }}</td>
+        <td class="border px-4 py-2">${basket.p_name }</td>
+        <td class="border px-4 py-2">${basket.p_price }</td>
+        <td class="border px-4 py-2 text-center">${basket.b_quantity }</td>
+        <td class="border px-4 py-2">${basket.b_shipping }</td>
+        <td class="border px-4 py-2">${basket.p_price + basket.b_shipping }</td>
         <td class="border px-4 py-2 text-center">
-          <button @click="removeItem(index)">X</button>
+          <button onclick ="basket_del(${basket.b_idx})">X</button>
         </td>
       </tr>
+      </c:forEach>	
     </tbody>
   </table>
   <div class="flex justify-end mt-4">

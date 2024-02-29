@@ -8,6 +8,7 @@ public class BasketDTO {
 	private String b_id;
 	private int b_num;
 	private int b_quantity;
+	private int b_shipping;
 
 	//Pruduct
 	private String p_name;

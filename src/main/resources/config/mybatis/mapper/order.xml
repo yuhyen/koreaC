@@ -15,9 +15,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE U_IDX = #{u_idx}
 	</update>
 		
-	<select id="basket_list" resultType="basket">
-		SELECT * FROM TB_BASKET
+	<select id="basket_list"  resultType="basket">
+		select * from TB_BASKET B, TB_PRODUCT P
+		WHERE B.B_ID = #{b_id} 
+		and B.B_NUM = P.P_NUM
 	</select>
+	
+	<delete id="basket_del" parameterType="int">
+		DELETE FROM TB_BASKET
+		WHERE B_IDX = #{b_idx}	
+	</delete>
 	
 </mapper>
 
