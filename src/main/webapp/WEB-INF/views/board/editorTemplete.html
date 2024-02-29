@@ -3,12 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>TOAST UI Editor 적용하기</title>
-
     <!-- TUI 에디터 CSS CDN -->
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+ <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tomato: "tomato",
+          },
+        },
+      },
+    };
+  </script>
 <body>
     <!-- 에디터를 적용할 요소 (컨테이너) -->
     <div id="content">

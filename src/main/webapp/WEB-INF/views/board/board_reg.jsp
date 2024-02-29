@@ -27,8 +27,8 @@
 	    </div>
 	    
 	    <div id="fileupload">
-	    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
-		<input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
+<!-- 	    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label> -->
+		<input class="px-4 py-2 text-black rounded" id="file_input" type="file" multiple="multiple" @change="fileListChange">
 	    </div>
   	</div>
     
@@ -47,40 +47,19 @@
     <script>
     new Vue({
         el: '#app',
-        data: {
-          boardItems: [
-            {
-              no: '공지',
-              product: '',
-              subject: '공지사항',
-              name: '손종욱',
-              date: '2024-01-01',
-              hit: 3000,
-            },
-            {
-              no: 1,
-              product: 'https://source.unsplash.com/random/200x200?product',
-              subject: '상품1',
-              name: '손종욱',
-              date: '2024-01-01',
-              hit: 3000,
-            },
-            {
-              no: 2,
-              product: 'https://source.unsplash.com/random/200x200?product',
-              subject: '상품2',
-              name: '손종욱',
-              date: '2024-01-01',
-              hit: 3000,
-            }
-          ],
-          total: 0,
-        },
         methods: {
               registBoard:function(){
               	alert("글쓰기 클릭");
+              },
+              cancel:function(){
+            	alert("취소 클릭")  
+              },
+              fileListChange:function(obj){
+            	  
+            	alert("파일변경");  
+	            const dataTransfer = new DataTransfer(); //TODO:이걸로 표시할지 결정해야함.
+            	let files = document.getElementById("file_input").files;
               }
-          
         }
       });
     
