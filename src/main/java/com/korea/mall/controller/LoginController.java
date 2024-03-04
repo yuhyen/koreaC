@@ -74,6 +74,46 @@ public class LoginController {
 		return "/login/user_insert_form";
 	}
 	
+	@RequestMapping("find_id_form")
+	public String find_id_form() {
+		return "/login/find_id_form";
+	}
+	
+	@RequestMapping("find_id")
+	@ResponseBody
+	public String find_id(String u_username,String u_email) {
+		System.out.println(u_username+","+u_email);
+		
+		UserDTO dto = user_dao.selectUserName(u_username);
+		
+		if(dto ==null) {
+			return "[{'param':'no_u_username'}]";
+		}
+		
+		//우리가 입력받은 email와 DB에 저장된 이메일를 비교하기
+		if(!u_email.equals(dto.getU_email())){
+			return "[{'param':'no_u_email'}]";
+		}
+		
+		//여기까지 내려오면 아이디와 비밀번호에 문제가 없다는 뜻
+		//세션에 바인딩을 한다.
+		//세션은 서버의 메모리를 사용하기 때문에 세션을 많이 사용할수록
+		//브라우저가 느려지기 때문에 꼭 필요한 곳에서만 쓰도록 하자
+		
+		
+		String u_id = String.format("%s", dto.getU_id());
+		System.out.println(u_id);
+		
+	
+		//로그인에 성공한 경우
+		return "[{'param':'clear'},{'u_id':'"+u_id+"'}]";
+	}
+	
+	@RequestMapping("find_pwd_form")
+	public String find_pwd_form() {
+		return "/login/find_pwd_form";
+	}
+	
 	@RequestMapping("check_id")
 	@ResponseBody
 	public String check_id(String u_id) {
