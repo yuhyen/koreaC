@@ -89,6 +89,7 @@ public class OrderController {
 		
 		int res = orderService.delete(idx);
 		if(res >= 1) {
+			
 			return "[{'param' : 'yes'}]";
 		}
 		return "[{'param' : 'no'}]";
