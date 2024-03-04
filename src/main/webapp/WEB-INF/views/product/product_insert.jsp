@@ -14,6 +14,7 @@
 		let explain = f.p_explain.value;
 		let size = f.p_size.value;
 		let pabric = f.p_pabric.value;
+		let stock = f.p_stock.value;
 		let picture = f.picture.files.length;
 		
 		f.submit();
@@ -38,7 +39,6 @@
 						     <option value="2">Top</option>
 						     <option value="3">Bottom</option>
 						     <option value="4">Suit</option>
-						     <option value="5">Shoes & acc</option>
 					   	</select>
 					</td>
 				</tr>
@@ -51,17 +51,33 @@
 					<td><textarea name="p_explain" rows="10" cols="50" style="resize: none;"></textarea></td>
 				</tr>
 				<tr>
-					<th>크기</th>
-					<td><input name="p_size"></td>
+					<th>사이즈</th>
+					<td>
+						<select name="p_size">
+							<option value="M">M</option>
+							<option value="L">L</option>
+							<option value="XL">XL</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<th>색상</th>
-					<td><input name="p_color"></td>
+					<td>
+						<select name="p_color">
+							<option value="black">black</option>
+							<option value="black">white</option>
+							<option value="black">red</option>
+							<option value="black">green</option>
+						</select>
+					</td>
 				</tr>
 				<tr>
 					<th>원단</th>
 					<td><input name="p_pabric"></td>
 				</tr>
+				<tr>
+					<th>재고</th>
+					<td><input name="p_stock"></td>
 				<tr>
 					<th>사진등록</th>
 					<td><input name="picture" type="file" multiple="multiple"></td>

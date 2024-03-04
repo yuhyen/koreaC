@@ -18,6 +18,7 @@ public class ProductDTO {
 	
 	private int p_num;
 	private int p_price;
+	private int p_stock;
 	private int p_id;
 	private int picture_count;
 	
