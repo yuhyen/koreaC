@@ -10,7 +10,7 @@
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <script src="resources/js/HttpRequest.js"></script>
-
+<script src="https://cdn.tailwindcss.com"></script>
 <style>
   .checkbox:checked + .check-icon {
     display: flex;
@@ -42,7 +42,7 @@
     <c:forEach var="basket" items="${basket }">
       <tr>
         <td class="border px-4 py-2 text-center">
-          <input type="checkbox" class="checkbox" onclick="check(this, ${basket.p_price + basket.b_shipping })">
+          <input type="checkbox" class="checkbox" onclick="check(this, ${basket.p_price * basket.b_quantity + basket.b_shipping })">
           <span class="check-icon hidden justify-center items-center">
             ✔
           </span>
@@ -51,10 +51,10 @@
           <img :src="item.image" alt="" class="h-16 mx-auto">
         </td>
         <td class="border px-4 py-2">${basket.p_name }</td>
-        <td class="border px-4 py-2">${basket.p_price }</td>
+        <td class="border px-4 py-2">${basket.p_price }원</td>
         <td class="border px-4 py-2 text-center">${basket.b_quantity }</td>
-        <td class="border px-4 py-2">${basket.b_shipping }</td>
-        <td class="border px-4 py-2">${basket.p_price + basket.b_shipping }</td>
+        <td class="border px-4 py-2">${basket.b_shipping }원</td>
+        <td class="border px-4 py-2">${basket.p_price * basket.b_quantity + basket.b_shipping }원</td>
         <td class="border px-4 py-2 text-center">
           <button onclick ="basket_del(${basket.b_idx})">X</button>
         </td>
@@ -68,8 +68,9 @@
     </div>
   </div>
   <div class="flex justify-end mt-4 space-x-2">
-    <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"  onclick = "byall(this.form)">전체 상품 구매</button>
-    <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700" >선택 상품 구매</button>
+    <input type="button" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" value="전체 상품 구매" onclick="location.href='order_page?type=1'">
+    <input type="button" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700" value="선택 상품 구매" onclick="location.href='order_page?type=2'">
+    
   </div>
 </div>
 
@@ -118,6 +119,6 @@
 	  
   }
 
-</script>
+ </script>
 </body>
 </html>
