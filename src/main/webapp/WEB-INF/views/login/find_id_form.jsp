@@ -66,6 +66,7 @@
             </div>
 			<div class="flex items-center justify-between mb-6">
                 <input type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="아이디찾기"  onclick="send(this.form)"/>
+                <input type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="뒤로가기"  onclick="location.href='login_form'"/>
             </div>
 	</form>
 	</div>
