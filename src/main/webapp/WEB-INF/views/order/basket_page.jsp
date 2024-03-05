@@ -27,7 +27,7 @@
   <table class="min-w-full table-fixed">
     <thead>
       <tr class="bg-gray-200">
-        <th class="w-1/12 px-4 py-2">체크</th>
+        <th class="w-1/12 px-4 py-2">체크<input type="checkbox"  onclick="checkAll(this)"/></th>
         <th class="w-2/12 px-4 py-2">이미지</th>
         <th class="w-3/12 px-4 py-2">상품정보</th>
         <th class="w-1/12 px-4 py-2">판매가</th>
@@ -68,7 +68,7 @@
     </div>
   </div>
   <div class="flex justify-end mt-4 space-x-2">
-    <input type="button" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" value="전체 상품 구매" onclick="location.href='order_page?type=1'">
+    <input type="button" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" value="전체 상품 구매" onclick="byall()">
     <input type="button" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700" value="선택 상품 구매" onclick="location.href='order_page?type=2'">
     
   </div>
@@ -118,6 +118,16 @@
 	  
 	  
   }
+  
+  function checkAll(el){
+	  const checkBoxes  = document.querySelectorAll('.checkbox');
+	  checkBoxes.forEach((row)=>{
+	    row.checked = el.checked;
+	  })
+	  
+	  
+	 this.check();
+	}
 
  </script>
 </body>
