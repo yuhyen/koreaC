@@ -5,7 +5,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Login Page</title>
-	<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 	<script src="resources/js/HttpRequest.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">

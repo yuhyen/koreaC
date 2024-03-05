@@ -19,8 +19,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				#{u_username},
 				#{u_email},
 				#{u_tel},
+				#{u_ip}	,
 				default,
-				#{u_ip}	
+				default
 			)
 		</insert>
 		

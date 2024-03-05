@@ -6,6 +6,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="resources/js/HttpRequest.js"></script>
+ <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+        .button{
+        	text-align: center;
+        }
+    </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	let b_idCheck=false;
@@ -131,61 +141,51 @@
 	}
 </script>
 </head>
-<body>
+<body class="bg-gray-50 flex items-center justify-center h-screen">
+	<div class="bg-white shadow-lg rounded-lg p-8">
+        <h1 class="text-3xl font-bold mb-6 text-center">회원가입</h1>
 	<form>
-		<table border="1">
-			<caption>:::회원가입:::</caption>
-			<tr>
-				<th>아이디</th>
-				<td>
-					<input name="u_id", id="u_id" onchange="che()">
-					<input type="button" value="중복체크" onclick="check_id()">
-				</td>
-			</tr>
-			<tr>
-				<th>이름</th>
-				<td>
-					<input name="u_username">
-				</td>
-			</tr>
-			<tr>
-				<th>비밀번호</th>
-				<td>
-					<input name="u_pwd" type="password">
-				</td>
-			</tr>
-			<tr>
-				<th>이메일</th>
-				<td>
-					<input name="u_email">
-				</td>
-			</tr>
-			<tr>
-				<th>전화번호</th>
-				<td>
-					<input name="u_tel">
-				</td>
-			</tr>
-			<tr>
-				<th>주소</th>
-				<td>
-					<input name="u_ip">
-					<input type="button" value="우편번호검색" onclick="ipsearch(this.form)">
-				</td>
-			</tr>
-			<tr>
-			<th>상세주소</th>
-				<td>
-				<input name="u_ipExtraAddr">
-				</td>
-			</tr>	
-			<tr>
-				<td colspan="2" align="center">
-				<input type="button" value="가입" onclick="send(this.form)">
-				<input type="button" value="취소" onclick="location.href='login_form'">
-				</td>
-			</tr>							
-		</table>
+	
+			<div class="mb-2">
+			<div class="flex items-center justify-between mb-1">
+                <label for="u_id" class="block text-gray-700 text-sm font-bold mb-2">아이디</label>
+                <input type="button" id="button" value="중복체크" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline" onclick="check_id()">
+           </div>   
+                <input type="text" id="u_id" name="u_id" placeholder="아이디를 입력하세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+        
+       
+			 <div class="mb-2">
+                <label for="u_username" class="block text-gray-700 text-sm font-bold mb-2">이름</label>
+                <input type="text" id="u_username" name="u_username" placeholder="이름 입력하세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+        
+             <div class="mb-2">
+                <label for="u_pwd" class="block text-gray-700 text-sm font-bold mb-2">비밀번호</label>
+                <input type="password" id="u_pwd" name="u_pwd" placeholder="비밀번호를 입력하세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+             <div class="mb-2">
+                <label for="u_email" class="block text-gray-700 text-sm font-bold mb-2">이메일</label>
+                <input type="text" id="u_email" name="u_email" placeholder="이메일를 입력하세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+             <div class="mb-2">
+                <label for="u_tel" class="block text-gray-700 text-sm font-bold mb-2">전화번호</label>
+                <input type="text" id="u_tel" name="u_tel" placeholder="전화번호를 입력하세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+             <div class="mb-2">
+             <div class="flex items-center justify-between mb-1">
+                <label for="u_ip" class="block text-gray-700 text-sm font-bold mb-2">주소</label>
+               <input type="button" value="우편번호검색" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline" onclick="ipsearch(this.form)">
+             </div>  
+                <input type="text" id="u_ip" name="u_ip" placeholder="주소" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline">
+                 <input type="text" id="u_ipExtraAddr" name="u_ipExtraAddr" placeholder="상세주소" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+			<div class="flex items-center justify-between mb-4">
+                <input type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" value="가입하기"  onclick="send(this.form)"/>
+                <input type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" value="취소"  onclick="location.href='login_form'"/>
+            </div>
+	
 	</form>
+	</div>
 </body>
 </html>
