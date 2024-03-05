@@ -9,9 +9,9 @@
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script src="resources/js/HttpRequest.js"></script>
 <body>
 <div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
 	  <div class="flex justify-between items-center mb-6">
@@ -29,6 +29,7 @@
 	    <div id="fileupload">
 <!-- 	    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label> -->
 		<input class="px-4 py-2 text-black rounded" id="file_input" type="file" multiple="multiple" @change="fileListChange">
+		<input class="px-4 py-2 text-black rounded" id="chk" type="checkbox">
 	    </div>
   	</div>
     
@@ -45,6 +46,30 @@
 </div>
     <!-- TUI 에디터 JS CDN -->
     <script>
+    
+    //파일업로드기능
+    let fileUpload = () =>{
+    	let url = "board_fileUpload.ajax"
+        const formData = new FormData();
+    	const files = document.getElementById("file_input").files;
+    	let fileList = Array.from(files);
+    	console.log(fileList);
+    	fileList.forEach( (obj) =>{
+    		formData.append('files', obj);
+    	});
+// 		formData.append('files' , fileList);
+    	
+        
+        console.log(formData);
+        console.dir(formData);
+        console.log(formData.values());
+    	sendRequest(url, formData, fileUploadAfter,"POST" , true);
+    };
+    
+    let fileUploadAfter = () =>{
+    	console.log("완료");
+    }
+
     new Vue({
         el: '#app',
         methods: {
@@ -58,7 +83,10 @@
             	  
             	alert("파일변경");  
 	            const dataTransfer = new DataTransfer(); //TODO:이걸로 표시할지 결정해야함.
-            	let files = document.getElementById("file_input").files;
+//             	let files = document.getElementById("file_input");
+            	fileUpload();
+	            
+	            
               }
         }
       });
@@ -77,6 +105,8 @@
 //             initialValue : "Hello toast ui viewer~!"
 //         }); 
         
+        
+         
     </script>
 </body>
 </html>

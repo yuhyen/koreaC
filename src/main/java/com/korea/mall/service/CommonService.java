@@ -3,37 +3,59 @@ package com.korea.mall.service;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
 
 import com.korea.mall.common.Const;
+import com.korea.mall.dao.BoardDAO;
+import com.korea.mall.dao.FileDAO;
 import com.korea.mall.dto.FileDTO;
 import com.korea.mall.dto.UserDTO;
 
+import lombok.RequiredArgsConstructor;
 
 
+@Service
+@RequiredArgsConstructor
 public class CommonService {
 	
-	@Autowired
-	HttpSession session;
+	
+	private final HttpSession session;
+	private final ResourceLoader resourceLoader;
+	private final FileDAO fileDao;
+//	private final HttpServletRequest request;
 	
 	
 	private FileDTO fileUploadProc(MultipartFile multipartFile) {
 		
-	    String path = Const.FILE_PATH;
+		//요거쓰면 was주소가져옴.
+		Resource resource = resourceLoader.getResource(Const.FILE_PATH);
+		String path ="";
+//	    String path = request.getServletContext().getRealPath(Const.FILE_PATH);
 	    String uuid = UUID.randomUUID().toString();
 	    UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY);
+	    //userDTO 더미 set mok test
+	    if(user == null) {
+	    	user = new UserDTO();
+	    	user.setU_idx(9999);
+	    }
 	    FileDTO file = new FileDTO();
 	    file.setDelYn("N");
 	    file.setStriostoredFileName(uuid);
@@ -41,15 +63,17 @@ public class CommonService {
 	    file.setUpdUser(user.getU_idx());
 	    file.setOrgFileName(multipartFile.getOriginalFilename());
 	    file.setFileSize(multipartFile.getSize());
-	    
-	    File saveFile = new File(path, file.getStriostoredFileName());
-	    
 	    try {
-	    	
+	    	//임시코딩
+	    	path = "C:\\Users\\admin\\git\\koreaC\\src\\main\\webapp\\resources\\file\\";
+//	    	path = resource.getFile().getPath();
+	    	Files.createDirectories(Paths.get(path));
+	    	File saveFile = new File(path, file.getStriostoredFileName());
 	    	//서버저장
 			multipartFile.transferTo(saveFile);
-			//dao db넣기
 			
+			//업로드 성공시 dao db넣기
+			fileDao.insert(file);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -61,14 +85,22 @@ public class CommonService {
 	public List<FileDTO> uploadFile(MultipartFile[] uploadFile) {
 		List<FileDTO> fileList = new ArrayList<FileDTO>();  
 		for(MultipartFile multipartFile : uploadFile) {
-//			log.info("----------------------------");
-//			log.info("Upload File Name: " + multipartFile.getOriginalFilename());
-//			log.info("Upload File Size: " + multipartFile.getSize());
 			fileList.add(this.fileUploadProc(multipartFile));
 		}
 		return fileList;
 		
 	}
+	
+	public List<FileDTO> uploadFile(List<MultipartFile> uploadFile) {
+		List<FileDTO> fileList = new ArrayList<FileDTO>();  
+		for(MultipartFile multipartFile : uploadFile) {
+			fileList.add(this.fileUploadProc(multipartFile));
+		}
+		return fileList;
+		
+	}
+	
+	
 	
 	public FileDTO uploadFile(MultipartFile multipartFile) {
 		return this.fileUploadProc(multipartFile);

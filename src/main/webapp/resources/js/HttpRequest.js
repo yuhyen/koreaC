@@ -81,16 +81,35 @@ Ajax에서 XMLHttpRequest객체는 웹 브라우저와 서버가 데이터를 �
  }
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+ //url : 목적지
+ //param : 파라미터
+ //callback : 처리후 돌아올 곳
+ //method : 전송방식(GET, POST)
+ function sendRequest(url, param, callback, method , sync){
+	 createRequest();
+	 sync = !sync
+	 
+	 //전송타입을 구분
+	 let httpMethod = (method !='POST' && method!='post') ? 'GET' : 'POST';
+	 //파라미터 구분
+	 let httpParam = (param == null || param=='')? null : param;
+	 //접근 url
+	 let httpURL = url;
+	 //요청방식이 GET이고, 전달할 파라미터가 있다면
+	 //url 경로 새로 제작하기
+	 if(httpMethod == 'GET' && httpParam != null){
+			httpURL = httpURL+'?'+httpParam; 
+	 }
+	 //xhr.open(요청방식, 목적지, 비동기여부(true면 비동기));
+	 console.log("=========================================")
+	 console.log("httpMethod " , httpMethod)
+	 console.log("httpURL " , httpURL)
+	 console.log("sync " , sync)
+	 console.log("=========================================")
+	 xhr.open(httpMethod, httpURL, sync);
+//	 xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	 xhr.onreadystatechange=callback;
+	 //send() : 데이터 교환을 요청하는 함수
+	 xhr.send(param);
+	 
+ }
