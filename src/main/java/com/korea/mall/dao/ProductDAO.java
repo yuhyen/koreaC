@@ -30,6 +30,11 @@ public class ProductDAO {
 		return sqlSession.selectOne("p.p_selectOne", p_num);
 	}
 	
+	// 상품 검색
+	public List<ProductDTO> search(String p_name) {
+		return sqlSession.selectList("p.p_search", p_name);
+	}
+	
 //	// 상품 카테고리별 조회
 //	public List<ProductDTO> selectList(int p_id){
 //		return sqlSession.selectList("p.product_list", p_id);

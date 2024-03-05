@@ -21,8 +21,8 @@
                 <a href="#" class="text-gray-500 hover:text-gray-900">Notice</a>
                 <a href="#" class="text-gray-500 hover:text-gray-900">Q & A</a>
                 <a href="#" class="text-gray-500 hover:text-gray-900">Review</a>
-                <a href="#" class="text-gray-500 hover:text-gray-900">Delay</a>
-                <a href="#" class="text-gray-500 hover:text-gray-900">Search</a>
+                <a href="delay" class="text-gray-500 hover:text-gray-900">Delay</a>
+                <a href="search" class="text-gray-500 hover:text-gray-900">Search</a>
                 <a href="login_form" class="text-gray-500 hover:text-gray-900">Login</a>
                 <a href="login_form" class="text-gray-500 hover:text-gray-900">Register</a>
                 <a href="#" class="text-gray-500 hover:text-gray-900">Order</a>

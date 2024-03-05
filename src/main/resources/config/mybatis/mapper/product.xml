@@ -36,6 +36,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from tb_product where p_num = #{p_num}
 	</select>
 	
+	<!-- 상품 검색 -->
+	<select id="p_search" resultType="product" parameterType="java.util.List">
+		select * from tb_product where p_name like '%'||#{p_name}||'%'
+	</select>
+	
 </mapper>
 
 

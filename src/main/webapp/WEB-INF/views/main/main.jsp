@@ -16,8 +16,8 @@
 </head>
 <jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 <body class="bg-gray-50">
-	<div class="flex">
-        <aside class="w-64 bg-white p-6 shadow-md">
+	<div class="relative h-full flex">
+        <aside class="float-left w-64 bg-white p-6 shadow-md">
             <div class="flex flex-col space-y-4">
                 <a href=""><button class="text-gray-700 font-semibold">New</button></a>
                 <a href=""><button class="text-gray-700 font-semibold">Top50</button></a>
@@ -28,7 +28,7 @@
                 <a href=""><button class="text-gray-700 font-semibold">Cart</button></a>
             </div>
         </aside>
-        <main class="flex-1">
+        <main class="flex-1 overscroll-auto static">
             <div class="py-6 px-4 sm:px-6 lg:px-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">Top Seller</h2>
                 <button>
@@ -59,10 +59,7 @@
             </div>
         </main>
     </div>
-    <div align="center">
-    	${pageMenu}
-    </div>
+    <jsp:include page="/WEB-INF/views/main/footer.jsp"></jsp:include>
 </body>
-<jsp:include page="/WEB-INF/views/main/footer.jsp"></jsp:include>
 </html>
 
