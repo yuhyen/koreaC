@@ -32,8 +32,9 @@ public class OrderController {
 	HttpSession session;
 	
 	@RequestMapping("/mypage")
-	public String mypage() {
-		
+	public String mypage(Model model) {
+		UserDTO dto = (UserDTO) session.getAttribute("u_id");
+		model.addAttribute("user", dto);		
 		return "mypage";
 	}
 	
@@ -89,6 +90,7 @@ public class OrderController {
 		
 		int res = orderService.delete(idx);
 		if(res >= 1) {
+			
 			return "[{'param' : 'yes'}]";
 		}
 		return "[{'param' : 'no'}]";
@@ -96,7 +98,11 @@ public class OrderController {
 	}
 	
 	
+	@RequestMapping("order_page")
+	public String orderpage(String type) {
 	
+		return "order/orderpage";
+	}
 	
 	
 	

@@ -23,6 +23,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				#{u_ip}	
 			)
 		</insert>
+		
+		<select id="userNameCheck" parameterType="String" resultType="user">
+			select * from TB_user where u_username=#{u_username}
+		</select>
 	
 </mapper>
 

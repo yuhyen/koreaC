@@ -25,6 +25,9 @@ public class UserDAO {
 		public int insert(UserDTO dto) {
 			return sqlSession.insert("user.insert",dto);
 		}
-	
+	//아이디 찾기
+		public UserDTO selectUserName(String u_username) {
+			return sqlSession.selectOne("user.userNameCheck",u_username);
+		}
 	
 }

@@ -6,10 +6,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shopping Cart</title>
+<title>장바구니</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <script src="resources/js/HttpRequest.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  .checkbox:checked + .check-icon {
+    display: flex;
+  }
+</style>
+</head>
+<body class="bg-gray-100">
+<form>
+<div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+  <div class="flex items-center mb-4">
+    <h1 class="text-xl font-semibold mr-auto">장바구니</h1>
+    <span class="text-gray-600">${user.u_username }님</span>
+  </div>
+  <table class="min-w-full table-fixed">
+    <thead>
+      <tr class="bg-gray-200">
+        <th class="w-1/12 px-4 py-2">체크<input type="checkbox"  onclick="checkAll(this)"/></th>
+        <th class="w-2/12 px-4 py-2">이미지</th>
+        <th class="w-3/12 px-4 py-2">상품정보</th>
+        <th class="w-1/12 px-4 py-2">판매가</th>
+        <th class="w-1/12 px-4 py-2">수량</th>
+        <th class="w-1/12 px-4 py-2">배송비</th>
+        <th class="w-1/12 px-4 py-2">합계</th>
+        <th class="w-1/12 px-4 py-2">삭제</th>
+      </tr>
+    </thead>
+    <tbody>
+	
+    <c:forEach var="basket" items="${basket }">
+      <tr>
+        <td class="border px-4 py-2 text-center">
+          <input type="checkbox" class="checkbox" onclick="check(this, ${basket.p_price * basket.b_quantity + basket.b_shipping })">
+          <span class="check-icon hidden justify-center items-center">
+            ✔
+          </span>
+        </td>
+        <td class="border px-4 py-2">
+          <img :src="item.image" alt="" class="h-16 mx-auto">
+        </td>
+        <td class="border px-4 py-2">${basket.p_name }</td>
+        <td class="border px-4 py-2">${basket.p_price }원</td>
+        <td class="border px-4 py-2 text-center">${basket.b_quantity }</td>
+        <td class="border px-4 py-2">${basket.b_shipping }원</td>
+        <td class="border px-4 py-2">${basket.p_price * basket.b_quantity + basket.b_shipping }원</td>
+        <td class="border px-4 py-2 text-center">
+          <button onclick ="basket_del(${basket.b_idx})">X</button>
+        </td>
+      </tr>
+      </c:forEach>
+    </tbody>
+  </table>
+  <div class="flex justify-end mt-4">
+    <div class="text-lg font-semibold" id ="total">
+    총 가격 : 원
+    </div>
+  </div>
+  <div class="flex justify-end mt-4 space-x-2">
+    <input type="button" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" value="전체 상품 구매" onclick="byall()">
+    <input type="button" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700" value="선택 상품 구매" onclick="location.href='order_page?type=2'">
+    
+  </div>
+</div>
+
+</form>
 <script>
   function basket_del(b){
 	  if(!confirm("삭제하시겠습니까?")){
@@ -38,66 +103,32 @@
 			
 	  }
   }
-</script>
-<style>
-  .checkbox:checked + .check-icon {
-    display: flex;
+  let total = 0;
+  let text = document.getElementById("total");
+  
+  function check(c, t){
+	  
+	  if(c.checked){ //체크가 되면
+		  total += t;
+	  }else{
+		  total -= t;
+	  }
+	  
+	  text.innerHTML = "총 가격 : " + total.toString() + " 원";
+	  
+	  
   }
-</style>
-</head>
-<body class="bg-gray-100">
-<div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-  <div class="flex items-center mb-4">
-    <h1 class="text-xl font-semibold mr-auto">장바구니</h1>
-    <span class="text-gray-600">${user.u_username }님</span>
-  </div>
-  <table class="min-w-full table-fixed">
-    <thead>
-      <tr class="bg-gray-200">
-        <th class="w-1/12 px-4 py-2">체크</th>
-        <th class="w-2/12 px-4 py-2">이미지</th>
-        <th class="w-3/12 px-4 py-2">상품정보</th>
-        <th class="w-1/12 px-4 py-2">판매가</th>
-        <th class="w-1/12 px-4 py-2">수량</th>
-        <th class="w-1/12 px-4 py-2">배송비</th>
-        <th class="w-1/12 px-4 py-2">합계</th>
-        <th class="w-1/12 px-4 py-2">삭제</th>
-      </tr>
-    </thead>
-    <tbody>
-    <c:forEach var="basket" items="${basket }">
-      <tr>
-        <td class="border px-4 py-2 text-center">
-          <input type="checkbox" class="checkbox" v-model="item.checked" @change="updateTotal">
-          <span class="check-icon hidden justify-center items-center">
-            ✔
-          </span>
-        </td>
-        <td class="border px-4 py-2">
-          <img :src="item.image" alt="" class="h-16 mx-auto">
-        </td>
-        <td class="border px-4 py-2">${basket.p_name }</td>
-        <td class="border px-4 py-2">${basket.p_price }</td>
-        <td class="border px-4 py-2 text-center">${basket.b_quantity }</td>
-        <td class="border px-4 py-2">${basket.b_shipping }</td>
-        <td class="border px-4 py-2">${basket.p_price + basket.b_shipping }</td>
-        <td class="border px-4 py-2 text-center">
-          <button onclick ="basket_del(${basket.b_idx})">X</button>
-        </td>
-      </tr>
-      </c:forEach>	
-    </tbody>
-  </table>
-  <div class="flex justify-end mt-4">
-    <div class="text-lg font-semibold">
-      총 가격: {{ total.toLocaleString() }}원
-    </div>
-  </div>
-  <div class="flex justify-end mt-4 space-x-2">
-    <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" >전체 상품 구매</button>
-    <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700" >선택 상품 구매</button>
-  </div>
-</div>
+  
+  function checkAll(el){
+	  const checkBoxes  = document.querySelectorAll('.checkbox');
+	  checkBoxes.forEach((row)=>{
+	    row.checked = el.checked;
+	  })
+	  
+	  
+	 this.check();
+	}
 
+ </script>
 </body>
 </html>
