@@ -19,7 +19,6 @@ public class BoardService {
 		return (List<Object>) boardDao.selectList(param);
 	}
 	
-	
 	public BoardDTO selectOne(BoardDTO param) throws Exception {
 	
 		if("".equals( param.getSeq()) || null == param.getSeq()) {
@@ -27,6 +26,17 @@ public class BoardService {
 		}
 		
 		return boardDao.selectOne(param);
+	}
+	
+	
+	public Object insert(BoardDTO param) {
+		
+		String key = boardDao.selectKey();
+		
+		boardDao.insertBase(param);
+		boardDao.insertDtls(param);
+		
+		return null;
 	}
 	
 }

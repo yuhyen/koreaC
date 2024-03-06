@@ -14,29 +14,70 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 	
+	<select id="selectKey" resultType="String">
+		SELECT NVL(MAX(B_SEQ) , 0) +1 FROM TB_BOARD_BASE
+	</select>
+
+	
 	<insert id="insertBase">
 		INSERT INTO TB_BOARD_BASE
-		(
-		  B_SEQ
-		, B_CATEGORY
-		, B_USER
-		, B_NOTICE_YN
-		, B_IMG_PATH
-		, B_TITLE
-		, B_CRTR
-		, B_REPLY
-		, B_DEEP
-		, B_REG_DATE
-		, B_REG_USER
-		, B_MOD_DATE
-		, B_MOD_USER
-		) 
+			(
+			  B_SEQ
+			, B_CATEGORY
+			, B_USER
+			, B_NOTICE_YN
+			, B_IMG_PATH
+			, B_TITLE
+			, B_CRTR
+			, B_REPLY
+			, B_DEEP
+			, B_REG_DATE
+			, B_REG_USER
+			, B_MOD_DATE
+			, B_MOD_USER) 
 			VALUES 
-		( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );				
+				(
+		   	  #{seq} 
+			, #{category}
+			, #{user}
+			, #{noticeYn}
+			, #{imgPath}
+			, #{title}
+			, #{crtr}
+			, #{reply}
+			, #{deep}
+			, #{regDate}
+			, #{regUser}
+			, #{modDate}
+			, #{modUser} 
+			)
 	</insert>
 	
 	<insert id="insertDtls">
 		
+		INSERT INTO TB_BOARD_DTLS
+		(
+		  B_SEQ
+		, B_CRTR
+		, B_REPLY
+		, B_DEEP
+		, B_CONTENTS
+		, B_REG_DATE
+		, B_REG_USER
+		, B_MOD_DATE
+		, B_MOD_USER) 
+		VALUES 
+			( 
+		 	  #{seq} 
+			, #{crtr}
+			, #{reply}
+			, #{deep}
+			, #{contents}
+			, #{regDate}
+			, #{regUser}
+			, #{modDate}
+			, #{modUser}  
+		);
 	</insert>
 	
 	<update id="updateBase">

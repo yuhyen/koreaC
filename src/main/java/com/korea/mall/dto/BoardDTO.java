@@ -9,8 +9,8 @@ public class BoardDTO {
 	private String seq;
 	private String category;
 	private long user;
-	private String notice_yn;
-	private String img_path;
+	private String noticeYn;
+	private String imgPath;
 	private String title;
 	private String crtr;
 	private String reply;
@@ -23,9 +23,9 @@ public class BoardDTO {
 //	private String deep;
 	private String contents;
 	
-	private String reg_date;
-	private long reg_user;
-	private String mod_date;
-	private long mod_user;
+	private String regDate;
+	private long regUser;
+	private String modDate;
+	private long modUser;
 	
 }

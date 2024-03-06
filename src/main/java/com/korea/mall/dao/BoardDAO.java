@@ -24,6 +24,9 @@ public class BoardDAO {
 		return sqlSession.selectOne("board.selectOne", param);
 	}
 	
+	public String selectKey() {
+		return sqlSession.selectOne("board.selectkey");	}
+	
 	public int insertBase(BoardDTO param) {
 		return sqlSession.insert("board.insertBase", param);
 	}
