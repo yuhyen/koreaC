@@ -23,5 +23,7 @@ public class BasketDAO {
 	 return sqlSession.delete("order.basket_del", idx);
  }
  
-	
+	public List<BasketDTO> selectList(List<Integer> typelist){
+		return sqlSession.selectList("order.order_basket_list", typelist);
+	}
 }

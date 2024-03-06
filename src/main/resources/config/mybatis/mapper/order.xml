@@ -26,6 +26,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE B_IDX = #{b_idx}	
 	</delete>
 	
+	<select id="order_basket_list" resultType="basket"  parameterType="Integer">
+		select * from TB_BASKET B, TB_PRODUCT P
+		WHERE B.B_IDX IN
+		<foreach collection="list" index="index" item="type" open="(" close=")" separator=",">
+		#{type}
+		</foreach>
+		and B.B_NUM = P.P_NUM
+	</select>
+	
 </mapper>
 
 

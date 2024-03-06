@@ -99,8 +99,17 @@ public class OrderController {
 	
 	
 	@RequestMapping("order_page")
-	public String orderpage(String type) {
-	
+	public String orderpage(String type, Model model, String pronum) {
+		UserDTO dto = (UserDTO) session.getAttribute("u_id");
+		model.addAttribute("user", dto);
+		
+		if(pronum == null) {
+		List<BasketDTO> order = orderService.selectList(type);
+		model.addAttribute("order", order);
+		}
+		
+		
+		
 		return "order/orderpage";
 	}
 	

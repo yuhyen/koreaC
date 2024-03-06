@@ -1,5 +1,7 @@
 package com.korea.mall.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -36,6 +38,20 @@ public class OrderService {
  public int delete(int idx) {
 	 return basketDAO.delete(idx);
 	 
+ }
+ 
+ public List<BasketDTO> selectList(String type) {
+	 String[] types = type.split(",");
+	int[] inttypes = Arrays.stream(types).mapToInt(Integer::parseInt).toArray();
+	 
+	ArrayList<Integer> typelist = new ArrayList<>(inttypes.length);
+	for(int num : inttypes) {
+		typelist.add(num);
+	}
+	
+	
+	 return  basketDAO.selectList(typelist);
+			
  }
  	
  

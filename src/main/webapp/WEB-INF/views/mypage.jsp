@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +35,17 @@
         <div class="flex justify-between items-center mb-6">
             <div class="flex-1 text-center border-r-4 border-gray-300">
                 <div class="text-sm text-gray-500">회원 등급</div>
-                <div class="text-2xl font-semibold">Silver</div>
+                <div class="text-2xl font-semibold">
+				<c:choose>
+				<c:when test="${user.u_total >= 5000000}">diamond</c:when>
+				<c:when test="${user.u_total <= 4999999 && user.u_total >= 4000000 }">Platinum</c:when>
+				<c:when test="${user.u_total <= 3999999 && uesr.u_total >= 3000000 }">Gold</c:when>
+				<c:when test="${user.u_total <= 2999999 && user.u_total >= 2000000 }">Silver</c:when>
+				<c:when test="${user.u_total <= 1999999 && user.u_total >= 1000000 }">Bronze</c:when>
+				<c:when test="${user.u_total <= 999999 }">Iron</c:when>
+				
+				</c:choose>
+                </div>
             </div>
             <div class="flex-1 text-center">
                 <div class="text-sm text-gray-500">적립금</div>
