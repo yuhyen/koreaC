@@ -141,7 +141,9 @@ Ajax에서 XMLHttpRequest객체는 웹 브라우저와 서버가 데이터를 �
 	 console.log("=========================================")
 	 xhr.open(httpMethod, url, sync);
 	 xhr.setRequestHeader("Content-Type",contentType);
-	 xhr.onreadystatechange=callback; // ?
+	 //xhr.onreadystatechange=callback; // ?
 	 xhr.send(param);
+	 
+	 return xhr;
 	 
  }

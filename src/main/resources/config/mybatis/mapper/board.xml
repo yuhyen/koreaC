@@ -5,17 +5,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="board">
 
 	<select id="selectList" resultType="hashMap">
-		SELECT * FROM TB_BOARD_BASE
+	  	SELECT * FROM TB_BOARD_BASE  A 
+  	             ,(SELECT COUNT(1) CNT, B_SEQ FROM TB_BOARD_DTLS GROUP BY B_SEQ )  B 
+  	    WHERE A.B_SEQ  = B.B_SEQ
+		ORDER BY TO_NUMBER(A.B_SEQ) DESC
 	</select>
 		
 	<select id="selectOne">
-		SELECT * FROM TB_BOARD_BASE
-		WHERE ROWNUM = 1
+		SELECT * 
+		   FROM TB_BOARD_BASE A 
+			   ,TB_BOARD_DTLS B
+		  WHERE A.B_SEQ = B.B_SEQ 
+		    AND A.B_SEQ = #{seq}
 
 	</select>
 	
 	<select id="selectKey" resultType="String">
-		SELECT NVL(MAX(B_SEQ) , 0) +1 FROM TB_BOARD_BASE
+		SELECT NVL(MAX(TO_NUMBER(B_SEQ)) , 0) +1 FROM TB_BOARD_BASE
+	</select>
+	
+	<select id="selectReply" resultType="String">
+		SELECT NVL(MAX(TO_NUMBER(B_REPLY)) , 0) +1 FROM TB_BOARD_BASE
+		WHERE B_SEQ = #{seq} 
 	</select>
 
 	
@@ -46,9 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, #{crtr}
 			, #{reply}
 			, #{deep}
-			, #{regDate}
+			, SYSDATE
 			, #{regUser}
-			, #{modDate}
+			, SYSDATE
 			, #{modUser} 
 			)
 	</insert>
@@ -73,11 +84,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			, #{reply}
 			, #{deep}
 			, #{contents}
-			, #{regDate}
+			, SYSDATE
 			, #{regUser}
-			, #{modDate}
-			, #{modUser}  
-		);
+			, SYSDATE  
+			, #{modUser}
+		)
 	</insert>
 	
 	<update id="updateBase">

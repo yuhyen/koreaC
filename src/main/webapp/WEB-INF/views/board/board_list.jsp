@@ -9,6 +9,7 @@
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script src="resources/js/HttpRequest.js"></script>
 <style>
  body {
  	font-size: 11px;
@@ -20,9 +21,9 @@
 </head>
 <body class="bg-gray-100">
 <div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
-  <div class="flex items-center mb-4">
-    <h1 class="text-xl font-semibold mr-auto">게시판종류아이디넣기</h1>
-    <span class="text-gray-600">로그인아이디넣기</span>
+  <div class="flex justify-between items-center mb-6">
+    <a id="boardName" href="#" class="text-lg font-semibold text-blue-600 hover:text-blue-800">게시판종류</a>
+    <span id="userName" class="text-gray-600">로그인아이디넣기</span>
   </div>
   <table class="min-w-full table-fixed">
     <thead>
@@ -31,8 +32,7 @@
         <th class="w-40 px-4 py-2">PRODUCT</th>
         <th class="w-80 px-4 py-2">SUBJECT</th>
         <th class="w-20 px-4 py-2">NAME</th>
-        <th class="w-40 px-4 py-2">DATE</th>
-        <th class="w-20 px-4 py-2">HIT</th>
+        <th class="w-40 px-4 py-2">DATE</th>        
       </tr>
     </thead>
     <tbody>
@@ -44,7 +44,6 @@
         <td class="border px-6 py-2 text-left" @click="subjectClicked">{{ item.subject }}</td>
         <td class="border px-4 py-2 text-center">{{ item.name }}</td>
         <td class="border px-6 py-2 text-center" >{{ item.date }}</td>
-        <td class="border px-4 py-2 text-center">{{ item.hit }}</td>
       </tr>
     </tbody>
   </table>
@@ -72,35 +71,113 @@
 </div>
 
 <script>
-  new Vue({
+	window.onload = () => { 
+		const qa =  location.search
+		const urlParam = new URLSearchParams(qa);
+		typeCategory = urlParam.get("type") 
+		console.log(typeCategory);
+		getBoardName(urlParam.get("type"))
+		
+		let sendObj = setSendObj(1 ,"" , "");
+		sendRequestContent("board_list.json" , JSON.stringify(sendObj) , "" ,"POST" , true , "application/json");
+		if(xhr.status == "200"){
+      		let returnObj = JSON.parse(xhr.response);
+      		console.log(returnObj);
+      		let data = returnObj.data;
+      		data.forEach( (obj) =>{
+      			let date = new Date(Number(obj.B_MOD_DATE));      		    obj.no = obj.B_SEQ
+      		    obj.product = ''
+      		    obj.subject = obj.B_TITLE
+      		    obj.name = obj.B_USER
+      		    obj.date = date.toISOString().substring(0,10)
+// 	      		console.log(obj);
+      		});
+      		vueObj.boardItems = data;
+      		
+      		//아이디
+      		let uid = returnObj.u_id;
+//       		let uid = returnObj.u_id.U_USERNAME;
+      		document.getElementById("userName").textContent = uid;
+//       		document.getElementById("userName").textContent = uid.U_USERNAME;
+			alert("select end")
+      	}else{
+      		console.log("오류처리")
+      		alert("select 실패")
+      	}
+	}
+	
+	
+	
+	
+	let setSendObj = (pageNo , searchType , searchKey) =>{
+    	sendObj = {
+   	            pageNo : pageNo
+   	           ,searchType : searchType
+   	           ,searchKey : searchKey
+    		}
+    	
+    	return sendObj;
+	}
+	  
+	
+	let getBoardName = (type) =>{
+    	let nameEl = document.getElementById("boardName")
+    	let name = "";
+    	let url = "";
+    	switch (type) {
+    	  case 'qna':
+    		name = "Q&A"
+    		url = "";
+    	  	break;
+    	  case 'review':
+    		name = "REVIEW"
+    	    url = "";
+      	  	break;
+    	  case 'notice':
+    		name = "NOTICE"
+    	    url = "";
+        	break;
+    	  default:
+    		  name = "게시판"
+    	}
+    	
+		nameEl.text = name;
+		nameEl.href = "http://naver.com"
+		
+		return name;
+    } 
+
+   let vueObj = new Vue({
     el: '#app',
     data: {
-      boardItems: [
-        {
-          no: '공지',
-          product: '',
-          subject: '공지사항',
-          name: '손종욱',
-          date: '2024-01-01',
-          hit: 3000,
-        },
-        {
-          no: 1,
-          product: 'https://source.unsplash.com/random/200x200?product',
-          subject: '상품1',
-          name: '손종욱',
-          date: '2024-01-01',
-          hit: 3000,
-        },
-        {
-          no: 2,
-          product: 'https://source.unsplash.com/random/200x200?product',
-          subject: '상품2',
-          name: '손종욱',
-          date: '2024-01-01',
-          hit: 3000,
-        }
-      ],
+      boardItems: []
+//       [
+//         {
+//           no: '공지',
+//           product: '',
+//           subject: '공지사항',
+//           name: '손종욱',
+//           date: '2024-01-01',
+//           hit: 3000,
+//         },
+//         {
+//           no: 1,
+//           product: 'https://source.unsplash.com/random/200x200?product',
+//           subject: '상품1',
+//           name: '손종욱',
+//           date: '2024-01-01',
+//           hit: 3000,
+//         },
+//         {
+//           no: 2,
+//           product: 'https://source.unsplash.com/random/200x200?product',
+//           subject: '상품2',
+//           name: '손종욱',
+//           date: '2024-01-01',
+//           hit: 3000,
+//         }
+//       ]
+      ,
       total: 0,
     },
     methods: {

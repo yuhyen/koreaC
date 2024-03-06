@@ -13,13 +13,16 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <script src="resources/js/HttpRequest.js"></script>
 <body>
+
 <div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
 	  <div class="flex justify-between items-center mb-6">
             <div class="space-x-4">
-                <a href="#" class="text-lg font-semibold text-blue-600 hover:text-blue-800">게시판종류</a>
+                <a id="boardName" href="#" class="text-lg font-semibold text-blue-600 hover:text-blue-800">게시판종류</a>
             </div>
-<!--             <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">신규등록</button> -->
+            <input class="w-9/12 px-4 py-2 text-black rounded" id="title" type="text" placeholder="제목을 입력하세요" />
+			<label class="text-sm font-semibold text-blue-600"> 공지 </label><input class="w-1/12 px-1 py-1 text-black rounded" id="noticeYn" type="checkBox"/>
         </div>
+
   	<div id=regGrp>
 	    <!-- 에디터를 적용할 요소 (컨테이너) -->
 	    <div id="content">
@@ -27,9 +30,7 @@
 	    </div>
 	    
 	    <div id="fileupload">
-<!-- 	    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label> -->
-		<input class="px-4 py-2 text-black rounded" id="file_input" type="file" multiple="multiple" @change="fileListChange">
-		<input class="px-4 py-2 text-black rounded" id="chk" type="checkbox">
+			<input class="px-4 py-2 text-black rounded" id="file_input" type="file" multiple="multiple" @change="fileListChange">
 	    </div>
   	</div>
     
@@ -40,12 +41,75 @@
     	
     </div>
     <div id="regBtnGrp" class="flex justify-end mt-4 space-x-2">
-    	<button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="registBoard">등록</button>
-    	<button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="cancel">취소</button>
+    	<button id="btnReg" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="registBoard">등록</button>
+    	<button id="btnUpd" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="updateBoard">수정</button>
+    	<button id="btnCel" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="cancel">취소</button>
     </div>
 </div>
     <!-- TUI 에디터 JS CDN -->
     <script>
+    
+    let typeCategory = "";
+    
+    window.onload = () => { 
+    	const qa =  location.search
+    	const urlParam = new URLSearchParams(qa);
+    	typeCategory = urlParam.get("type") 
+    	console.log(typeCategory);
+    	getBoardName(urlParam.get("type"))
+    }
+    
+    let sendObj = {
+    		
+            seq : ""
+    	 ,  category : ""
+    	 ,	noticeYn : "N"
+		 ,  files : "files"
+		 ,  title : "title"
+		 ,  contents : "content"
+	}
+    
+    
+    let getBoardName = (type) =>{
+    	let nameEl = document.getElementById("boardName")
+    	let name = "";
+    	let url = "";
+    	switch (type) {
+    	  case 'qna':
+    		name = "Q&A"
+    		url = "";
+    	  	break;
+    	  case 'review':
+    		name = "REVIEW"
+    	    url = "";
+      	  	break;
+    	  case 'notice':
+    		name = "NOTICE"
+    	    url = "";
+        	break;
+    	  default:
+    		  name = "게시판"
+    	}
+    	
+		nameEl.text = name;
+		nameEl.href = "http://naver.com"
+		
+		return name;
+    } 
+    
+    let setSendObj = (seq , category , noticeYn , files , title , contents) =>{
+    	sendObj = {
+    	            seq : seq
+    	    	 ,  category : category
+    	    	 ,	noticeYn : noticeYn
+    			 ,  files : files
+    			 ,  title : title
+    			 ,  contents : contents
+    		}
+    	
+    	return sendObj;
+    }
+    
     
     //파일업로드기능
     let fileUpload = () =>{
@@ -58,16 +122,19 @@
     		formData.append('files', obj);
     	});
 // 		formData.append('files' , fileList);
-    	
-        
-        console.log(formData);
-        console.dir(formData);
-        console.log(formData.values());
-    	sendRequest(url, formData, fileUploadAfter,"POST" , true);
+    	sendRequestFile(url, formData, fileUploadCallback,"POST" , true);
     };
     
-    let fileUploadAfter = () =>{
-    	console.log("완료");
+    let fileUploadCallback = (e) =>{
+    	console.log(e)
+    	console.log(xhr.responseText)
+//     	if(xhr.readyState == 4 && xhr.status == 200){
+// 		var data= xhr.responseText;
+    }
+    	
+    	
+    let sendDate = (dvCd) =>{
+    	sendRequestContent("board_"+dvCd , JSON.stringify(sendObj) , "" ,"POST" , true , "application/json");	
     }
 
     new Vue({
@@ -75,9 +142,32 @@
         methods: {
               registBoard:function(){
               	alert("글쓰기 클릭");
+              	//공지사항여부 체크?
+                let noticeYn = document.getElementById("noticeYn").checked ? "Y" : "N"; 
+				//글제목 관련
+				let title = document.getElementById("title").value;
+				let contents = editor.getHTML();
+              	setSendObj("" , typeCategory , noticeYn , "" , title , contents);
+              	sendDate("insert");
+              	console.log(xhr);
+              	if(xhr.status == "200"){
+              		let returnObj = JSON.parse(xhr.response);
+              		console.log(returnObj.boardDTO)
+					alert("insert end")
+              	}else{
+              		console.log("오류처리")
+              		alert("insert 실패")
+              	}
+              },
+              updateBoard:function(){
+              	alert("수정 클릭");
+              	sendDate("update");
+				console.log("update end")
+				
               },
               cancel:function(){
             	alert("취소 클릭")  
+            	history.back()
               },
               fileListChange:function(obj){
             	  

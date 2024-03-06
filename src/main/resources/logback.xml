@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="true">
+<configuration scan="true" scanPeriod="30 seconds" >
 
     <!-- Appenders -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -16,9 +16,15 @@
 
     <!-- Logger -->
     
-    <logger name="com.korea.mall" level="DEBUG" appender-ref="console" /> 
-    <logger name="jdbc.sqlonly" level="DEBUG" appender-ref="console-infolog" />
-    <logger name="jdbc.resultsettable" level="INFO" appender-ref="console-infolog" />
+    <logger name="com.korea.mall" level="debug" appender-ref="console" /> 
+    <!-- mybatis query log setting -->
+	<logger name="jdbc" level="OFF" />
+	<logger name="jdbc.sqlonly" level="debug" />
+	<logger name="jdbc.sqltiming" level="debug" />
+	<logger name="jdbc.audit" level="OFF" />
+	<logger name="jdbc.resultset" level="OFF" />
+	<logger name="jdbc.resultsettable" level="debug" />
+	<logger name="jdbc.connection" level="OFF" />
 
     <!-- Root Logger -->
     <root level="off">

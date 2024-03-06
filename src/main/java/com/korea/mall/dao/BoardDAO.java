@@ -1,5 +1,6 @@
 package com.korea.mall.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class BoardDAO {
 	
 	private final SqlSession sqlSession;
 	
-	public Object selectList(BoardDTO param){
+	public Object selectList(HashMap<String, Object> param){
 		return sqlSession.selectList("board.selectList" , param);
 	}
 	
@@ -25,7 +26,13 @@ public class BoardDAO {
 	}
 	
 	public String selectKey() {
-		return sqlSession.selectOne("board.selectkey");	}
+		return sqlSession.selectOne("board.selectKey");	
+	}
+	
+	public String selectReply(String seq) {
+		
+		return sqlSession.selectOne("board.selectReply" , seq);	
+	}
 	
 	public int insertBase(BoardDTO param) {
 		return sqlSession.insert("board.insertBase", param);
