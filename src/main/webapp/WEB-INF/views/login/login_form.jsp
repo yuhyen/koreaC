@@ -45,7 +45,7 @@
 				alert('비밀번호가 틀립니다.');
 			}else{
 				alert('로그인 성공')
-				location.href='user_list';
+				location.href='main';
 			}
 		}
 	}
@@ -65,7 +65,10 @@
             </div>
 			<div class="flex items-center justify-between mb-6">
                 <input type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="로그인하기"  onclick="send(this.form)"/>
+           		<input type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="메인으로"  onclick="location.href='main'"/> 		
             </div>
+           
+            
 			 <div class="flex items-center justify-between">
                 <a href="find_id_form" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" >아이디찾기</a>
                 <a href="find_pwd_form" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" >비밀번호찾기</a>

@@ -1,15 +1,21 @@
 	package com.korea.mall.controller;
 
+import java.util.Map;
+import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.korea.mall.dao.UserDAO;
 import com.korea.mall.dto.UserDTO;
+import com.korea.mall.mail.MailUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoginController {
 
-	
 	final UserDAO user_dao;
 	
 	@Autowired
@@ -26,6 +31,11 @@ public class LoginController {
 	
 	@Autowired
 	HttpSession session;
+	
+	@Autowired
+	JavaMailSender mailSender;
+	
+	private String strRand;
 	
 	
 	@RequestMapping("login")
@@ -109,6 +119,35 @@ public class LoginController {
 		return "[{'param':'clear'},{'u_id':'"+u_id+"'}]";
 	}
 	
+	
+	
+	@RequestMapping("find_pwd")
+	@ResponseBody
+	public String find_pwd(String u_id,String u_email) {
+		System.out.println(u_id+","+u_email);
+		
+		UserDTO dto = user_dao.selectUserId(u_id);
+		
+		if(dto ==null) {
+			return "[{'param':'no_u_id'}]";
+		}
+		
+		//우리가 입력받은 email와 DB에 저장된 이메일를 비교하기
+		if(!u_email.equals(dto.getU_email())){
+			return "[{'param':'no_u_email'}]";
+		}
+		
+		//여기까지 내려오면 아이디와 비밀번호에 문제가 없다는 뜻
+		//세션에 바인딩을 한다.
+		//세션은 서버의 메모리를 사용하기 때문에 세션을 많이 사용할수록
+		//브라우저가 느려지기 때문에 꼭 필요한 곳에서만 쓰도록 하자
+		
+				
+	
+		//로그인에 성공한 경우
+		return "[{'param':'clear'},{'u_id':'"+u_id+"'}]";
+	}
+	
 	@RequestMapping("find_pwd_form")
 	public String find_pwd_form() {
 		return "/login/find_pwd_form";
@@ -142,6 +181,64 @@ public class LoginController {
 	}
 	
 	
+	 @RequestMapping("/find")
+	   @ResponseBody
+	   public String find_post(@RequestParam Map<String, Object> map,
+	      HttpServletRequest req,String u_email) throws Exception {
+	      // 랜덤한 숫자문자를 합친 문자열을 전달받은 map의 email로 보낸다.
+		 
+		 System.out.println(u_email);
+		 
+		  Random rand = new Random();
+		  strRand = "";
+		  for (int i = 0; i < 4; i++) {
+			  strRand +=  rand.nextInt(10);
+		}
+		 
+	      MailUtils sendMail = new MailUtils(mailSender);
+	      sendMail.setSubject("회원가입 이메일 인증");
+	      String message = new StringBuffer()
+	    		  .append("<h1>[이메일 인증]발신전용이므로 회신 불가</h1>")
+	    		  .append("<p>인증번호: ")
+	    		  .append(strRand)
+	    		  .append("</p>")
+	    		  .toString() ;
+	    		  
+	      sendMail.setText(message);
+	      sendMail.setFrom("noreply@noreply.com", "관리자");
+	      sendMail.setTo(u_email);
+	      sendMail.send();
+	        
+	      return null;   
+	   }
+	
+	 @RequestMapping("/checknum")
+		@ResponseBody
+		public String checknum(String u_check, String u_id) {
+			u_check = u_check.replace("=", "");
+			System.out.println("#####strRand:"+strRand);
+			System.out.println("######str:"+u_check);
+			System.out.println(u_id);
+			String u_pwd="";
+			
+			u_pwd = user_dao.selectUserPwd(u_id);
+			System.out.println(u_pwd);
+			
+			
+			//우리가 입력받은 email와 DB에 저장된 이메일를 비교하기
+			if(!u_check.equals(strRand)){
+				return "[{'param':'no_equal'}]";
+			}	
+			//여기까지 내려오면 아이디와 비밀번호에 문제가 없다는 뜻
+			//세션에 바인딩을 한다.
+			//세션은 서버의 메모리를 사용하기 때문에 세션을 많이 사용할수록
+			//브라우저가 느려지기 때문에 꼭 필요한 곳에서만 쓰도록 하자
+			
+					
+		
+			//로그인에 성공한 경우
+			return "[{'param':'clear'},{'u_pwd':'"+u_pwd+"'}]";
+		}
 	
 	
 }

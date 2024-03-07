@@ -28,7 +28,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<select id="userNameCheck" parameterType="String" resultType="user">
 			select * from TB_user where u_username=#{u_username}
 		</select>
-	
+		
+		<select id="userIdCheck" parameterType="String" resultType="user">
+			select * from TB_user where u_id=#{u_id}
+		</select>
+		
+		<select id="userPwdCheck" parameterType="String" resultType="String">
+			select u_pwd from TB_user where u_id=#{u_id}
+		</select>
+		
+		
+		
 </mapper>
 
 

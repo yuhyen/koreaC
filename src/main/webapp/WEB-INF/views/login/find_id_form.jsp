@@ -44,9 +44,9 @@
 			}else if(json[0].param=='no_u_email'){
 				alert('이메일이 틀립니다.');
 			}else{
-				console.log(json[1].idTrue)
+				
 				alert('회원님의 아이디는 '+json[1].u_id+'입니다.');			
-				//location.href='user_list';
+				location.href='login_form';
 			}
 		}
 	}
