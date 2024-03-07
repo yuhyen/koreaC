@@ -17,6 +17,10 @@ public class BoardDAO {
 	
 	private final SqlSession sqlSession;
 	
+	public Object selectAll(HashMap<String, Object> param){
+		return sqlSession.selectList("board.selectAll" , param);
+	}
+	
 	public Object selectList(HashMap<String, Object> param){
 		return sqlSession.selectList("board.selectList" , param);
 	}
