@@ -79,7 +79,7 @@
             </div>
             <div class="flex justify-between items-center mb-4">
                 <p>배송비</p>
-                <p>3,000원</p>
+                <p>3000원</p>
             </div>
             <div class="flex justify-between items-center font-semibold mb-4">
                 <p>총 가격</p>
@@ -121,6 +121,7 @@
     
     function pay(f){
     	let url = "order_pay";
+    	param = ""
     	
     }
     

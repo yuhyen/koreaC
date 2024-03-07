@@ -56,7 +56,7 @@ private final ProductDAO productDAO;
 	 return  basketDAO.selectList(typelist);		
  }
  
- public BasketDTO selectProduct(String pronum, int num){
+ public List<BasketDTO> selectProduct(String pronum, int num){
 	Integer p_num = Integer.parseInt(pronum);
 	 ProductDTO p_dto = productDAO.selectOne(p_num);
 	 BasketDTO b_dto = new BasketDTO();
@@ -73,8 +73,9 @@ private final ProductDAO productDAO;
 	 b_dto.setP_price(p_dto.getP_price());
 	 b_dto.setP_size(p_dto.getP_size());
 	 b_dto.setPicture_count(p_dto.getPicture_count());
-	 
-	 return b_dto;
+	 List<BasketDTO> list = new ArrayList<BasketDTO>();
+	 list.add(b_dto);
+	 return list;
  }
  	
  

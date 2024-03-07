@@ -99,7 +99,7 @@ public class OrderController {
 	
 	
 	@RequestMapping("order_page")
-	public String orderpage(String type, Model model, String pronum, int num) {
+	public String orderpage(String type, Model model, String pronum, Integer num) {
 		UserDTO dto = (UserDTO) session.getAttribute("u_id");
 		model.addAttribute("user", dto);
 		
@@ -107,7 +107,7 @@ public class OrderController {
 		List<BasketDTO> order = orderService.selectList(type);
 		model.addAttribute("order", order);
 		}else if(pronum != null){
-			BasketDTO order = orderService.selectProduct(pronum, num);
+			List<BasketDTO> order = orderService.selectProduct(pronum, num);
 			model.addAttribute("order", order);
 			
 		}
