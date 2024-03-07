@@ -16,7 +16,7 @@
 				<button>
 				<div>
 					<div>
-						<img src="resources/product_img/${dto.p_picture}">
+						<img src="resources/product_img/${dto.p_name}/${dto.p_picture}">
 					</div>
 					<div>
 						<h2>${dto.p_name}</h2>

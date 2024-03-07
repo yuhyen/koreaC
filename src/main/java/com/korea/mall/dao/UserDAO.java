@@ -29,5 +29,14 @@ public class UserDAO {
 		public UserDTO selectUserName(String u_username) {
 			return sqlSession.selectOne("user.userNameCheck",u_username);
 		}
+		
+	//비밀번호 찾기
+		public UserDTO selectUserId(String u_id) {
+			return sqlSession.selectOne("user.userIdCheck",u_id);
+		}
+		
+		public String selectUserPwd(String u_pwd) {
+			return sqlSession.selectOne("user.userPwdCheck",u_pwd);
+		}
 	
 }

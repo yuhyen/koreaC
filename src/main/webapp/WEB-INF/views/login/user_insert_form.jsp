@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>user insert</title>
 <script src="resources/js/HttpRequest.js"></script>
  <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -132,7 +132,7 @@
 			alert('아이디 중복체크 하세요')
 			return;
 		}
-		
+		alert('회원가입 성공!');
 		//user_insert 매핑으로 전송
 		f.method="post";
 		f.action="user_insert";

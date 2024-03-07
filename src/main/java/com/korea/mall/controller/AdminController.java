@@ -26,76 +26,67 @@ public class AdminController {
 	HttpServletRequest request;
 	
 	// 상품 등록 이동
-		@RequestMapping("p_add_form")
-		public String p_add_form() {
-			return "product/product_insert";
-		}
+	@RequestMapping("p_add_form")
+	public String p_add_form() {
+		return "product/product_insert";
+	}
+	
+	// 상품 등록
+	@RequestMapping("p_add")
+	public String p_add(ProductDTO dto) {
+		photo_upload(dto);
+		int res = product_dao.p_add(dto);
 		
-		// 상품 등록
-		@RequestMapping("p_add")
-		public String p_add(ProductDTO dto) {
-			photo_upload(dto);
-			int res = product_dao.p_add(dto);
-			
-			if(res > 0) {
-				return "redirect:pList_form";
-			}
-			return null;
+		if(res > 0) {
+			return "redirect:pList_form";
 		}
-		
-		// 상품 리스트 페이지
-		@RequestMapping("pList_form")
-		public String pList_form(Model model) {
-			List<ProductDTO> list = product_dao.selectList();
+		return null;
+	}
+	
+	// 상품 리스트 페이지
+	@RequestMapping("pList_form")
+	public String pList_form(Model model) {
+		List<ProductDTO> list = product_dao.selectList();
 
-			model.addAttribute("list",list);
-			return "admin/pList";
-		}
+		model.addAttribute("list",list);
+		return "admin/pList";
+	}
+	
+	// 상품 수정 및 등록시 사진 업로드 
+	public ProductDTO photo_upload(ProductDTO dto) {
+		String webPath = "/resources/product_img/";
+		webPath = String.format("%s/%s/", webPath, dto.getP_name());
+		String savePath = request.getServletContext().getRealPath(webPath);
 		
-		// 상품 상세보기
-		@RequestMapping("detail")
-		public String detail(Model model, int p_num) {
-			ProductDTO dto = product_dao.selectOne(p_num);
-			model.addAttribute("dto", dto);
-			
-			return "main/p_detail";
-		}
+		System.out.println(savePath);
 		
-		// 상품 수정 및 등록시 사진 업로드 
-		public ProductDTO photo_upload(ProductDTO dto) {
-			String webPath = "/resources/product_img/";
-			webPath = String.format("%s/%s/", webPath, dto.getP_name());
-			String savePath = request.getServletContext().getRealPath(webPath);
+		int picCount = dto.getPicture_count();
+		
+		for(int i = 0; i < dto.getPicture().length; i++) {
+			MultipartFile photo = dto.getPicture()[i];
+			String fileName = "no_file";
 			
-			System.out.println(savePath);
-			
-			int picCount = dto.getPicture_count();
-			
-			for(int i = 0; i < dto.getPicture().length; i++) {
-				MultipartFile photo = dto.getPicture()[i];
-				String fileName = "no_file";
+			if(!photo.isEmpty()) {
+				fileName = dto.getP_name() + '_' + (++picCount) + ".jpeg"; // 사진이름_1.jpeg, 사진이름_2.jpeg ...
 				
-				if(!photo.isEmpty()) {
-					fileName = dto.getP_name() + '_' + (++picCount) + ".jpeg"; // 사진이름_1.jpeg, 사진이름_2.jpeg ...
-					
-					File saveFile = new File(savePath, fileName);
-					
-					if(!saveFile.exists()) {
-						saveFile.mkdirs();
-					} else {
-						saveFile.delete();
-						saveFile = new File(savePath, fileName);
-					}
-					
-					try {
-						photo.transferTo(saveFile);
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					dto.setP_picture(fileName);
-					dto.setPicture_count(picCount);
+				File saveFile = new File(savePath, fileName);
+				
+				if(!saveFile.exists()) {
+					saveFile.mkdirs();
+				} else {
+					saveFile.delete();
+					saveFile = new File(savePath, fileName);
 				}
+				
+				try {
+					photo.transferTo(saveFile);
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				dto.setP_picture(fileName);
+				dto.setPicture_count(picCount);
 			}
-			return dto;
 		}
+		return dto;
+	}
 }

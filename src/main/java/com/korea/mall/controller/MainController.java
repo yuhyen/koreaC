@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.korea.mall.dao.ProductDAO;
 import com.korea.mall.dto.ProductDTO;
@@ -33,6 +33,15 @@ public class MainController {
 		return "main/main";
 	}
 	
+	// 상품 상세보기
+	@RequestMapping("detail")
+	public String detail(Model model, int p_num) {
+		ProductDTO dto = product_dao.selectOne(p_num);
+		model.addAttribute("dto", dto);
+		
+		return "main/p_detail";
+	}
+	
 	// 배송지연 안내 페이지
 	@RequestMapping("delay")
 	public String delay() {
@@ -41,33 +50,41 @@ public class MainController {
 	
 	// 검색 페이지
 	@RequestMapping("search")
-	public String search() {
+	public String search(Model model) {
+		List<ProductDTO> list = product_dao.selectList();
+		model.addAttribute("list", list);
 		return "main/search";
+	}
+	
+	// 카테고리별로 보기
+	@RequestMapping("category")
+	public String view_list(Model model,@RequestParam(value = "p_id", required = true) int p_id) {
+		List<ProductDTO> list = product_dao.category(p_id);
+		model.addAttribute("list", list);
+		
+		return "main/category";
 	}
 	
 	// 상품 검색
 	@RequestMapping("p_search")
-	@ResponseBody
-	public String p_search(Model model, String p_name) {
-		List<ProductDTO> list = product_dao.search(p_name);
+	public String p_search(Model model,@RequestParam(value = "keyword", required = true) String keyword, String p_name) {
 		
-		model.addAttribute("list",list);
+		keyword = "all";
+		String p_keyword = request.getParameter("keyword");
 		
-		if(list == null) {
-			return "[{'search':'no_product'}]";
+		if(p_keyword != null && !p_keyword.isEmpty()) {
+			keyword = p_keyword;
 		}
-		return "[{'search':'yes_product'}]";
+		
+		List<ProductDTO> list = null;
+		
+		if(keyword.equalsIgnoreCase("all")) {
+			list = product_dao.selectList();
+		} else {
+			list = product_dao.search(p_keyword);
+		}
+		model.addAttribute("list", list);
+		
+		return "main/search";
 	}
-	
-//	// 카테고리별로 보기
-//	@RequestMapping("category")
-//	public String view_list(Model model, int p_id) {
-//		List<ProductDTO> list = product_dao.selectList(p_id);
-//		
-//		model.addAttribute("list", list);
-//		
-//		return "main/main";
-//	}
-	
-	
 }
