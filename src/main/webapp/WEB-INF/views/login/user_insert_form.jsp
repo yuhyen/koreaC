@@ -132,7 +132,7 @@
 			alert('아이디 중복체크 하세요')
 			return;
 		}
-		
+		alert('회원가입 성공!');
 		//user_insert 매핑으로 전송
 		f.method="post";
 		f.action="user_insert";
