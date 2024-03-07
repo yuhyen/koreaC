@@ -37,7 +37,7 @@ public class LoginController {
 	
 	private String strRand;
 	
-	
+	//로그인
 	@RequestMapping("login")
 	@ResponseBody
 	public String login(String u_id, String u_pwd) {
@@ -89,6 +89,7 @@ public class LoginController {
 		return "/login/find_id_form";
 	}
 	
+	//아이디찾기
 	@RequestMapping("find_id")
 	@ResponseBody
 	public String find_id(String u_username,String u_email) {
@@ -105,22 +106,15 @@ public class LoginController {
 			return "[{'param':'no_u_email'}]";
 		}
 		
-		//여기까지 내려오면 아이디와 비밀번호에 문제가 없다는 뜻
-		//세션에 바인딩을 한다.
-		//세션은 서버의 메모리를 사용하기 때문에 세션을 많이 사용할수록
-		//브라우저가 느려지기 때문에 꼭 필요한 곳에서만 쓰도록 하자
-		
-		
 		String u_id = String.format("%s", dto.getU_id());
 		System.out.println(u_id);
-		
 	
 		//로그인에 성공한 경우
 		return "[{'param':'clear'},{'u_id':'"+u_id+"'}]";
 	}
 	
 	
-	
+	//비밀번호 찾기
 	@RequestMapping("find_pwd")
 	@ResponseBody
 	public String find_pwd(String u_id,String u_email) {
@@ -137,21 +131,18 @@ public class LoginController {
 			return "[{'param':'no_u_email'}]";
 		}
 		
-		//여기까지 내려오면 아이디와 비밀번호에 문제가 없다는 뜻
-		//세션에 바인딩을 한다.
-		//세션은 서버의 메모리를 사용하기 때문에 세션을 많이 사용할수록
-		//브라우저가 느려지기 때문에 꼭 필요한 곳에서만 쓰도록 하자
-		
-		
 		//로그인에 성공한 경우
 		return "[{'param':'clear'},{'u_id':'"+u_id+"'}]";
 	}
+	
 	
 	@RequestMapping("find_pwd_form")
 	public String find_pwd_form() {
 		return "/login/find_pwd_form";
 	}
 	
+	
+	//아이디찾기
 	@RequestMapping("check_id")
 	@ResponseBody
 	public String check_id(String u_id) {
@@ -164,6 +155,8 @@ public class LoginController {
 		return "[{'res':'no'}]";
 	}
 	
+	
+	//회원가입
 	@RequestMapping("user_insert")
 	public String user_insert(UserDTO dto,String u_ipExtraAddr) {
 		
@@ -180,6 +173,7 @@ public class LoginController {
 	}
 	
 	
+	//비밀번호찾기 이메일 인증번호 전송
 	 @RequestMapping("/find")
 	   @ResponseBody
 	   public String find_post(@RequestParam Map<String, Object> map,
@@ -195,7 +189,7 @@ public class LoginController {
 		}
 		 
 	      MailUtils sendMail = new MailUtils(mailSender);
-	      sendMail.setSubject("회원가입 이메일 인증");
+	      sendMail.setSubject("비밀번호찾기 이메일 인증");
 	      String message = new StringBuffer()
 	    		  .append("<h1>[이메일 인증]발신전용이므로 회신 불가</h1>")
 	    		  .append("<p>인증번호: ")
@@ -210,7 +204,9 @@ public class LoginController {
 	        
 	      return null;   
 	   }
-	
+	 
+	 
+	//이메일 인증번호 비교
 	 @RequestMapping("/checknum")
 		@ResponseBody
 		public String checknum(String u_check, String u_id) {
@@ -224,22 +220,14 @@ public class LoginController {
 			System.out.println(u_pwd);
 			
 			
-			//우리가 입력받은 email와 DB에 저장된 이메일를 비교하기
+			//인증번호 비교
 			if(!u_check.equals(strRand)){
 				return "[{'param':'no_equal'}]";
 			}	
-			//여기까지 내려오면 아이디와 비밀번호에 문제가 없다는 뜻
-			//세션에 바인딩을 한다.
-			//세션은 서버의 메모리를 사용하기 때문에 세션을 많이 사용할수록
-			//브라우저가 느려지기 때문에 꼭 필요한 곳에서만 쓰도록 하자
-			
-					
-		
-			//로그인에 성공한 경우
+
+			//인증번호가 맞을 경우
 			return "[{'param':'clear'},{'u_pwd':'"+u_pwd+"'}]";
 		}
-	
-	
 }
 
 
