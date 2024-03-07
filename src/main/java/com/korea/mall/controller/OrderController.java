@@ -99,13 +99,17 @@ public class OrderController {
 	
 	
 	@RequestMapping("order_page")
-	public String orderpage(String type, Model model, String pronum) {
+	public String orderpage(String type, Model model, String pronum, Integer num) {
 		UserDTO dto = (UserDTO) session.getAttribute("u_id");
 		model.addAttribute("user", dto);
 		
 		if(pronum == null) {
 		List<BasketDTO> order = orderService.selectList(type);
 		model.addAttribute("order", order);
+		}else if(pronum != null){
+			List<BasketDTO> order = orderService.selectProduct(pronum, num);
+			model.addAttribute("order", order);
+			
 		}
 		
 		
@@ -113,7 +117,12 @@ public class OrderController {
 		return "order/orderpage";
 	}
 	
-	
+	@RequestMapping("order_pay")
+	public String order_pay(BasketDTO dto) {
+		
+		System.out.println(dto);
+		return null;
+	}
 	
 	
 	

@@ -16,7 +16,7 @@
 			alert("상품을 입력하세요")
 		}
 		
-		location.href = 'search?keyword='+keyword
+		location.href = 'p_search?keyword='+keyword
 	}
 </script>
 <style type="text/css">

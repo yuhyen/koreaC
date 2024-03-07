@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.korea.mall.dao.ProductDAO;
 import com.korea.mall.dto.ProductDTO;
@@ -77,14 +76,12 @@ public class MainController {
 			keyword = p_keyword;
 		}
 		
-		System.out.println(keyword);
-		
 		List<ProductDTO> list = null;
 		
 		if(keyword.equalsIgnoreCase("all")) {
 			list = product_dao.selectList();
 		} else {
-			list = product_dao.search(p_name);
+			list = product_dao.search(p_keyword);
 		}
 		model.addAttribute("list", list);
 		

@@ -18,6 +18,7 @@
   
 </head>
 <body class="bg-gray-50 p-8">
+
     <div class="max-w-4xl mx-auto">
         <h1 class="text-3xl font-semibold mb-6">Order</h1>
         <div class="bg-white shadow rounded-lg p-6 mb-6">
@@ -56,13 +57,14 @@
             <c:forEach var="order" items="${order }">
             <div class="flex items-center mb-4">
                 <img src="https://source.unsplash.com/random/100x100?product" alt="Product Image" class="w-24 h-24 object-cover rounded mr-4">
-                <div>
+                <div>상품 번호 
                     <p class="font-semibold">${order.p_name }</p>
                     <p>${order.p_size }, ${order.p_color }</p>
                     <p>${order.b_quantity } 개</p>
                     <p class="font-semibold">${order.p_price * order.b_quantity }원</p>
                     <input type="hidden" class="total" value="${order.p_price * order.b_quantity }">
                 </div>
+                
             </div>
             <hr>
             <br>
@@ -77,7 +79,7 @@
             </div>
             <div class="flex justify-between items-center mb-4">
                 <p>배송비</p>
-                <p>3,000원</p>
+                <p>3000원</p>
             </div>
             <div class="flex justify-between items-center font-semibold mb-4">
                 <p>총 가격</p>
@@ -91,7 +93,7 @@
                     <option>토스</option>
                 </select>
             </div>
-            <button class="w-full bg-blue-600 text-white rounded-md py-3 font-semibold hover:bg-blue-700" id = "alltotalhtml2"></button>
+            <button class="w-full bg-blue-600 text-white rounded-md py-3 font-semibold hover:bg-blue-700" id = "alltotalhtml2" onclick="pay()"></button>
         </div>
     </div>
       <script type="text/javascript">
@@ -116,6 +118,14 @@
     let alltotalhtml2 =  document.getElementById("alltotalhtml2");
     alltotalhtml2.innerHTML = alltotal.toString() + "원 결제하기";
 	
+    
+    function pay(f){
+    	let url = "order_pay";
+    	param = ""
+    	
+    }
+    
 	</script>
+	
 </body>
 </html>
