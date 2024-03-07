@@ -10,21 +10,21 @@
 	<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 		<input type="hidden" name="p_num" value="${p_num}">
 	<div>
-		<img src="resources/product_img/${dto.p_picture}">
+		<img src="resources/product_img/${dto.p_name}/${dto.p_picture}">
 	</div>
 	<div>
-		<strong>${dto.p_name}</strong>
+		<strong>${dto.p_name}</strong><br>
 		<strong>${dto.p_price}원</strong>
 		<div>
-			<p>상품설명</p>
+			상품설명 : 
 			${dto.p_explain}
 		</div>
 		<div>
-			<p>원단</p>
+			원단 : 
 			${dto.p_pabric}
 		</div>
 		<div>
-			<p>색상</p>
+			색상 : 
 			<select id="select_p_size">
 				<option value="${dto.p_color}">black</option>	
 				<option value="${dto.p_color}">white</option>	
@@ -33,7 +33,7 @@
 			</select>  
 		</div>
 		<div>
-			<p>사이즈</p>
+			사이즈 : 
 			<select id="select_p_size">
 				<option value="${dto.p_size}">M</option>	
 				<option value="${dto.p_size}">L</option>	
