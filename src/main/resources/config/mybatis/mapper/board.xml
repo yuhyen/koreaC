@@ -5,13 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="board">
 
 
-	<select id="selectAll" resultType="int">
+	<select id="selectCnt" resultType="int">
 		SELECT COUNT(1) FROM TB_BOARD_BASE 
 		 WHERE B_CATEGORY = #{category}
 	</select>
 	
 	
-	<select id="selectPage" resultType="int">
+	<select id="selectPage" resultType="hashMap">
 			SELECT * 
 		FROM (
 			SELECT ROWNUM RN, A.* 
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						SELECT * FROM TB_BOARD_BASE  A1 
 				  	             ,(SELECT COUNT(1) CNT, B_SEQ AS SEQ FROM TB_BOARD_DTLS GROUP BY B_SEQ )  B1 
 				  	    WHERE A1.B_SEQ  = B1.SEQ
-				  	     --AND  A1.B_CATEGORY = #{category}
+				  	     AND  A1.B_CATEGORY = #{category}
 						ORDER BY TO_NUMBER(A1.B_SEQ) DESC
 						) A
 				)

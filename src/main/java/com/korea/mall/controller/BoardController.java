@@ -35,8 +35,16 @@ public class BoardController {
 	public ModelAndView list() {
  		ModelAndView mv = new ModelAndView("/board/board_list");
 		return mv;
-		
 	}
+	
+	@RequestMapping(value = {"/board_page.json"})
+	public ModelAndView listAjaxPage(@RequestBody HashMap<String, Object> param) {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Object output = service.selectPage(param);
+		mv.addObject("u_id", session.getAttribute(Const.U_SESSION_KEY));
+		mv.addObject("data", output);
+		return mv;
+	} 
 	@RequestMapping(value = {"/board_list.json"})
 	public ModelAndView listAjax(@RequestBody HashMap<String, Object> param) {
 		ModelAndView mv = new ModelAndView("jsonView");
@@ -87,7 +95,7 @@ public class BoardController {
 		  	user.setU_idx(9999);
 		}
 		BoardDTO dto = new BoardDTO();
-		 
+		
 		dto.setCategory((String) param.get("category"));
 		dto.setNoticeYn((String) param.get("noticeYn"));
 		dto.setTitle((String) param.get("title"));
