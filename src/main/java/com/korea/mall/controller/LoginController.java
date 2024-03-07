@@ -142,8 +142,7 @@ public class LoginController {
 		//세션은 서버의 메모리를 사용하기 때문에 세션을 많이 사용할수록
 		//브라우저가 느려지기 때문에 꼭 필요한 곳에서만 쓰도록 하자
 		
-				
-	
+		
 		//로그인에 성공한 경우
 		return "[{'param':'clear'},{'u_id':'"+u_id+"'}]";
 	}
@@ -175,7 +174,7 @@ public class LoginController {
 		int res = user_dao.insert(dto);
 		
 		if(res>0) {
-			return "redirect:user_list";
+			return "redirect:login_form";
 		}
 		return null;
 	}
