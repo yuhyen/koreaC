@@ -120,7 +120,8 @@
     
     let alltotalhtml2 =  document.getElementById("alltotalhtml2");
     alltotalhtml2.innerHTML = alltotal.toString() + "원 결제하기";
-	
+	 
+    
     
     function pay(){
     	let u_idx = document.getElementById("u_idx").value;

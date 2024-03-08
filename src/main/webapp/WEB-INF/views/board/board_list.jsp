@@ -57,17 +57,17 @@
 <!--     <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700" @click="purchaseSelected">선택 상품 구매</button> -->
 <!--   </div> -->
 	<div class="flex px-4 py-2 justify-center">
-		<div class="inline-flex items-center" v-for=" startPage in endPage" :key="startPage">
-<!-- 	        <button v-if="index === startPage" class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"  @click="prevPage"> -->
-<!-- 	            < -->
-<!-- 	        </button> -->
-	        <button  class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4" @click="pageMove(startPage)">
-	        	{{ startPage }}
-<!-- 	            <span v-if="index === nowPage" class="text-blue-600"> {{ index }}</span>   -->
-<!-- 	            <span v-if="index !== nowPage" > {{ index }}</span> -->
+		<div class="inline-flex items-center" v-for="(item, index) in pageNumList" :key="index">
+	        <button v-if="item === startPage" class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"  @click="prevPage">
+	            <
+	        </button>
+	        <button  class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4" @click="pageMove(item)">
+	        	
+	            <span v-if="item === nowPage" class="text-blue-600"> {{ item }}</span>  
+	            <span v-if="item !== nowPage" > {{ item }}</span>
 	            
 	        </button>
-	        <button v-if="startPage === endPage"  class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r"  @click="nextPage">
+	        <button v-if="item === endPage"  class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r"  @click="nextPage">
 	            >
 	        </button>
 	        
@@ -144,12 +144,19 @@
 
 			//페이징용
 			let page = returnObj.data.page;
+      		console.log(page);
 			vueObj.total = page.total;
 			vueObj.startPage = page.startPage;
 			vueObj.endPage = page.endPage;
 			vueObj.lastPage = page.lastPage;
 			vueObj.nowPage = page.nowPage;
 			
+			vueObj.pageNumList =  []
+			for(let i=page.startPage ; i <=page.endPage ; i++){
+				vueObj.pageNumList.push(i);
+			} 
+			
+			console.log(vueObj.pageNumList);
 			
       	}else{
       		console.log("오류처리")
@@ -201,7 +208,9 @@
     el: '#app',
     data: {
       boardItems: []
-      , 
+      ,
+      pageNumList: []
+      ,
       startPage : 0
       , 
       lastPage : 0
@@ -209,6 +218,7 @@
       nowPage : 0
       ,
       total: 0,
+      
     },
     methods: {
         subjectClicked :function () {
@@ -225,20 +235,20 @@
           	location.href=path;
         },
         prevPage:function(){
-          	if(vueObj.nowPage == 1 ){
-          		alert("첫번째 페이지 입니다.");
+          	if(vueObj.startPage == 1 ){
+          		alert("첫번째 입니다.");
           		return;
           	}
-          	
+          	pageLoad(vueObj.startPage-1 , typeCategory , "" , "");
         },
         nextPage:function(){
         	
+          	if(vueObj.lastPage == vueObj.endPage ){
+          		alert("마지막 입니다.");
+          		return;
+          	}
         	pageLoad(vueObj.endPage+1 , typeCategory , "" , "");
         	
-//           	if(vueObj.lastPage == vueObj.nowPage ){
-//           		alert("마지막 페이지 입니다.");
-//           		return;
-//           	}
 			          	
           	
         },
