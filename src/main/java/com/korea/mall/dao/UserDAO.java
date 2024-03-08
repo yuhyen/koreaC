@@ -38,5 +38,11 @@ public class UserDAO {
 		public String selectUserPwd(String u_pwd) {
 			return sqlSession.selectOne("user.userPwdCheck",u_pwd);
 		}
+		
+		//이메일중복검사 
+				public UserDTO selectUserEmail(String u_email) {
+					return sqlSession.selectOne("user.EmailCheck",u_email);
+				}
+		
 	
 }
