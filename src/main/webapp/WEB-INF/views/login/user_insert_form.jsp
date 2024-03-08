@@ -135,7 +135,14 @@
 			alert('아이디를 입력해주세요')
 			return;
 		}
-		
+		if(!b_idCheck){
+			alert('아이디 중복체크 하세요')
+			return;
+		}
+		if(u_username ==''){
+			alert('이름을 입력해주세요')
+			return;
+		}
 		if(u_pwd==''){
 			alert('비밀번호를 입력해주세요')
 			return;
@@ -149,6 +156,10 @@
 			alert('이메일을 입력해주세요')
 			return;
 		}
+		if(!b_emailCheck){
+			alert('이메일 중복체크 해주세요')
+			return;
+		}
 		if(u_tel==''){
 			alert('전화번호를 입력해주세요')
 			return;
@@ -158,15 +169,9 @@
 			return;
 		}
 		
-		if(!b_emailCheck){
-			alert('이메일 중복체크 해주세요')
-			return;
-		}
 		
-		if(!b_idCheck){
-			alert('아이디 중복체크 하세요')
-			return;
-		}
+		
+		
 		alert('회원가입 성공!');
 		//user_insert 매핑으로 전송
 		f.method="post";
