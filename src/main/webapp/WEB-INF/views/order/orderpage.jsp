@@ -15,7 +15,7 @@
             font-family: 'Open Sans', sans-serif;
         }
     </style>
-  
+  <script src="resources/js/HttpRequest.js"></script>
 </head>
 <body class="bg-gray-50 p-8">
 
@@ -26,6 +26,7 @@
             <div class="mb-4">
                 <label for="recipient" class="block text-sm font-medium text-gray-700">받는사람</label>
                 <input type="text" id="recipient" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="${user.u_username }">
+                <input type="hidden" id="u_idx" value="${user.u_idx }">
             </div>
             <div class="mb-4">
                 <label for="address" class="block text-sm font-medium text-gray-700">주소</label>
@@ -63,6 +64,8 @@
                     <p>${order.b_quantity } 개</p>
                     <p class="font-semibold">${order.p_price * order.b_quantity }원</p>
                     <input type="hidden" class="total" value="${order.p_price * order.b_quantity }">
+                    <input type="hidden" class="p_num" value="${order.p_num }">
+                    <input type="hidden" class="b_idx" value="${order.b_idx }">
                 </div>
                 
             </div>
@@ -119,10 +122,29 @@
     alltotalhtml2.innerHTML = alltotal.toString() + "원 결제하기";
 	
     
-    function pay(f){
-    	let url = "order_pay";
-    	param = ""
+    function pay(){
+    	let u_idx = document.getElementById("u_idx").value;
+    	let message = document.getElementById("message").value;
+    	let p_num = document.getElementsByClassName("p_num");
+    	let b_idx = document.getElementsByClassName("b_idx");
     	
+    	
+    	let jsonString = {
+    			
+    	}
+    	
+    	
+    	let url = "order_pay";
+    	param = "u_idx=" + u_idx + "&message=" + message + "&p_num=" + p_num + "&b_idx=" + b_idx;
+    	
+    	sendRequest(url, param, paycallBack, "POST");
+    	
+    }
+    
+    function paycallBack(){
+    	if(xhr.readyState == 4 && xhr.status == 200){
+    		
+    	}
     }
     
 	</script>

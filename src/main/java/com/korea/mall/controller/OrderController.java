@@ -118,9 +118,13 @@ public class OrderController {
 	}
 	
 	@RequestMapping("order_pay")
-	public String order_pay(BasketDTO dto) {
+	public String order_pay(Integer u_idx, String message, Integer p_num, Integer b_idx, String jsonString) {
+		System.out.println(u_idx);
+		System.out.println(message);
+		System.out.println(p_num);
+		System.out.println(b_idx);
+		System.out.println("------------------------");
 		
-		System.out.println(dto);
 		return null;
 	}
 	
