@@ -19,6 +19,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	let b_idCheck=false;
+	let b_emailCheck=false;
 	
 	function check_id(){
 		let u_id=document.getElementById("u_id").value;
@@ -48,9 +49,43 @@
 			}
 		}
 	}
-	function che(){
-		b_idCheck=false;
+	
+	function check_email(f){
+		
+		let u_email = f.u_email.value;
+		console.log(u_email);
+		
+		
+		let regex= /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+			if(!regex.test(u_email)){
+				alert('형식에 맞게 입력해주세요')
+				return;
+			}
+		
+		let url="check_email";
+		let param="u_email="+u_email;
+		
+		sendRequest(url,param,EmailresultFn,"post")
 	}
+	
+	function EmailresultFn(){
+		if(xhr.readyState==4 && xhr.status==200){
+			var data=xhr.responseText;
+			var json=(new Function('return' + data))();
+			
+			if(json[0].res=='yes'){
+				alert('사용가능한 이메일입니다.')
+			b_emailCheck=true;
+			}else{
+				alert("이미 사용중인 이메일입니다.")
+				return;
+			}
+		}
+	}
+	
+	/* function che(){
+		b_idCheck=false;
+	} */
 	
 	function ipsearch(f){
 				
@@ -122,12 +157,12 @@
 			alert('주소를 입력해주세요')
 			return;
 		}
-		//이메일은 형식검사
-		let regex= /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-		if(!regex.test(u_email)){
-			alert('형식에 맞게 입력해주세요')
+		
+		if(!b_emailCheck){
+			alert('이메일 중복체크 해주세요')
 			return;
 		}
+		
 		if(!b_idCheck){
 			alert('아이디 중복체크 하세요')
 			return;
@@ -164,14 +199,20 @@
                 <label for="u_pwd" class="block text-gray-700 text-sm font-bold mb-2">비밀번호</label>
                 <input type="password" id="u_pwd" name="u_pwd" placeholder="비밀번호를 입력하세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
             </div>
+            
              <div class="mb-2">
+             <div class="flex items-center justify-between mb-1">
                 <label for="u_email" class="block text-gray-700 text-sm font-bold mb-2">이메일</label>
+                <input type="button" id="button2" value="중복체크" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline" onclick="check_email(this.form)">
+             </div>   
                 <input type="text" id="u_email" name="u_email" placeholder="이메일를 입력하세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
             </div>
+            
              <div class="mb-2">
                 <label for="u_tel" class="block text-gray-700 text-sm font-bold mb-2">전화번호</label>
                 <input type="text" id="u_tel" name="u_tel" placeholder="전화번호를 입력하세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
             </div>
+            
              <div class="mb-2">
              <div class="flex items-center justify-between mb-1">
                 <label for="u_ip" class="block text-gray-700 text-sm font-bold mb-2">주소</label>

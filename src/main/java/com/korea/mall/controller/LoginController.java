@@ -110,7 +110,7 @@ public class LoginController {
 		System.out.println(u_id);
 	
 		//로그인에 성공한 경우
-		return "[{'param':'clear'},{'u_id':'"+u_id+"'}]";
+		return "[{'u_id':'"+u_id+"'}]";
 	}
 	
 	
@@ -142,7 +142,7 @@ public class LoginController {
 	}
 	
 	
-	//아이디찾기
+	//아이디중복검사
 	@RequestMapping("check_id")
 	@ResponseBody
 	public String check_id(String u_id) {
@@ -154,6 +154,23 @@ public class LoginController {
 		}
 		return "[{'res':'no'}]";
 	}
+	
+	//이메일 중복검사
+	@RequestMapping("check_email")
+	@ResponseBody
+	public String check_email(String u_email) {
+		System.out.println("jsp에서 입력해서 넘어온 이메일 : "+ u_email);//jsp에서 넘어온 이메일
+		
+		
+		UserDTO dto = user_dao.selectUserEmail(u_email);
+		//System.out.println("DB에서 넘어온 이메일 : " + dto.getU_email()); //DB에서 넘어온 이메일
+		
+		if(dto ==null) {
+			return "[{'res':'yes'}]";
+		}
+		return "[{'res':'no'}]";
+	}
+	
 	
 	
 	//회원가입

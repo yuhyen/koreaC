@@ -10,7 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="loginCheck" parameterType="String" resultType="user">
 			select * from TB_user where u_id=#{u_id}
-		</select>
+	</select>
+		
 		<insert id="insert" parameterType="user">
 			insert into TB_user values(
 				seq_user_idx.nextVal,
@@ -37,7 +38,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select u_pwd from TB_user where u_id=#{u_id}
 		</select>
 		
-		
+		<select id="EmailCheck" parameterType="String" resultType="user">
+			select * from TB_user where u_email=#{u_email}
+		</select>
 		
 </mapper>
 

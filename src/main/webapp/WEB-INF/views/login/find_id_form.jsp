@@ -45,7 +45,7 @@
 				alert('이메일이 틀립니다.');
 			}else{
 				
-				alert('회원님의 아이디는 '+json[1].u_id+'입니다.');			
+				alert('회원님의 아이디는 '+json[0].u_id+'입니다.');			
 				location.href='login_form';
 			}
 		}
