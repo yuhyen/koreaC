@@ -127,17 +127,37 @@
     	let message = document.getElementById("message").value;
     	let p_num = document.getElementsByClassName("p_num");
     	let b_idx = document.getElementsByClassName("b_idx");
+    	let p_numTotal = [];
+    	let b_idxTotal = [];
     	
+    	for(i =0; i < p_num.length; i++){
+//     		p_numTotal = p_numTotal + p_num[i].value + ",";
+    		p_numTotal.push(p_num[i].value);
+
+    	}
     	
-    	let jsonString = {
-    			
+    	for(i =0; i < b_idx.length; i++){
+//     		b_idxTotal = b_idxTotal + b_idx[i].value + ","; 
     	}
     	
     	
-    	let url = "order_pay";
-    	param = "u_idx=" + u_idx + "&message=" + message + "&p_num=" + p_num + "&b_idx=" + b_idx;
     	
-    	sendRequest(url, param, paycallBack, "POST");
+    	let jsonString = {
+    			u_idxjs : u_idx,
+    			messagejs : message,
+    			p_numjs : p_numTotal,
+    			b_idxjs : b_idxTotal
+    	}
+    	
+    	
+    	
+    	
+    	let url = "order_pay";
+//     	param = "u_idx=" + u_idx + "&message=" + message + "&p_num=" + p_num[0].value + "&b_idx=" + b_idx[0].value + "&jsonString=" + JSON.stringify(jsonString);
+    	param = JSON.stringify(jsonString);
+    	
+//     	sendRequest(url, param, paycallBack, "POST");
+    	sendRequestContent(url, param, paycallBack, "POST" , false , "application/json");
     	
     }
     
