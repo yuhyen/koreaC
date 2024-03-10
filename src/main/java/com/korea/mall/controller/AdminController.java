@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.korea.mall.dao.ProductDAO;
@@ -49,7 +51,56 @@ public class AdminController {
 		List<ProductDTO> list = product_dao.selectList();
 
 		model.addAttribute("list",list);
-		return "admin/pList";
+		return "admin/product_list";
+	}
+	
+	// 상품 카테고리별
+	@RequestMapping("product_category")
+	public String view_list(Model model,@RequestParam(value = "p_id", required = true) int p_id) {
+		List<ProductDTO> list = product_dao.category(p_id);
+		model.addAttribute("list", list);
+		
+		return "admin/product_category_list";
+	}
+	
+	
+	// 상품 메인으로 등록
+	@RequestMapping("upload")
+	@ResponseBody
+	public String upload(int p_num) {
+		ProductDTO dto = product_dao.selectOne(p_num);
+		
+		if(dto == null) {
+			return "[{'upload':'no'}]";
+		}
+		return "[{'upload':'yes'}]";
+	}
+	
+	// 상품 삭제
+	@RequestMapping("delete")
+	@ResponseBody
+	public String delete(int p_num) {
+		
+		int res = product_dao.delete(p_num);
+		
+		String result = "no";
+		
+		if(res == 1) {
+			result = "yes";
+		}
+		
+		String finRes = String.format("[{'del':'%s'}]", result);
+		
+		return finRes;
+		
+	}
+	
+	// 상품 수정
+	@RequestMapping("modify")
+	public String modify(Model model, int p_num) {
+		ProductDTO dto = product_dao.selectOne(p_num);
+		model.addAttribute("dto", dto);
+		return "product/product_modify";
 	}
 	
 	// 상품 수정 및 등록시 사진 업로드 

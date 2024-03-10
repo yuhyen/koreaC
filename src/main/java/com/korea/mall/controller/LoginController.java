@@ -1,4 +1,4 @@
-	package com.korea.mall.controller;
+package com.korea.mall.controller;
 
 import java.util.Map;
 import java.util.Random;
@@ -76,7 +76,7 @@ public class LoginController {
 	@RequestMapping("logout")
 	public String logout() {
 		session.removeAttribute("u_id");
-		return "redirect:user_list";
+		return "redirect:main";
 	}
 	
 	@RequestMapping("user_insert_form")

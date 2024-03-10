@@ -10,13 +10,13 @@
 <script src="resources/js/HttpRequest.js"></script>
 <script type="text/javascript">
 	function search(){
-		let keyword = document.getElementById("keyword").value.trim();
+		let p_name = document.getElementById("p_name").value.trim();
 		
-		if(keyword == ''){
+		if(p_name == ''){
 			alert("상품을 입력하세요")
 		}
 		
-		location.href = 'p_search?keyword='+keyword
+		location.href = 'p_search?p_name='+p_name
 	}
 </script>
 <style type="text/css">
@@ -47,15 +47,15 @@
 	<div class="flex-1 overscroll-auto static">
 		<div class="py-6 px-4 sm:px-6 lg:px-8">
 			<div>
-		  		<input type="text" id="keyword" placeholder="상품">
+		  		<input type="text" id="p_name" placeholder="상품">
 				<input type="button" value="검색" onclick="search()">
 		  	</div>
 		  	<br>
 		  	<hr>
 		  	<br>
 			<c:forEach var="dto" items="${list}">
+			<form action="detail" name="f" method="post">
 				<input type="hidden" name="p_num" value="${dto.p_num}">
-				<input type="hidden" name="p_num" value="${dto.p_name}">
 					<button>
 				        <div class="grid grid-cols-6 gap-4">
 				            <div class="w-24 h-24 bg-gray-200" style="width: 280px; height: 230px;">
@@ -65,6 +65,7 @@
 				            </div>
 				        </div>
 			        </button>
+			</form>
 			</c:forEach>
 		</div>
 	</div>
