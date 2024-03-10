@@ -1,5 +1,6 @@
 package com.korea.mall.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.korea.mall.common.Const;
 import com.korea.mall.dao.UserDAO;
 import com.korea.mall.dto.BoardDTO;
@@ -35,8 +39,16 @@ public class BoardController {
 	public ModelAndView list() {
  		ModelAndView mv = new ModelAndView("/board/board_list");
 		return mv;
-		
 	}
+	
+	@RequestMapping(value = {"/board_page.json"})
+	public ModelAndView listAjaxPage(@RequestBody HashMap<String, Object> param) {
+		ModelAndView mv = new ModelAndView("jsonView");
+		Object output = service.selectPage(param);
+		mv.addObject("u_id", session.getAttribute(Const.U_SESSION_KEY));
+		mv.addObject("data", output);
+		return mv;
+	} 
 	@RequestMapping(value = {"/board_list.json"})
 	public ModelAndView listAjax(@RequestBody HashMap<String, Object> param) {
 		ModelAndView mv = new ModelAndView("jsonView");
@@ -87,7 +99,7 @@ public class BoardController {
 		  	user.setU_idx(9999);
 		}
 		BoardDTO dto = new BoardDTO();
-		 
+		
 		dto.setCategory((String) param.get("category"));
 		dto.setNoticeYn((String) param.get("noticeYn"));
 		dto.setTitle((String) param.get("title"));

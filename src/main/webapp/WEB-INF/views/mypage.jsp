@@ -49,7 +49,7 @@
             </div>
             <div class="flex-1 text-center">
                 <div class="text-sm text-gray-500">적립금</div>
-                <div class="text-2xl font-semibold">9000 point</div>
+                <div class="text-2xl font-semibold">${user.u_reserve } point</div>
             </div>
         </div>
         <br>

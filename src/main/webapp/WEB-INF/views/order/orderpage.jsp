@@ -15,9 +15,10 @@
             font-family: 'Open Sans', sans-serif;
         }
     </style>
-  
+  <script src="resources/js/HttpRequest.js"></script>
 </head>
 <body class="bg-gray-50 p-8">
+
     <div class="max-w-4xl mx-auto">
         <h1 class="text-3xl font-semibold mb-6">Order</h1>
         <div class="bg-white shadow rounded-lg p-6 mb-6">
@@ -25,6 +26,7 @@
             <div class="mb-4">
                 <label for="recipient" class="block text-sm font-medium text-gray-700">받는사람</label>
                 <input type="text" id="recipient" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="${user.u_username }">
+                <input type="hidden" id="u_idx" value="${user.u_idx }">
             </div>
             <div class="mb-4">
                 <label for="address" class="block text-sm font-medium text-gray-700">주소</label>
@@ -56,13 +58,16 @@
             <c:forEach var="order" items="${order }">
             <div class="flex items-center mb-4">
                 <img src="https://source.unsplash.com/random/100x100?product" alt="Product Image" class="w-24 h-24 object-cover rounded mr-4">
-                <div>
+                <div>상품 번호 
                     <p class="font-semibold">${order.p_name }</p>
                     <p>${order.p_size }, ${order.p_color }</p>
                     <p>${order.b_quantity } 개</p>
                     <p class="font-semibold">${order.p_price * order.b_quantity }원</p>
                     <input type="hidden" class="total" value="${order.p_price * order.b_quantity }">
+                    <input type="hidden" class="p_num" value="${order.p_num }">
+                    <input type="hidden" class="b_idx" value="${order.b_idx }">
                 </div>
+                
             </div>
             <hr>
             <br>
@@ -77,7 +82,7 @@
             </div>
             <div class="flex justify-between items-center mb-4">
                 <p>배송비</p>
-                <p>3,000원</p>
+                <p>3000원</p>
             </div>
             <div class="flex justify-between items-center font-semibold mb-4">
                 <p>총 가격</p>
@@ -91,7 +96,7 @@
                     <option>토스</option>
                 </select>
             </div>
-            <button class="w-full bg-blue-600 text-white rounded-md py-3 font-semibold hover:bg-blue-700" id = "alltotalhtml2"></button>
+            <button class="w-full bg-blue-600 text-white rounded-md py-3 font-semibold hover:bg-blue-700" id = "alltotalhtml2" onclick="pay()"></button>
         </div>
     </div>
       <script type="text/javascript">
@@ -115,7 +120,55 @@
     
     let alltotalhtml2 =  document.getElementById("alltotalhtml2");
     alltotalhtml2.innerHTML = alltotal.toString() + "원 결제하기";
-	
+	 
+    
+    
+    function pay(){
+    	let u_idx = document.getElementById("u_idx").value;
+    	let message = document.getElementById("message").value;
+    	let p_num = document.getElementsByClassName("p_num");
+    	let b_idx = document.getElementsByClassName("b_idx");
+    	let p_numTotal = [];
+    	let b_idxTotal = [];
+    	
+    	for(i =0; i < p_num.length; i++){
+//     		p_numTotal = p_numTotal + p_num[i].value + ",";
+    		p_numTotal.push(p_num[i].value);
+
+    	}
+    	
+    	for(i =0; i < b_idx.length; i++){
+//     		b_idxTotal = b_idxTotal + b_idx[i].value + ","; 
+    	}
+    	
+    	
+    	
+    	let jsonString = {
+    			u_idxjs : u_idx,
+    			messagejs : message,
+    			p_numjs : p_numTotal,
+    			b_idxjs : b_idxTotal
+    	}
+    	
+    	
+    	
+    	
+    	let url = "order_pay";
+//     	param = "u_idx=" + u_idx + "&message=" + message + "&p_num=" + p_num[0].value + "&b_idx=" + b_idx[0].value + "&jsonString=" + JSON.stringify(jsonString);
+    	param = JSON.stringify(jsonString);
+    	
+//     	sendRequest(url, param, paycallBack, "POST");
+    	sendRequestContent(url, param, paycallBack, "POST" , false , "application/json");
+    	
+    }
+    
+    function paycallBack(){
+    	if(xhr.readyState == 4 && xhr.status == 200){
+    		
+    	}
+    }
+    
 	</script>
+	
 </body>
 </html>

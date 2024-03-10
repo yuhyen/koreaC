@@ -4,7 +4,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>find id</title>
+	<title>아이디찾기</title>
 	<script src="resources/js/HttpRequest.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -45,7 +45,7 @@
 				alert('이메일이 틀립니다.');
 			}else{
 				
-				alert('회원님의 아이디는 '+json[1].u_id+'입니다.');			
+				alert('회원님의 아이디는 '+json[0].u_id+'입니다.');			
 				location.href='login_form';
 			}
 		}

@@ -4,16 +4,20 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Login Page</title>
+	<title>로그인</title>
 	<script src="resources/js/HttpRequest.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
+        #body {
             font-family: 'Noto Sans KR', sans-serif;
+             
+        }
+        #header{
+        	padding-left: 100px;
+        	padding-top: 25px;
         }
     </style>
-    
 <script type="text/javascript">
 	function send(f){
 		var u_id = f.u_id.value.trim();
@@ -51,8 +55,15 @@
 	}
 </script>
 </head>
-<body class="bg-gray-50 flex items-center justify-center h-screen">
+	
+<body>
+
+	<!-- <h1 id="header" class="bg-gray-50 flex text-4xl font-bold"><a href="main">KoreaMall</a></h1> -->
+
+	<div id="body" class="bg-gray-50 flex items-center justify-center h-screen">
+
 	<div class="bg-white shadow-lg rounded-lg p-8">
+	
         <h1 class="text-3xl font-bold mb-6 text-center">로그인</h1>
 	<form>
 			<div class="mb-4">
@@ -76,5 +87,7 @@
             </div>
 	</form>
 	</div>
+	
+</div>
 </body>
 </html>

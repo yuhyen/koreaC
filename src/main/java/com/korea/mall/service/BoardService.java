@@ -3,10 +3,14 @@ package com.korea.mall.service;
 import java.util.HashMap;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.korea.mall.dao.BoardDAO;
 import com.korea.mall.dto.BoardDTO;
+import com.korea.mall.dto.pagingDTO;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -14,6 +18,36 @@ import lombok.RequiredArgsConstructor;
 public class BoardService {
 	
 	private final BoardDAO boardDao;
+	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
+	
+	public Object selectPage(HashMap<String, Object> param){
+		
+		HashMap<String, Object> output = new HashMap<String, Object>();
+		int totalCnt = boardDao.selectCnt(param);
+		int nowPage = param.get("pageNo") == null ? 0 :(int) param.get("pageNo");
+		int cntPerPage = param.get("cntPerPage") == null ? 0 :(int) param.get("cntPerPage");
+		
+		if (nowPage == 0 && cntPerPage == 0) {
+			nowPage = 1;
+			cntPerPage = 10;
+		} else if (nowPage == 0) {
+			nowPage = 1;
+		} else if (cntPerPage == 0) { 
+			cntPerPage = 10;
+		}
+		
+		pagingDTO pagingDTO = new pagingDTO(totalCnt, nowPage, cntPerPage);
+		
+//		pagingDTO(nowPage=3, startPage=1, endPage=10, total=101, cntPerPage=10, lastPage=11, start=21, end=30)
+
+		param.put("start", pagingDTO.getStart());
+		param.put("end", pagingDTO.getEnd());
+		output.put("list" , boardDao.selectPage(param)) ;
+		output.put("page" , pagingDTO) ;
+		
+		return output;
+		
+	}
 	
 	public List<Object> selectList(HashMap<String, Object> param){
 		return (List<Object>) boardDao.selectList(param);
