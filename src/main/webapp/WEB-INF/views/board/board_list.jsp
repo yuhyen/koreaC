@@ -90,11 +90,11 @@
   <div class="flex mt-4 space-x-2">
 <!--   	<div class="mb-4"> -->
 <!--          <label for="search" class="block text-gray-700 text-sm font-semibold mb-2">검색조건</label> -->
-         <select id="search" class="block w-100 bg-gray-50 border border-gray-300 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+         <select id="searchType" class="block w-100 bg-gray-50 border border-gray-300 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
              <option>SUBJECT</option>
              <option>NAME</option>
          </select>
-         <input type="text" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"/>
+         <input id="searchKey"type="text" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"/>
 <!--     </div> -->
 	
 	<button id="searchBtn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" @click="searchBoard">검색</button>
@@ -112,15 +112,13 @@
 		getBoardName(urlParam.get("type"))
 		let uid = pageLoad(1 , typeCategory , "" , "");
   		document.getElementById("userName").textContent = uid;
-//		document.getElementById("userName").textContent = uid.U_USERNAME;
-		
 		
 	}
 	
 	let pageLoad = (pageNo , typeCategory , searchType ,searchKey ) =>{
 		
 		let output;
-		let sendObj = setSendObj( pageNo ,typeCategory , "" , "");
+		let sendObj = setSendObj( pageNo ,typeCategory , searchType , searchKey);
 // 		sendRequestContent("board_list.json" , JSON.stringify(sendObj) , "" ,"POST" , true , "application/json");
 		sendRequestContent("board_page.json" , JSON.stringify(sendObj) , "" ,"POST" , true , "application/json");
 		if(xhr.status == "200"){
@@ -134,7 +132,6 @@
       		    obj.subject = obj.B_TITLE
       		    obj.name = obj.B_USER
       		    obj.date = date.toISOString().substring(0,10)
-// 	      		console.log(obj);
       		});
       		vueObj.boardItems = [];
       		vueObj.boardItems = data;
@@ -154,9 +151,8 @@
 			vueObj.pageNumList =  []
 			for(let i=page.startPage ; i <=page.endPage ; i++){
 				vueObj.pageNumList.push(i);
-			} 
-			
-			console.log(vueObj.pageNumList);
+			}
+						
 			
       	}else{
       		console.log("오류처리")
@@ -226,6 +222,8 @@
         },
         searchBoard:function(){
         	alert("검색 클릭");
+        	pageLoad(1 , typeCategory , document.getElementById("searchType").value , document.getElementById("searchKey").value);
+        	
         },
         registBoard:function(){
           	alert("글쓰기 클릭");

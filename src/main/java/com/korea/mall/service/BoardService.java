@@ -38,8 +38,10 @@ public class BoardService {
 		
 		pagingDTO pagingDTO = new pagingDTO(totalCnt, nowPage, cntPerPage);
 		
-//		pagingDTO(nowPage=3, startPage=1, endPage=10, total=101, cntPerPage=10, lastPage=11, start=21, end=30)
-
+//		searchKey 검색어
+//		searchType 검색 종류 SUBJECT , NAME ;
+		
+		
 		param.put("start", pagingDTO.getStart());
 		param.put("end", pagingDTO.getEnd());
 		output.put("list" , boardDao.selectPage(param)) ;
@@ -63,7 +65,6 @@ public class BoardService {
 		
 		return boardDao.selectOne(param);
 	}
-	
 	
 	public BoardDTO insert(BoardDTO param) {
 		
