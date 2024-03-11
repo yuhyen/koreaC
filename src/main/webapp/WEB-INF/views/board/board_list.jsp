@@ -41,7 +41,7 @@
         <td class="border px-4 py-2">
           <img :src="item.product" alt="" class="h-16 mx-auto">
         </td>
-        <td class="border px-6 py-2 text-left" @click="subjectClicked">{{ item.subject }}</td>
+        <td class="border px-6 py-2 text-left" @click="subjectClicked(item.no)">{{ item.subject }}</td>
         <td class="border px-4 py-2 text-center">{{ item.name }}</td>
         <td class="border px-6 py-2 text-center" >{{ item.date }}</td>
       </tr>
@@ -111,7 +111,7 @@
 		console.log(typeCategory);
 		getBoardName(urlParam.get("type"))
 		let uid = pageLoad(1 , typeCategory , "" , "");
-  		document.getElementById("userName").textContent = uid;
+//   		document.getElementById("userName").textContent = uid;
 		
 	}
 	
@@ -217,8 +217,12 @@
       
     },
     methods: {
-        subjectClicked :function () {
+        subjectClicked :function (seq) {
         	alert("게시판 클릭");
+        	let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+          	let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+          	let path = contextPath+"/board_view?seq="+seq;
+          	location.href=path;
         },
         searchBoard:function(){
         	alert("검색 클릭");

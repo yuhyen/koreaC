@@ -92,7 +92,7 @@
     	}
     	
 		nameEl.text = name;
-		nameEl.href = "http://naver.com"
+		nameEl.href = "mall/board_list?type="+type;
 		
 		return name;
     } 

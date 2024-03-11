@@ -124,8 +124,6 @@ public class BoardController {
 		}
 		BoardDTO dto = new BoardDTO();
 		
-		dto.setCategory((String) param.get("category"));
-		dto.setNoticeYn((String) param.get("noticeYn"));
 		dto.setTitle((String) param.get("title"));
 		dto.setContents((String) param.get("contents"));
 		dto.setUser(user.getU_idx());
