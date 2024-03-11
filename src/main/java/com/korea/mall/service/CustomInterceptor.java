@@ -20,7 +20,9 @@ public class CustomInterceptor implements HandlerInterceptor{
 		System.out.println("preHandle");
 		System.out.println("##################");
 		System.out.println("##################");
+		
 		return HandlerInterceptor.super.preHandle(request, response, handler);
+		
 	}
 
 	@Override
