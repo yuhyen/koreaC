@@ -10,13 +10,13 @@
 <body>
 	<table border="1" align="center">
 		<tr>
-			<th>유저번호</th>
-			<th>유저아이디</th>
-			<th>유저비밀번호</th>
-			<th>유저이름</th>
-			<th>유저이메일</th>
-			<th>유저전화번호</th>
-			<th>유저주소</th>
+			<th>회원번호</th>
+			<th>아이디</th>
+			<th>비밀번호</th>
+			<th>이름</th>
+			<th>이메일</th>
+			<th>전화번호</th>
+			<th>주소</th>
 			<th>총금액</th>
 			<th>적립금</th>
 		</tr>

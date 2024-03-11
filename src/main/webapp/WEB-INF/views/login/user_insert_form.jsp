@@ -169,9 +169,6 @@
 			return;
 		}
 		
-		
-		
-		
 		alert('회원가입 성공!');
 		//user_insert 매핑으로 전송
 		f.method="post";

@@ -243,7 +243,7 @@ public class LoginController {
 			}	
 
 			//인증번호가 맞을 경우
-			return "[{'param':'clear'},{'u_pwd':'"+u_pwd+"'}]";
+			return "[{'u_pwd':'"+u_pwd+"'}]";
 		}
 }
 

@@ -24,7 +24,6 @@
 			alert('아이디를 입력해주세요');
 			return;
 		}
-		
 		if(u_email==''){
 			alert('이메일을 입력하세요')
 			return;
@@ -67,6 +66,16 @@
     function check(){
     	var u_check = document.getElementById("u_check").value;
     	var u_id = document.getElementById("u_id").value;
+    	var u_email = document.getElementById("u_email").value;
+    	
+    	if(u_id==''){
+    		alert('아이디를 입력해주세요');
+    		return;
+    	}
+    	if(u_email==''){
+    		alert('이메일을 입력해주세요');
+    		return;
+    	}
     	if(u_check == ''){
 			alert('인증번호를 입력해주세요');
 			return;
@@ -86,8 +95,7 @@
 			 if(json[0].param=='no_equal'){
 				alert('인증번호가 틀립니다.');
 			}else{
-				
-				alert('회원님의 비밀번호는 '+json[1].u_pwd+'입니다.');			
+				alert('회원님의 비밀번호는 '+json[0].u_pwd+'입니다.');			
 				location.href='login_form';
 			}
     }
