@@ -40,4 +40,9 @@ public class ProductDAO {
 		return sqlSession.selectList("p.p_search", p_name);
 	}
 	
+	// 상품 삭제
+	public int delete(int p_num) {
+		return sqlSession.delete("p.p_delete", p_num);
+	}
+	
 }

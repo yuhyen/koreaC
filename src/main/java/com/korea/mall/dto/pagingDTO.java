@@ -36,7 +36,14 @@ public class pagingDTO {
 		if (getLastPage() < getEndPage()) {
 			setEndPage(getLastPage());
 		}
-		setStartPage(getEndPage() - cntPage + 1);
+		setStartPage(getEndPage()   - cntPage + 1);
+//		setStartPage(getEndPage()  - cntPage + 1);
+//		1~5
+//		6~10 
+//		1 2 3 4 5  1 start
+//		
+//		6 7 8 9 10 6 start
+//		11,12,13-> 10 start 
 		if (getStartPage() < 1) {
 			setStartPage(1);
 		}

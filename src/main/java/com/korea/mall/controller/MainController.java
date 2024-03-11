@@ -29,7 +29,6 @@ public class MainController {
 		List<ProductDTO> list = product_dao.selectList();
 
 		model.addAttribute("list",list);
-		
 		return "main/main";
 	}
 	
@@ -61,27 +60,26 @@ public class MainController {
 	public String view_list(Model model,@RequestParam(value = "p_id", required = true) int p_id) {
 		List<ProductDTO> list = product_dao.category(p_id);
 		model.addAttribute("list", list);
-		
 		return "main/category";
 	}
 	
 	// 상품 검색
 	@RequestMapping("p_search")
-	public String p_search(Model model,@RequestParam(value = "keyword", required = true) String keyword, String p_name) {
+	public String p_search(Model model,@RequestParam(value = "p_name", required = true) String p_name) {
 		
-		keyword = "all";
-		String p_keyword = request.getParameter("keyword");
+		p_name = "all";
+		String name = request.getParameter("p_name");
 		
-		if(p_keyword != null && !p_keyword.isEmpty()) {
-			keyword = p_keyword;
+		if(name != null && !name.isEmpty()) {
+			p_name = name;
 		}
 		
 		List<ProductDTO> list = null;
 		
-		if(keyword.equalsIgnoreCase("all")) {
+		if(p_name.equalsIgnoreCase("all")) {
 			list = product_dao.selectList();
 		} else {
-			list = product_dao.search(p_keyword);
+			list = product_dao.search(name);
 		}
 		model.addAttribute("list", list);
 		

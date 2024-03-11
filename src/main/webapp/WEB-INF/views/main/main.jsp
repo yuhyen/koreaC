@@ -34,27 +34,27 @@
         <main class="flex-1 overscroll-auto static">
             <div class="py-6 px-4 sm:px-6 lg:px-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">Top Seller</h2>
-                <button>
 	                <div class="grid grid-cols-6 gap-4 mb-6">
-	                    <div class="w-24 h-24 bg-gray-200" style="width: 280px; height: 230px;">
-	                        <img src="resources/product_img/${dto.p_name}/${dto.p_picture}">
-	                    </div>
+		                <button>
+	            	        <div class="w-24 h-24 bg-gray-200" style="width: 280px; height: 230px;">
+	    	                    <img src="resources/product_img/${dto.p_name}/${dto.p_picture}">
+	        	            </div>
+		                </button>
 	                </div>
-                </button>
 
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">New</h2>
                 <c:forEach var="dto" items="${list}">
 					<form action="detail" name="f" method="post">
 						<input type="hidden" name="p_num" value="${dto.p_num}">
-						<button>
-			                <div class="grid grid-cols-6 gap-4">
+		                <div class="grid grid-cols-6 gap-4">
+							<button>
 			                    <div class="w-24 h-24 bg-gray-200" style="width: 280px; height: 230px;">
 			                        <img src="resources/product_img/${dto.p_name}/${dto.p_picture}">
 			                        <h2 class="text-sm mt-2" align="left">${dto.p_name}</h2>
 		                    		<p class="text-sm text-gray-600" align="left">${dto.p_price}원</p>
 			                    </div>
-			                </div>
-	                	</button>
+                			</button>
+		                </div>
 		    		</form>
 				</c:forEach>
             </div>
