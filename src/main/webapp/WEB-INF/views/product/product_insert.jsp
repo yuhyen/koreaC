@@ -85,6 +85,7 @@
 				<tr>
 					<td colspan="2" align="center">
 						<input type="button" value="등록" onclick="send_check()">
+						<input type="button" value="취소" onclick="location.href='pList_form'">
 					</td>			
 				</tr>
 			</table>

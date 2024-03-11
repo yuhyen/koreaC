@@ -63,19 +63,6 @@ public class AdminController {
 		return "admin/product_category_list";
 	}
 	
-	
-	// 상품 메인으로 등록
-	@RequestMapping("upload")
-	@ResponseBody
-	public String upload(int p_num) {
-		ProductDTO dto = product_dao.selectOne(p_num);
-		
-		if(dto == null) {
-			return "[{'upload':'no'}]";
-		}
-		return "[{'upload':'yes'}]";
-	}
-	
 	// 상품 삭제
 	@RequestMapping("delete")
 	@ResponseBody
