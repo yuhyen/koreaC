@@ -7,20 +7,13 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="resources/js/HttpRequest.js"></script>
-<style type="text/css">
-	table{
-		margin: 0 auto;
-		border-style: solid black 1px;
-	}
-</style>
+<script src="https://cdn.tailwindcss.com"></script>
 <script type="text/javascript">
-	function send(f){
-		
-		f.action = "p_add_main";
-		f.submit();
+	function modify(p_num){
+		location.href="modify?p_num="+p_num;
 	}
 	
-	function del(f,p_num){
+	function del(p_num){
 		let p = f.p_num.value;
 		
 		if(!confirm("삭제하시겠습니까?")){
@@ -51,35 +44,45 @@
 </head>
 <jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 <body>
-	<div align="center">
+<div class="container mx-auto p-6">
+	<div class="divide-x-2 divide-black flex justify-around mb-4">
+		<a href="pList_form"><button>All</button></a>
 		<a href="product_category?p_id=1"><button>Outer</button></a>
 		<a href="product_category?p_id=2"><button>Top</button></a>
 		<a href="product_category?p_id=3"><button>Bottom</button></a>
 		<a href="product_category?p_id=4"><button>Suit</button></a>
+		<a href="p_add_form"><button>상품 등록</button></a>
 	</div>
 	<hr>
-	<form>
-		<table>
-			<tr>
+	<div class="bg-white shadow-md rounded my-6">
+		<table class="divide-y divide-black text-center w-full">
+			<thead>
+			<tr class="divide-x divide-black">
 				<th>상품명</th>
 				<th>상품설명</th>
 				<th>원단</th>
 				<th>가격</th>
+				<th></th>
 			</tr>
+			</thead>
 			<c:forEach var="dto" items="${list}">
-			<tr>
+			<tbody>
+			<tr class="divide-x divide-black">
 				<td>${dto.p_name}</td>
 				<td>${dto.p_explain}</td>
 				<td>${dto.p_pabric}</td>
 				<td>${dto.p_price}원</td>
 				<td>
-					<input type="hidden" name="p_num" value="${dto.p_num}">
-					<input type="button" value="등록" onclick="send(this.form)">
-					<input type="button" value="삭제" onclick="del(this.form , ${dto.p_num})">
+					<input type="button" value="수정" onclick="modify(${dto.p_num})">
+				</td>
+				<td>
+					<input type="button" value="삭제" onclick="del(${dto.p_num})">
 				</td>
 			</tr>
+			</tbody>
 			</c:forEach>
 		</table>
-	</form>
+	</div>
+</div>
 </body>
 </html>

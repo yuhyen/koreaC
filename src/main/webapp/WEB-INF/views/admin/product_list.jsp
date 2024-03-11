@@ -6,43 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="resources/js/HttpRequest.js"></script>
-<style type="text/css">
-	table{
-		margin: 0 auto;
-		border-style: solid black 1px;
-	}
-</style>
 <script type="text/javascript">
 	function modify(p_num){
 		location.href="modify?p_num="+p_num;
-	}
-	
-	function send(p_num){
-		
-		if(!confirm("등록하시겠습니까")){
-			return;
-		}
-		
-		let url = "upload"
-		let param = "p_num="+p_num;
-		
-		sendRequest(url, param, uploadFn, "post")
-	}
-	
-	function uploadFn(){
-		if(xhr.readyState == 4 && xhr.status == 200){
-			let data = xhr.responseText;
-			let json = (new Function('return' + data))();
-			
-			if(json[0].upload == 'no'){
-				alert('등록 실패')
-				return
-			}
-			
-			alert('등록 성공')
-			location.href="pList_form";
-		}
 	}
 	
 	function del(p_num){
@@ -72,36 +40,49 @@
 		}
 	}
 </script>
+
 </head>
 <jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 <body>
-	<div align="center">
+<div class="container mx-auto p-6">
+	<div class="divide-x-2 divide-black flex justify-around mb-4">
+		<a href="pList_form"><button>All</button></a>
 		<a href="product_category?p_id=1"><button>Outer</button></a>
 		<a href="product_category?p_id=2"><button>Top</button></a>
 		<a href="product_category?p_id=3"><button>Bottom</button></a>
 		<a href="product_category?p_id=4"><button>Suit</button></a>
+		<a href="p_add_form"><button>상품 등록</button></a>
 	</div>
 	<hr>
-	<table>
-		<tr>
+	<div class="bg-white shadow-md rounded my-6">
+	<table class="divide-y divide-black text-center w-full">
+		<thead>
+		<tr class="divide-x divide-black">
 			<th>상품명</th>
 			<th>상품설명</th>
 			<th>원단</th>
 			<th>가격</th>
+			<th></th>
 		</tr>
+		</thead>
 		<c:forEach var="dto" items="${list}">
-		<tr>
+		<tbody>
+		<tr class="divide-x divide-black">
 			<td>${dto.p_name}</td>
 			<td>${dto.p_explain}</td>
 			<td>${dto.p_pabric}</td>
 			<td>${dto.p_price}원</td>
 			<td>
-				<input type="button" value="등록" onclick="send(${dto.p_num})">
 				<input type="button" value="수정" onclick="modify(${dto.p_num})">
+			</td>
+			<td>
 				<input type="button" value="삭제" onclick="del(${dto.p_num})">
 			</td>
 		</tr>
+		</tbody>
 		</c:forEach>
 	</table>
+	</div>
+</div>
 </body>
 </html>
