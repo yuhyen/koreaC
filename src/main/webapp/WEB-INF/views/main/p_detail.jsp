@@ -5,12 +5,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
+		<aside class="float-left w-64 bg-white p-6 shadow-md">
+            <div class="flex flex-col space-y-4">
+                <a href="new"><button class="text-gray-700 font-semibold">New</button></a>
+                <a href="category?p_id=1"><button class="text-gray-700 font-semibold">Outer</button></a>
+                <a href="category?p_id=2"><button class="text-gray-700 font-semibold">Top</button></a>
+                <a href="category?p_id=3"><button class="text-gray-700 font-semibold">Bottom</button></a>
+                <a href="category?p_id=4"><button class="text-gray-700 font-semibold">Suit</button></a>  
+            </div>
+            <br><br><br>
+            <div>
+            	<a href="basket_page"><button class="text-gray-700 font-semibold">Cart</button></a>
+            </div>
+        </aside>
 		<input type="hidden" name="p_num" value="${p_num}">
 	<div>
-		<img src="resources/product_img/${dto.p_name}/${dto.p_picture}">
+		<img src="resources/product_img/${dto.p_picture}">
 	</div>
 	<div>
 		<strong>${dto.p_name}</strong><br>
@@ -41,5 +55,6 @@
 			</select>  
 		</div>
 	</div>
+	<jsp:include page="/WEB-INF/views/main/footer.jsp"></jsp:include>
 </body>
 </html>

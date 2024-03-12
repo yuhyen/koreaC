@@ -58,20 +58,18 @@
 	<table class="divide-y divide-black text-center w-full">
 		<thead>
 		<tr class="divide-x divide-black">
+			<th>상품번호</th>
 			<th>상품명</th>
-			<th>상품설명</th>
-			<th>원단</th>
-			<th>가격</th>
+			<th>재고</th>
 			<th></th>
 		</tr>
 		</thead>
 		<c:forEach var="dto" items="${list}">
 		<tbody>
 		<tr class="divide-x divide-black">
+			<td>${dto.p_num}</td>
 			<td>${dto.p_name}</td>
-			<td>${dto.p_explain}</td>
-			<td>${dto.p_pabric}</td>
-			<td>${dto.p_price}원</td>
+			<td>${dto.p_stock}</td>
 			<td>
 				<input type="button" value="수정" onclick="modify(${dto.p_num})">
 			</td>

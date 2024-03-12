@@ -2,11 +2,9 @@ package com.korea.mall.dto;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class ProductDTO {
 	
 	private String p_name;
@@ -20,7 +18,6 @@ public class ProductDTO {
 	private int p_price;
 	private int p_stock;
 	private int p_id;
-	private int picture_count;
 	
-	private MultipartFile picture[];
+	private MultipartFile picture;
 }

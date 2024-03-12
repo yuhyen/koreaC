@@ -28,7 +28,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{p_pabric},
 			#{p_id},
 			#{p_picture},
-			#{picture_count},
 			#{p_stock}
 		)
 	</insert>
@@ -42,6 +41,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="p_search" resultType="product">
 		select * from TB_product where p_name like '%'||#{p_name}||'%'
 	</select>
+	
+	<!-- 상품 수정 -->
+	<update id="p_update" parameterType="product">
+		update tb_product set
+		p_name = #{p_name},
+		p_price = #{p_price},
+		p_explain = #{p_explain},
+		p_size = #{p_size},
+		p_color = #{p_color},
+		p_pabric = #{p_pabric},
+		p_id = #{p_id},
+		p_picture = #{p_picture},
+		p_stock = #{p_stock}
+		where p_num = #{p_num}
+	</update>
 	
 	<!-- 상품 삭제 -->
 	<delete id="p_delete" parameterType="int">

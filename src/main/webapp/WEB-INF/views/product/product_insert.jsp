@@ -25,7 +25,6 @@
 	<div>
 		<h2>상품 등록하기</h2>
 		<form action="p_add" name="f" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="picture_count" value="-1">
 			<table border="1">
 				<tr>
 					<th>상품명</th>

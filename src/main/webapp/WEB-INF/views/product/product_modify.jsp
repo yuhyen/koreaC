@@ -5,7 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script type="text/javascript">
+	function modify(f){
+		f.action = "product_modify"
+		f.submit();
+	}
+</script>
 </head>
 <body>
 	<div>
@@ -67,11 +72,14 @@
 					<td><input name="p_stock" value="${dto.p_stock}"></td>
 				<tr>
 					<th>사진</th>
-					<td><input name="picture" value="${dto.p_picture}" type="file" multiple="multiple"></td>
+					<td>
+						<img src="resources/product_img/${dto.p_picture}">
+						<input name="picture" value="${dto.p_picture}" type="file" multiple="multiple">
+					</td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-						<input type="button" value="수정" onclick="send_check()">
+						<input type="button" value="수정" onclick="modify(this.form)">
 						<input type="button" value="취소" onclick="location.href='pList_form'">
 					</td>			
 				</tr>
