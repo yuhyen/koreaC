@@ -65,13 +65,12 @@ public class CommonService {
 	    file.setFileSize(multipartFile.getSize());
 	    try {
 	    	//임시코딩
-	    	path = "C:\\Users\\admin\\git\\koreaC\\src\\main\\webapp\\resources\\file\\";
-//	    	path = resource.getFile().getPath();
+//	    	path = "C:\\Users\\admin\\git\\koreaC\\src\\main\\webapp\\resources\\file\\";
+	    	path = resource.getFile().getPath();
 	    	Files.createDirectories(Paths.get(path));
 	    	File saveFile = new File(path, file.getStriostoredFileName());
 	    	//서버저장
 			multipartFile.transferTo(saveFile);
-			
 			//업로드 성공시 dao db넣기
 			fileDao.insert(file);
 			
