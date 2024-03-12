@@ -26,6 +26,10 @@ public class BoardDAO {
 		return sqlSession.selectList("board.selectPage" , param);
 	}
 	
+	public Object selectDetail(BoardDTO param){
+		return sqlSession.selectList("board.selectDetail" , param);
+	}
+	
 	
 	public Object selectList(HashMap<String, Object> param){
 		return sqlSession.selectList("board.selectList" , param);

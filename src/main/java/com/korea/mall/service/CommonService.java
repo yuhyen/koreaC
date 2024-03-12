@@ -107,38 +107,36 @@ public class CommonService {
 	
 	
 	
-	public ResponseEntity<Resource> downloadFile(long fileNo){
-		
-		FileDTO file = new FileDTO();
-		file.setFileNo(fileNo);
-		//dao 넣기
-		
-		
-		try {
-			
-			
-			return this.getResource(file);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//오류일경우
-		return null;
-	}
-	
-	
-	private ResponseEntity<Resource> getResource(FileDTO file) throws MalformedURLException {
-
-		String uploadFileName = file.getOrgFileName();
-	    String storeFileName = file.getStriostoredFileName();
-	    UrlResource urlResource = new UrlResource("file 경로지정:");
-
-	    String encodeUploadFileName = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
-	    String contentDisposition = "attachment; filename=\"" + encodeUploadFileName + "\"";
-	    return ResponseEntity.ok()
-	            .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
-	            .body(urlResource);
-	}
+//	public ResponseEntity<Resource> downloadFile(long fileNo){
+//		
+//		FileDTO file = new FileDTO();
+//		file.setFileNo(fileNo);
+//		//dao 넣기
+//		try {
+//			
+//			
+//			return this.getResource(file);
+//		} catch (MalformedURLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		//오류일경우
+//		return null;
+//	}
+//	
+//	
+//	private ResponseEntity<Resource> getResource(FileDTO file) throws MalformedURLException {
+//
+//		String uploadFileName = file.getOrgFileName();
+//	    String storeFileName = file.getStriostoredFileName();
+//	    UrlResource urlResource = new UrlResource("file 경로지정:");
+//
+//	    String encodeUploadFileName = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
+//	    String contentDisposition = "attachment; filename=\"" + encodeUploadFileName + "\"";
+//	    return ResponseEntity.ok()
+//	            .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
+//	            .body(urlResource);
+//	}
 }
 
 

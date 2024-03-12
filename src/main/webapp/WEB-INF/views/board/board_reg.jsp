@@ -17,7 +17,7 @@
 <div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
 	  <div class="flex justify-between items-center mb-6">
             <div class="space-x-4">
-                <a id="boardName" href="#" class="text-lg font-semibold text-blue-600 hover:text-blue-800">게시판종류</a>
+                <a id="boardName" href="#" class="text-lg font-semibold text-blue-600 hover:text-blue-800"></a>
             </div>
             <input class="w-9/12 px-4 py-2 text-black rounded" id="title" type="text" placeholder="제목을 입력하세요" />
 			<label class="text-sm font-semibold text-blue-600"> 공지 </label><input class="w-1/12 px-1 py-1 text-black rounded" id="noticeYn" type="checkBox"/>
@@ -185,7 +185,7 @@
             el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
             height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
             initialEditType: 'wysiwyg',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
-            initialValue: '내용을 입력해 주세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+            placeholder: '내용을 입력하세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
             previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
         });
         

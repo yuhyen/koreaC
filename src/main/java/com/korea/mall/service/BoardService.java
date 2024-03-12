@@ -55,11 +55,16 @@ public class BoardService {
 		return (List<Object>) boardDao.selectList(param);
 	}
 	
+	
+	public Object selectDetail(BoardDTO param) {
+		
+		return (List<Object>) boardDao.selectDetail(param);
+	}
+	
+	
 	public BoardDTO selectOne(BoardDTO param) {
 	
 		if("".equals( param.getSeq()) || null == param.getSeq()) {
-			
-//			throw new Exception("�ʼ��� seq�� �����ϴ�.");
 			return null;
 		}
 		

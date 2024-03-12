@@ -75,16 +75,14 @@ public class BoardController {
 	public ModelAndView detail(@RequestBody HashMap<String, Object> param) {
 		ModelAndView mv = new ModelAndView("jsonView");
 		UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY);
+		if(user == null) {
+			user = new UserDTO();
+		}
 		BoardDTO dto = new BoardDTO();
 		dto.setSeq((String) param.get("seq"));
-		
-		dto = service.selectOne(dto);
-		mv.addObject(dto);
-		if(dto.getRegUser() ==  user.getU_idx()) {
-			mv.addObject("update", "Y");
-		}else {
-			mv.addObject("update", "N");
-		}
+		Object output = service.selectDetail(dto);
+		mv.addObject("u_id", session.getAttribute(Const.U_SESSION_KEY));
+		mv.addObject("data", output);
 		
 		return mv;
 	}
