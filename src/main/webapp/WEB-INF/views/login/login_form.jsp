@@ -47,10 +47,16 @@
 				alert('아이디가 존재하지 않습니다.');
 			}else if(json[0].param=='no_u_pwd'){
 				alert('비밀번호가 틀립니다.');
+			}else if('${line}' != ''){
+				alert('${line}로 이동')
+				location.href='${line}';
+				<%
+					session.removeAttribute("line");
+				%>
 			}else{
 				alert('로그인 성공')
 				location.href='main';
-			}
+			}		
 		}
 	}
 </script>
