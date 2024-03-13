@@ -78,7 +78,6 @@ private final OrderDAO orderDAO;
 	 b_dto.setP_picture(p_dto.getP_picture());
 	 b_dto.setP_price(p_dto.getP_price());
 	 b_dto.setP_size(p_dto.getP_size());
-//	 b_dto.setPicture_count(p_dto.getPicture_count());
 	 List<BasketDTO> list = new ArrayList<BasketDTO>();
 	 list.add(b_dto);
 	 return list;

@@ -64,11 +64,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT  B1.*
 		      , A1.B_TITLE 
 		      , A1.B_CATEGORY 
-		      , A1.B_IMG_PATH 
+		      , A1.B_IMG_PATH
+		      , A1.B_NOTICE_YN 
 		  FROM TB_BOARD_BASE  A1 
 	         , TB_BOARD_DTLS  B1 
 	     WHERE A1.B_SEQ  = B1.B_SEQ
 	       AND  A1.B_SEQ = #{seq}
+	       <if test='reply !=null and !reply.equalsIgnoreCase("")'>
+	       	AND  B1.B_REPLY = #{reply}
+	       </if>
 	     ORDER BY B1.B_SEQ , B1.B_REPLY ASC
 	</select>
 	

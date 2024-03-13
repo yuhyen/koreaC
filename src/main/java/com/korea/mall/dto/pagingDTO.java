@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class pagingDTO {
-	// 현재페이지, 시작페이지, 끝페이지, 게시글 총 갯수, 페이지당 글 갯수, 마지막페이지, SQL쿼리에 쓸 start, end
+	// �쁽�옱�럹�씠吏�, �떆�옉�럹�씠吏�, �걹�럹�씠吏�, 寃뚯떆湲� 珥� 媛��닔, �럹�씠吏��떦 湲� 媛��닔, 留덉�留됲럹�씠吏�, SQL荑쇰━�뿉 �벝 start, end
 	private int nowPage;
 	private int startPage;
 	private int endPage;
@@ -26,11 +26,11 @@ public class pagingDTO {
 		calcStartEndPage(getNowPage(), cntPage);
 		calcStartEnd(getNowPage(), getCntPerPage());
 	}
-	// 제일 마지막 페이지 계산
+	// �젣�씪 留덉�留� �럹�씠吏� 怨꾩궛
 	public void calcLastPage(int total, int cntPerPage) {
 		setLastPage((int) Math.ceil((double)total / (double)cntPerPage));
 	}
-	// 시작, 끝 페이지 계산
+	// �떆�옉, �걹 �럹�씠吏� 怨꾩궛
 	public void calcStartEndPage(int nowPage, int cntPage) {
 		setEndPage(((int)Math.ceil((double)nowPage / (double)cntPage)) * cntPage);
 		if (getLastPage() < getEndPage()) {
@@ -41,7 +41,7 @@ public class pagingDTO {
 			setStartPage(1);
 		}
 	}
-	// DB 쿼리에서 사용할 start, end값 계산
+	// DB 荑쇰━�뿉�꽌 �궗�슜�븷 start, end媛� 怨꾩궛
 	public void calcStartEnd(int nowPage, int cntPerPage) {
 		setEnd(nowPage * cntPerPage);
 		setStart(getEnd() - cntPerPage + 1);
