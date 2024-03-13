@@ -44,7 +44,7 @@
 						<button>
 			                <div class="grid grid-cols-6 gap-4">
 			                    <div class="w-24 h-24 bg-gray-200" style="width: 280px; height: 230px;">
-			                        <img src="resources/product_img/${dto.p_name}/${dto.p_picture}">
+			                        <img src="resources/product_img/${dto.p_picture}">
 			                        <h2 class="text-sm mt-2" align="left">${dto.p_name}</h2>
 		                    		<p class="text-sm text-gray-600" align="left">${dto.p_price}원</p>
 			                    </div>
