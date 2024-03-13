@@ -14,6 +14,7 @@
 		<typeAlias type="com.korea.mall.dto.ProductDTO" alias="product"/>
 		<typeAlias type="com.korea.mall.dto.BasketDTO" alias="basket"/>
 		<typeAlias type="com.korea.mall.dto.FileDTO" alias="file"/>
+		<typeAlias type="com.korea.mall.dto.OrderDTO" alias="order"/>
 	</typeAliases>
 
 </configuration>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.korea.mall.dto.BasketDTO;
 import com.korea.mall.dto.OrderDTO;
 import com.korea.mall.dto.ProductDTO;
+import com.korea.mall.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,5 +28,9 @@ public class OrderDAO {
 	 public int insert(OrderDTO dto) {
 		 return sqlSession.insert("order.orderhistory_insert", dto);
 	 }
+	 public List<OrderDTO> selectOrderList(String u_id){
+		 return sqlSession.selectList("order.orderList", u_id);
+	 }
+	 
 	 
 }

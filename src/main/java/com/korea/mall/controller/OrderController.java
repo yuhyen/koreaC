@@ -69,11 +69,27 @@ public class OrderController {
 	}
 	
 	@RequestMapping("orderhistory_page")
-	public String orderhistory_page() {
+	public String orderhistory_page(Model model) {
+			UserDTO uesrdto = (UserDTO)session.getAttribute("u_id");
+			List<OrderDTO> order = orderService.selectOrderList();
 			
+			model.addAttribute("order", order);
+			model.addAttribute("user", uesrdto);	
 		return "order/orderhistory_page";
 	}
+	
 
+	
+	@RequestMapping("histroy_search")
+	@ResponseBody
+	public String history_search(@RequestBody HashMap<String, Object> jsonString) {
+		System.out.println(jsonString);
+		
+		return null;
+	}
+
+	
+	
 	@RequestMapping("user_update_login")
 	public String mypage_login() {
 		
@@ -131,9 +147,9 @@ public class OrderController {
 		int res = orderService.insertorder(jsonString);
 		
 		if (res >= 1) {
-			return "[{'param' : yes}]";
+			return "[{'param' : 'yes'}]";
 		}
-		return "[{'param' : no}]";
+		return "[{'param' : 'no'}]";
 
 
 

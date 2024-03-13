@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,29 +9,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order History</title>
     <script src="https://cdn.tailwindcss.com"></script>
+     <script src="resources/js/HttpRequest.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
         }
     </style>
+     <script type="text/javascript">
+    
+    	function search(){
+			let orderstatus = document.getElementById('order-status').value;
+			let startdate = document.getElementById('start-date').value;
+			let enddate = document.getElementById('end-date').value;
+			let userid = document.getElementById('userid').value;
+			
+			let jsonString = {
+					orderstatusjs : orderstatus,
+					startdatejs : startdate,
+					enddatejs : enddate,
+					useridjs : userid		
+			}
+			let url = "histroy_search";
+			let param = JSON.stringify(jsonString);
+			
+			sendRequestContent(url, param, searchCallback, "POST" , false , "application/json");	
+		}    
+    	
+    	function searchCallback(){
+    		if(xhr.readyState == 4 && xhr.status == 200){
+        		let data = xhr.responseText;
+    			let json = (new Function('return' + data))();
+    		}
+    	}
+    </script>
 </head>
 
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">
-                <h1 class="text-xl font-semibold mb-2">Order History</h1>
+                <h1 class="text-xl font-semibold mb-2">주문 내역</h1>
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <span class="mr-2">User Name:</span>
-                        <span class="font-semibold">ooo님</span>
+                        <span class="mr-2"></span>
+                        <span class="font-semibold">${user.u_username } 님</span>
                     </div>
                     <div class="flex items-center">
-                        <label for="order-status" class="mr-2">Order Status:</label>
+                        <label for="order-status" class="mr-2">주문 상태:</label>
                         <select id="order-status" class="bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option>Shipping</option>
-                            <option>Delivered</option>
+                            <option>--전체--</option>
+                            <option>배송중</option>
+                            <option>배송완료</option>
                         </select>
                     </div>
                 </div>
@@ -43,8 +73,9 @@
                         <label for="end-date" class="mr-2">To:</label>
                         <input type="date" id="end-date" class="bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value="2024-03-13">
                     </div>
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Search
+                    <input type="hidden" id="userid" value="${user.u_id }">
+                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="search()">
+                        조회
                     </button>
                 </div>
             </div>
@@ -57,50 +88,72 @@
                                     <thead class="bg-gray-50">
                                         <tr>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Order Number
+                                                상품 번호
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Image
+                                                이미지
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Product Info
+                                                상품 정보
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Quantity
+                                                수량
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Purchase Amount
+                                                상품구매금액
                                             </th>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Status
+                                                배송지
+                                            </th>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                주문처리상태
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
+                                    
+                                    <c:forEach items="${order }" var="arr" varStatus="i">
+                                    		
+                                    <tbody class="bg-white divide-y divide-gray-200" class="tbody">
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">4</div>
+                                                <div class="text-sm text-gray-900">${arr.o_ordernum }</div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <img src="https://source.unsplash.com/random/128x128?clothes" alt="Product Image" class="h-12 w-12 rounded-full">
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">Blue Shirt</div>
+                                                <div class="text-sm text-gray-900">${arr.o_proname },
+                                                									${arr.o_size },
+                                                									${arr.o_pabrice }
+                                                </div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">1</div>
+                                                <div class="text-sm text-gray-900">${arr.o_quantity }</div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">30000원</div>
+                                                <div class="text-sm text-gray-900">${arr.o_price } 원</div>
+                                            </td>
+                                             <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="text-sm text-gray-900">${arr.o_addres } 원</div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    Shipping
+                                                    ${arr.o_state}
                                                 </span>
                                             </td>
                                         </tr>
-                                        <!-- More rows... -->
                                     </tbody>
+                                     <c:if test="${order[i.index].o_ordernum < order[i.index + 1].o_ordernum }">
+<!-- class="bg-gray-200"-->            <thead> 
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" colspan="7">
+                                            <br>
+                                            <br>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                              		</c:if>
+                                    </c:forEach>
                                 </table>
                             </div>
                         </div>
@@ -110,6 +163,5 @@
         </div>
     </div>
 </body>
-
 </html>
 

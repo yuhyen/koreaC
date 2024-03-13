@@ -149,7 +149,13 @@ private final OrderDAO orderDAO;
 		
  }
  
- 
+  public List<OrderDTO> selectOrderList(){
+	  UserDTO userdto = (UserDTO)session.getAttribute("u_id");
+	  
+	  
+	  return orderDAO.selectOrderList(userdto.getU_id());
+	  
+  }
  
  
  
