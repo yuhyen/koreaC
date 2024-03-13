@@ -21,7 +21,7 @@ public class BasketDTO {
 	private int p_num;
 	private int p_price;
 	private int p_id;
-	private int picture_count;
+	
 	
 	
 }

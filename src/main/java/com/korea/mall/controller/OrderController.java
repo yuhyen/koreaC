@@ -1,5 +1,6 @@
 package com.korea.mall.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.korea.mall.dao.LoginDAO;
 import com.korea.mall.dao.UserDAO;
 import com.korea.mall.dto.BasketDTO;
+import com.korea.mall.dto.OrderDTO;
 import com.korea.mall.dto.UserDTO;
 import com.korea.mall.service.OrderService;
 
@@ -65,7 +70,7 @@ public class OrderController {
 	
 	@RequestMapping("orderhistory_page")
 	public String orderhistory_page() {
-		
+			
 		return "order/orderhistory_page";
 	}
 
@@ -120,18 +125,18 @@ public class OrderController {
 	}
 	
 	@RequestMapping("order_pay")
-	 
+	@ResponseBody
 	public String order_pay(@RequestBody HashMap<String, Object> jsonString) {
-//		Integer u_idx, String message, Integer p_num, Integer b_idx,
-//		System.out.println(u_idx);
-//		System.out.println(message);
-//		System.out.println(p_num);
-//		System.out.println(b_idx);
-		System.out.println(jsonString);
 		
-		System.out.println("------------------------");
+		int res = orderService.insertorder(jsonString);
 		
-		return null;
+		if (res >= 1) {
+			return "[{'param' : yes}]";
+		}
+		return "[{'param' : no}]";
+
+
+
 	}
 	
 	

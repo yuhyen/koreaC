@@ -35,6 +35,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and B.B_NUM = P.P_NUM
 	</select>
 	
+	<select id="selectSEQ" resultType="int">
+		select SEQ_ORDER_NUM.nextval FROM DUAL
+	</select>
+	
+	<select id="productall" resultType="product" parameterType="Integer">
+			select * from TB_PRODUCT
+			WHERE P_NUM IN
+			<foreach collection="list" index="index" item="dto" open="(" close=")" separator=",">
+				#{dto}
+			</foreach>
+	</select>
+	
+	<insert id="orderhistory_insert">
+	insert into TB_ORDERHISTORY values(#{o_ordernum}, #{o_num}, #{o_id}, #{o_picture}, default, #{o_addres}, #{o_message}, #{o_name}, #{o_quantity}, #{o_price}, #{o_size}, #{o_pabrice}, #{o_color}, sysdate, #{o_email}, #{o_tel}, #{o_proname})
+	</insert>
+	
+	<delete id="order_basket_deleteList">
+		DELETE FROM TB_BASKET 
+		WHERE B_IDX IN
+		<foreach collection="list" index="index" item="b_idxlist" open="(" close=")" separator=",">
+				#{b_idxlist}
+			</foreach>
+		
+	</delete>
+	
 </mapper>
 
 
