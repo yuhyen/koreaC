@@ -57,8 +57,9 @@ public class BoardService {
 	
 	
 	public Object selectDetail(BoardDTO param) {
-		
-		return (List<Object>) boardDao.selectDetail(param);
+		String reply = param.getReply() == null || param.getReply().equals("") ?  "1" : param.getReply();
+		param.setReply(reply);
+		return boardDao.selectDetail(param);
 	}
 	
 	
@@ -81,12 +82,10 @@ public class BoardService {
 		
 		if(param.getSeq() == null || param.getSeq().equals("")) {
 			seq = boardDao.selectKey();
-			reply = seq;
-			
 		}else if(param.getSeq() != null || !param.getSeq().equals("")) {
 			seq = param.getSeq();
-			reply  = boardDao.selectReply(seq);
 		}
+		reply  = boardDao.selectReply(seq);
 		crtr = param.getCrtr() == null ? reply : param.getCrtr();
 		deep = param.getDeep() == null ? reply : param.getDeep();
 		imgPath = param.getImgPath() == null ? "" : param.getImgPath();

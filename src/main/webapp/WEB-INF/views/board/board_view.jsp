@@ -14,27 +14,30 @@
 <script src="resources/js/HttpRequest.js"></script>
 <body>
 
-<div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+<div id="app" class="container mx-auto mt-10 p-6 bg-white rounded-lg">
 	  <div class="flex justify-between items-center mb-6">
             <div class="space-x-4">
                 <a id="boardName" href="#" class="text-lg font-semibold text-blue-600 hover:text-blue-800"></a>
             </div>
-            <input class="w-9/12 px-4 py-2 text-black rounded" id="title" type="text"/>
-			<label class="text-sm font-semibold text-blue-600"> 공지 </label><input class="w-1/12 px-1 py-1 text-black rounded" id="noticeYn" type="checkBox"/>
+            <input class="w-9/12 px-4 py-2 text-black rounded" id="title" type="text" readOnly />
+			<label class="text-sm font-semibold text-blue-600"> 공지 </label><input class="w-1/12 px-1 py-1 text-black rounded" id="noticeYn" type="checkBox" disabled/>
         </div>
     
-    <div id="viewer">
+    <div id="viewer" class="bg-gray-200 rounded-lg">
     
     </div>
     <div id="regBtnGrp" class="flex justify-end mt-4 space-x-2">
-    	<button id="btnUpd" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="updateBoard">수정</button>
+    	<button id="btnrel" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="reply">답글</button>
+    	<button id="btnUpd" style="display:none;" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="update">수정</button>
     	<button id="btnCel" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="cancel">뒤로가기</button>
     </div>
 </div>
+
     <!-- TUI 에디터 JS CDN -->
     <script>
     
     let seq = "";
+    let chatIcon = document.getElementById("chatIcon");
     let list;
     window.onload = () => { 
     	const qa =  location.search
@@ -55,7 +58,9 @@
       					elName : "detail"+idx
       				 , content : obj.B_CONTENTS
       				 , index : idx
+      				 , updateYn : returnObj.update
       			}
+      			
       			if(document.getElementById("boardName").text == '' || document.getElementById("boardName").text === ''){
       				getBoardName(obj.B_CATEGORY);
       			}
@@ -63,6 +68,7 @@
       			if(document.getElementById("title").value == '' || document.getElementById("title").text === ''){
       				document.getElementById("title").value = obj.B_TITLE;
       			}
+      			
       			createView(input);
       			
       		});
@@ -75,19 +81,48 @@
       	}
     	
     }
+    let btnController = (input) =>{
+    	
+    	let index = input.index;
+    	let updateYn = input.updateYn;
+    	
+    	//update가 Y일때만
+    	if(updateYn == "Y"){
+    		//수정버튼 활성화
+    		document.getElementById("btnUpd").style.display = "";
+    		
+	    	//index가 0번이면 제목 , 공지여부 수정 가능 리드온니 변경
+	    	if(input.index == 0){
+	    		
+	    		document.getElementById("title").readOnly = false;
+	    		document.getElementById("noticeYn").disabled = false;
+	    	}
+    	}
+    	
+    	
+    }
+    
     
     let makeViewElement = (input) =>{
     	let viewDiv = document.getElementById("viewer");
     	let newSpan = document.createElement("span");
     	let outerDiv = document.createElement("div");
     	let newDiv = document.createElement("div");
-    	let px = input.index * 4;
-    	outerDiv.classList.add("px-"+px , "py-2");
+    	let reDiv = document.createElement("div");
+    	let px = 2+(input.index * 8);
     	
-    	newSpan.textContent = "아이디자리";
+    	outerDiv.classList.add("pl-"+px , "py-2" , "pr-2");
+	    	
+    	reDiv.textContent = "↪";
     	
+    	
+      	newSpan.textContent = "아이디자리 ";
     	newDiv.id = input.elName
     	newDiv.classList.add("mx-auto", "mt-10" ,"p-6" ,"bg-white" ,"shadow-lg" ,"rounded-lg");
+    	
+    	if(input.index != 0 || input.index != "0") {
+    		newSpan.textContent = "↪" + "아이디자리";
+    	}
     	
     	outerDiv.appendChild(newSpan);
     	outerDiv.appendChild(newDiv);
@@ -100,6 +135,7 @@
    		let content = input.content;
    		
    		makeViewElement(input);
+   		btnController(input);
    	 
    	 	toastui.Editor.factory({
    	      el : document.querySelector("#"+elName),
@@ -111,12 +147,13 @@
 	let sendObj = {
     		
             seq : ""
+            
 	}
     
     let setSendObj = (seq) =>{
     	sendObj = {
     	            seq : seq
-    		}
+    	}
     	
     	return sendObj;
     }
@@ -144,7 +181,7 @@
     	    url = "";
         	break;
     	  default:
-    		  name = "게시판"
+    		  name = ""
     	}
     	
 		nameEl.text = name;
@@ -156,13 +193,14 @@
     new Vue({
         el: '#app',
         methods: {
-              updateBoard:function(){
+              update:function(){
               	alert("수정 클릭");
-              	
               	sendDate("update");
-				console.log("update end")
 				
               },
+              reply:function(){
+                	alert("답글 클릭");
+                },
               cancel:function(){
             	alert("취소 클릭")  
             	history.back()

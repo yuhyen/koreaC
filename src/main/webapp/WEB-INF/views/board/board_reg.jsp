@@ -50,18 +50,86 @@
     <script>
     
     let typeCategory = "";
+    let seq ="";
+    let reply ="";
+    let noticeYn = "";
+    let title = "";
+    let contents = "";
     
     window.onload = () => { 
     	const qa =  location.search
     	const urlParam = new URLSearchParams(qa);
-    	typeCategory = urlParam.get("type") 
-    	console.log(typeCategory);
-    	getBoardName(urlParam.get("type"))
+    	
+    	typeCategory =  urlParam.get("type");
+    	seq = urlParam.get("seq")
+    	reply = urlParam.get("reply")
+    	
+    	if(typeCategory != undefined || typeCategory != "" || typeCategory != null){
+	    	getBoardName(urlParam.get("type"))
+    	}
+    	console.log(seq)
+    	if(seq != null){
+	    	alert(seq);
+	    	setSendObj(seq , reply , "" , "" , "" , "" , "");
+	    	sendDate("detailOne");
+	    	if(xhr.status == "200"){
+	    		let returnObj = JSON.parse(xhr.response);
+	    		let data = returnObj.data;
+	    		
+// 	    		B_CATEGORY
+// 	    		: 
+// 	    		"qna"
+// 	    		B_CONTENTS
+// 	    		: 
+// 	    		"<p>내용을 입력해 주세요.1231412412</p>"
+// 	    		B_CRTR
+// 	    		: 
+// 	    		"126"
+// 	    		B_DEEP
+// 	    		: 
+// 	    		"126"
+// 	    		B_MOD_DATE
+// 	    		: 
+// 	    		1709766860000
+// 	    		B_MOD_USER
+// 	    		: 
+// 	    		9999
+// 	    		B_REG_DATE
+// 	    		: 
+// 	    		1709766860000
+// 	    		B_REG_USER
+// 	    		: 
+// 	    		9999
+// 	    		B_REPLY
+// 	    		: 
+// 	    		"1"
+// 	    		B_SEQ
+// 	    		: 
+// 	    		"126"
+// 	    		B_TITLE
+// 	    		: 
+// 	    		"제목테스트"
+	    		typeCategory = data.B_CATEGORY;
+	    		seq =data.B_SEQ;
+	    		reply =data.B_REPLY;
+	    		noticeYn =data.B_NOTICE_YN;
+	    		title = data.B_TITLE;
+	    		contents = data.B_CONTENTS;
+	    		
+	    		getBoardName(typeCategory);
+	    		document.getElementById("title").value = data.B_TITLE;
+	    		editor.setHTML(contents);
+	    		
+	    		
+	    	}
+    	}
+		    	
     }
     
     let sendObj = {
     		
             seq : ""
+         ,  reply : ""
     	 ,  category : ""
     	 ,	noticeYn : "N"
 		 ,  files : "files"
@@ -88,7 +156,7 @@
     	    url = "";
         	break;
     	  default:
-    		  name = "게시판"
+    		  name = ""
     	}
     	
 		nameEl.text = name;
@@ -97,9 +165,10 @@
 		return name;
     } 
     
-    let setSendObj = (seq , category , noticeYn , files , title , contents) =>{
+    let setSendObj = (seq , reply , category , noticeYn , files , title , contents) =>{
     	sendObj = {
     	            seq : seq
+    	         ,  reply : reply
     	    	 ,  category : category
     	    	 ,	noticeYn : noticeYn
     			 ,  files : files
@@ -147,7 +216,7 @@
 				//글제목 관련
 				let title = document.getElementById("title").value;
 				let contents = editor.getHTML();
-              	setSendObj("" , typeCategory , noticeYn , "" , title , contents);
+              	setSendObj("" , "" , typeCategory , noticeYn , "" , title , contents);
               	sendDate("insert");
               	console.log(xhr);
               	if(xhr.status == "200"){
