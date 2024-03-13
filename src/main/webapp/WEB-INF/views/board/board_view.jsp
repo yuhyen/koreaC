@@ -35,7 +35,7 @@
     <script>
     
     let seq = "";
-    
+    let list;
     window.onload = () => { 
     	const qa =  location.search
     	const urlParam = new URLSearchParams(qa);
@@ -47,7 +47,7 @@
       	if(xhr.status == "200"){
       		let returnObj = JSON.parse(xhr.response);
       		console.log(returnObj.data);
-      		let list = returnObj.data;
+      		list = returnObj.data;
       		
       		list.forEach( (obj , idx)=>{
       			console.log(obj , idx);
@@ -55,7 +55,6 @@
       					elName : "detail"+idx
       				 , content : obj.B_CONTENTS
       				 , index : idx
-      					
       			}
       			if(document.getElementById("boardName").text == '' || document.getElementById("boardName").text === ''){
       				getBoardName(obj.B_CATEGORY);
@@ -69,14 +68,11 @@
       		});
 //       		
       		
-      		
-      		
 			alert("detail end")
       	}else{
       		console.log("오류처리")
       		alert("detail 실패")
       	}
-
     	
     }
     
