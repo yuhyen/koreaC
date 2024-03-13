@@ -26,7 +26,7 @@
             <div class="mb-4">
                 <label for="recipient" class="block text-sm font-medium text-gray-700">받는사람</label>
                 <input type="text" id="recipient" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="${user.u_username }">
-                <input type="hidden" id="u_idx" value="${user.u_idx }">
+                <input type="hidden" id="u_id" value="${user.u_id }">
             </div>
             <div class="mb-4">
                 <label for="address" class="block text-sm font-medium text-gray-700">주소</label>
@@ -66,6 +66,7 @@
                     <input type="hidden" class="total" value="${order.p_price * order.b_quantity }">
                     <input type="hidden" class="p_num" value="${order.p_num }">
                     <input type="hidden" class="b_idx" value="${order.b_idx }">
+                    <input type="hidden" class="quantity" value="${order.b_quantity }">
                 </div>
                 
             </div>
@@ -124,12 +125,18 @@
     
     
     function pay(){
-    	let u_idx = document.getElementById("u_idx").value;
+    	let u_username = document.getElementById("recipient").value;
+    	let u_id = document.getElementById("u_id").value;
+    	let u_addres = document.getElementById("address").value;
+    	let u_tel = document.getElementById("phone").value;
+    	let u_email = document.getElementById("email").value;
     	let message = document.getElementById("message").value;
     	let p_num = document.getElementsByClassName("p_num");
     	let b_idx = document.getElementsByClassName("b_idx");
+    	let quantity = document.getElementsByClassName("quantity");
     	let p_numTotal = [];
     	let b_idxTotal = [];
+    	let quantityTotal = [];
     	
     	for(i =0; i < p_num.length; i++){
 //     		p_numTotal = p_numTotal + p_num[i].value + ",";
@@ -139,22 +146,29 @@
     	
     	for(i =0; i < b_idx.length; i++){
 //     		b_idxTotal = b_idxTotal + b_idx[i].value + ","; 
+			b_idxTotal.push(b_idx[i].value);	
     	}
     	
-    	
+    	for(i = 0; i < quantity.length; i++){
+    		quantityTotal.push(quantity[i].value);
+    	}
     	
     	let jsonString = {
-    			u_idxjs : u_idx,
+    			u_usernamejs : u_username,
+    			u_idjs : u_id,
+    			u_addresjs : u_addres,
+    			u_teljs : u_tel,
+    			u_emailjs : u_email,
     			messagejs : message,
     			p_numjs : p_numTotal,
-    			b_idxjs : b_idxTotal
+    			b_idxjs : b_idxTotal,
+    			quantityjs : quantityTotal
     	}
     	
     	
     	
     	
     	let url = "order_pay";
-//     	param = "u_idx=" + u_idx + "&message=" + message + "&p_num=" + p_num[0].value + "&b_idx=" + b_idx[0].value + "&jsonString=" + JSON.stringify(jsonString);
     	param = JSON.stringify(jsonString);
     	
 //     	sendRequest(url, param, paycallBack, "POST");
@@ -164,7 +178,16 @@
     
     function paycallBack(){
     	if(xhr.readyState == 4 && xhr.status == 200){
-    		
+    		let data = xhr.responseText;
+			let json = (new Function('return' + data))();
+			
+			if(json[0].param == 'yes'){
+				alert("결제 성공");
+				location.href = 'main';
+			}
+			if(json[0].param == 'no'){
+				alert("결제 실패");
+			}
     	}
     }
     

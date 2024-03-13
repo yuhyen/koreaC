@@ -28,7 +28,9 @@ public class CustomInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-	
+		
+		
+			String mainurl = "";
 
 			HttpSession session = request.getSession();
 			UserDTO u_id = (UserDTO)session.getAttribute("u_id");
@@ -50,15 +52,23 @@ public class CustomInterceptor implements HandlerInterceptor {
 	        	
 	            String line;
 	            while ((line = br.readLine()) != null) {
+	            	
 	                //기본 URL값에 파일에 있는 주소값 더해서 적용 
-	                if (request.getRequestURL().toString().equals(url+line) && u_id == null) {
-	                    response.sendRedirect(request.getContextPath() + "/login_form");
-	                    return false;
+	                if (request.getRequestURL().toString().equals(url+line)) {
+	                	if(u_id == null) {
+		                	session.setAttribute("line",line);
+		                    response.sendRedirect(request.getContextPath() + "/login_form");
+		                    return false;
+	                	}
 	                }
+	                
 	            }
+	           
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
+	        
+	  
 	        
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
