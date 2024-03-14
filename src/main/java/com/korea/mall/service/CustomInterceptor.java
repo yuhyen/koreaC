@@ -46,7 +46,10 @@ public class CustomInterceptor implements HandlerInterceptor {
 			resourceSrc += "resources/pageURL/pageURL";
 			
 			//System.out.println(resourceSrc);
-
+			
+			//System.out.println(request.getParameter("type"));
+		
+			
 	        // 파일에서 URL을 읽어와 처리
 	        try (BufferedReader br = new BufferedReader(new FileReader(resourceSrc))) {
 	        	
@@ -56,20 +59,21 @@ public class CustomInterceptor implements HandlerInterceptor {
 	                //기본 URL값에 파일에 있는 주소값 더해서 적용 
 	                if (request.getRequestURL().toString().equals(url+line)) {
 	                	if(u_id == null) {
+	                		if(request.getParameter("type")!=null) {
+	                			session.setAttribute("line", line+"?type="+request.getParameter("type"));
+	                			 response.sendRedirect(request.getContextPath() + "/login_form");
+	 		                    return false;
+	                		}
 		                	session.setAttribute("line",line);
 		                    response.sendRedirect(request.getContextPath() + "/login_form");
 		                    return false;
 	                	}
 	                }
-	                
 	            }
-	           
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-	        
-	  
-	        
+
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
 

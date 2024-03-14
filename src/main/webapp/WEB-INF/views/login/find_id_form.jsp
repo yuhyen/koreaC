@@ -43,8 +43,7 @@
 				alert('이름이 존재하지 않습니다.');
 			}else if(json[0].param=='no_u_email'){
 				alert('이메일이 틀립니다.');
-			}else{
-				
+			}else{	
 				alert('회원님의 아이디는 '+json[0].u_id+'입니다.');			
 				location.href='login_form';
 			}
