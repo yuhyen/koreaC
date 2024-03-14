@@ -11,12 +11,13 @@
 <script type="text/javascript">
 	function search(){
 		let p_name = document.getElementById("p_name").value.trim();
+		let p_id = document.getElementById("p_id").value.trim();
 		
 		if(p_name == ''){
 			alert("상품을 입력하세요")
 		}
 		
-		location.href = 'p_search?p_name='+p_name
+		location.href = "p_search?p_name="+p_name+"&p_id="+p_id
 	}
 </script>
 <style type="text/css">
@@ -47,13 +48,19 @@
 	<div class="flex overscroll-auto">
 		<div class="py-6 px-4 sm:px-6 lg:px-8">
 			<div>
+				<select id="p_id">
+					<option value="1">Outer</option>
+					<option value="2">Top</option>
+					<option value="3">Bottom</option>
+					<option value="4">Suit</option>
+				</select>
 		  		<input type="text" id="p_name" placeholder="상품">
 				<input type="button" value="검색" onclick="search()">
 		  	</div>
 		  	<br>
 		  	<hr>
 		  	<br>
-		  	<div class="grid gap-3 grid-cols-4 grid-rows-4">
+		  	<div class="grid gap-3 grid-cols-3 grid-rows-3">
 			<c:forEach var="dto" items="${list}">
 			<form action="detail" name="f" method="post">
 			<input type="hidden" name="p_num" value="${dto.p_num}">
@@ -71,6 +78,9 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div align="center">
+	${pageMenu}
 </div>
 </body>
 	<jsp:include page="/WEB-INF/views/main/footer.jsp"></jsp:include>

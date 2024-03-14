@@ -82,5 +82,9 @@
 	</table>
 	</div>
 </div>
+<div align="center">
+	${pageMenu}
+</div>
 </body>
+<jsp:include page="/WEB-INF/views/main/footer.jsp"></jsp:include>
 </html>

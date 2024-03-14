@@ -115,7 +115,7 @@
 			 <div class="mb-6">	
 			 	<div class="flex items-center justify-between mb-1">
                 <label for="u_email" class="block text-gray-700 text-sm font-bold mb-2">이메일</label>
-                <input type="button" id="button" value="인증번호 전송" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-1 rounded focus:outline-none focus:shadow-outline" onclick="send(this.form)">
+                <input type="button" id="button" value="인증번호 전송" class="bg-white-500 hover:bg-white-700 text-black font-bold py-1 px-1 rounded focus:outline-none focus:shadow-outline" onclick="send(this.form)">
              	</div>
           
              	<div class="input-group"> 
@@ -129,8 +129,8 @@
             
  
 			<div class="flex items-center justify-between mb-3">
-                <input type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="비밀번호찾기"  onclick="check()"/>
-                <input type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="뒤로가기"  onclick="location.href='login_form'"/>
+                <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="비밀번호찾기"  onclick="check()"/>
+                <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="뒤로가기"  onclick="location.href='login_form'"/>
             </div>
 	</form>
 	</div>
