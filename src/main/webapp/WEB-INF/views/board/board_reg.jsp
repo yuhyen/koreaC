@@ -41,8 +41,8 @@
     	
     </div>
     <div id="regBtnGrp" class="flex justify-end mt-4 space-x-2">
-    	<button id="btnReg" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="registBoard">등록</button>
-    	<button id="btnUpd" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="updateBoard">수정</button>
+    	<button id="btnReg" style="display:none;" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="registBoard">등록</button>
+    	<button id="btnUpd" style="display:none;" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="updateBoard">수정</button>
     	<button id="btnCel" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="cancel">취소</button>
     </div>
 </div>
@@ -50,18 +50,80 @@
     <script>
     
     let typeCategory = "";
+    let seq ="";
+    let reply ="";
+    let noticeYn = "";
+    let title = "";
+    let contents = "";
     
     window.onload = () => { 
     	const qa =  location.search
     	const urlParam = new URLSearchParams(qa);
-    	typeCategory = urlParam.get("type") 
-    	console.log(typeCategory);
-    	getBoardName(urlParam.get("type"))
+    	
+    	typeCategory =  urlParam.get("type");
+    	seq = urlParam.get("seq")
+    	reply = urlParam.get("reply")
+    	
+    	if(typeCategory != undefined || typeCategory != "" || typeCategory != null){
+	    	getBoardName(urlParam.get("type"))
+    	}
+    	console.log("seq" , seq)
+    	console.log("reply " , reply)
+    	if(seq != null){
+	    	alert(seq);
+	    	setSendObj(seq , reply , "" , "" , "" , "" , "");
+	    	sendDate("detailOne");
+	    	if(xhr.status == "200"){
+	    		let returnObj = JSON.parse(xhr.response);
+	    		let data = returnObj.data;
+	    		typeCategory = data.B_CATEGORY;
+// 	    		seq =data.B_SEQ;
+// 	    		reply =data.B_REPLY;
+	    		noticeYn =data.B_NOTICE_YN;
+	    		title = data.B_TITLE;
+	    		contents = data.B_CONTENTS;
+	    		getBoardName(typeCategory);
+	    		
+	    		document.getElementById("title").value = data.B_TITLE;
+	    		if(noticeYn == "Y"){
+	    			document.getElementById("noticeYn").checked = true;
+	    		} else if(noticeYn == "N"){
+	    			document.getElementById("noticeYn").checked = false;
+	    		}
+		    		
+	    		if(reply != null){
+		    		editor.setHTML(contents);
+		    		
+	    		}else{
+	    			document.getElementById("title").readOnly = true;
+	    			document.getElementById("noticeYn").disabled = true;
+	    		}
+	    	}
+    	}
+
+//     	seq가 있고 reply가 없으면 seq reply가 둘다 없을때 등록버튼 활성화
+// 	   	btnReg
+		if(seq !=null  && reply == null){
+			document.getElementById("btnReg").style.display = ""; 
+		}
+	   	
+// 	   	seq가 있고 reply있으면 수정 활성화
+//     	btnUpd
+	   	if(seq != null && reply != null){
+			document.getElementById("btnUpd").style.display = "";
+	   	}
+	   	
+	   	//또는 아무것도없을때도 등록버튼을 활성화
+	   	if(seq ==null  && reply == null){
+			document.getElementById("btnReg").style.display = ""; 
+		}
+			    	
     }
     
     let sendObj = {
     		
             seq : ""
+         ,  reply : ""
     	 ,  category : ""
     	 ,	noticeYn : "N"
 		 ,  files : "files"
@@ -88,7 +150,7 @@
     	    url = "";
         	break;
     	  default:
-    		  name = "게시판"
+    		  name = ""
     	}
     	
 		nameEl.text = name;
@@ -97,9 +159,10 @@
 		return name;
     } 
     
-    let setSendObj = (seq , category , noticeYn , files , title , contents) =>{
+    let setSendObj = (seq , reply , category , noticeYn , files , title , contents) =>{
     	sendObj = {
     	            seq : seq
+    	         ,  reply : reply
     	    	 ,  category : category
     	    	 ,	noticeYn : noticeYn
     			 ,  files : files
@@ -147,7 +210,7 @@
 				//글제목 관련
 				let title = document.getElementById("title").value;
 				let contents = editor.getHTML();
-              	setSendObj("" , typeCategory , noticeYn , "" , title , contents);
+              	setSendObj("" , "" , typeCategory , noticeYn , "" , title , contents);
               	sendDate("insert");
               	console.log(xhr);
               	if(xhr.status == "200"){

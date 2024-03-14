@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shopping Cart</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 <script src="resources/js/HttpRequest.js"></script>
@@ -59,16 +58,16 @@
 <!--   </div> -->
 	<div class="flex px-4 py-2 justify-center">
 		<div class="inline-flex items-center" v-for="(item, index) in pageNumList" :key="index">
-	        <button v-if="item === startPage" class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"  @click="prevPage">
+	        <button v-if="item === startPage" class="text-sm hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-l"  @click="prevPage">
 	            <
 	        </button>
-	        <button  class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4" @click="pageMove(item)">
+	        <button  class="text-sm hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4" @click="pageMove(item)">
 	        	
 	            <span v-if="item === nowPage" class="text-blue-600"> {{ item }}</span>  
 	            <span v-if="item !== nowPage" > {{ item }}</span>
 	            
 	        </button>
-	        <button v-if="item === endPage"  class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r"  @click="nextPage">
+	        <button v-if="item === endPage"  class="text-sm hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-r"  @click="nextPage">
 	            >
 	        </button>
 	        

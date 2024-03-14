@@ -61,7 +61,7 @@ public class LoginController {
 		
 		session.setAttribute("u_id",dto);
 		
-	
+		
 		//로그인에 성공한 경우
 		return "[{'param':'clear'}]";
 		

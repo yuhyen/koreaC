@@ -1,5 +1,6 @@
 package com.korea.mall.controller;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +62,7 @@ public class BoardController {
 	@RequestMapping(value = {"/board_reg"})
 	public ModelAndView reg() {
  		ModelAndView mv = new ModelAndView("/board/board_reg");
+ 		//세션 검사 필요함.
 		return mv;
 	}
 	
@@ -72,15 +74,48 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = {"/board_detail"})
-	public ModelAndView detail(@RequestBody HashMap<String, Object> param) {
+	public ModelAndView detailList(@RequestBody HashMap<String, Object> param) {
 		ModelAndView mv = new ModelAndView("jsonView");
 		UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY);
 		if(user == null) {
 			user = new UserDTO();
+			//임시
+			user.setU_idx(9999);
 		}
 		BoardDTO dto = new BoardDTO();
 		dto.setSeq((String) param.get("seq"));
-		Object output = service.selectDetail(dto);
+		List<HashMap<String, Object>> output = (List<HashMap<String, Object>>) service.selectDetail(dto);
+		
+		//마지막 글 수정 유무 판별
+		HashMap<String, Object> lastBoard = output.get(output.size()-1);
+		BigDecimal lastUser = (BigDecimal) lastBoard.get("B_REG_USER");
+		
+		if(user.getU_idx() == lastUser.intValue()) {
+			mv.addObject("update", "Y");
+		}else {
+			mv.addObject("update", "N");
+		}
+		mv.addObject("u_id", session.getAttribute(Const.U_SESSION_KEY));
+		mv.addObject("data", output);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = {"/board_detailOne"})
+	public ModelAndView detail(@RequestBody HashMap<String, Object> param) {
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		//세션체크 필요함
+		UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY);
+		if(user == null) {
+			user = new UserDTO();
+			//임시
+			user.setU_idx(9999);
+		}
+		BoardDTO dto = new BoardDTO();
+		dto.setSeq((String) param.get("seq"));
+		dto.setReply((String) param.get("reply"));
+		HashMap<String, Object> output = ((List<HashMap<String, Object>>) service.selectDetail(dto)).get(0);
 		mv.addObject("u_id", session.getAttribute(Const.U_SESSION_KEY));
 		mv.addObject("data", output);
 		
@@ -114,6 +149,7 @@ public class BoardController {
 	@RequestMapping(value = {"/board_update"})
 	public ModelAndView update(@RequestBody HashMap<String, Object> param) {
 		ModelAndView mv = new ModelAndView("jsonView");
+		
 		//세션체크 필요함.
 		UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY); 
 		if(user == null) {
@@ -121,7 +157,7 @@ public class BoardController {
 			user.setU_idx(9999);
 		}
 		BoardDTO dto = new BoardDTO();
-		
+		dto.setNoticeYn((String) param.get("noticeYn"));
 		dto.setTitle((String) param.get("title"));
 		dto.setContents((String) param.get("contents"));
 		dto.setUser(user.getU_idx());
@@ -132,7 +168,29 @@ public class BoardController {
 		mv.addObject(dto);
 		return mv;
 	}
-	
+	@RequestMapping(value = {"/board_reply"})
+	public ModelAndView reply(@RequestBody HashMap<String, Object> param) {
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		//세션체크 필요함.
+		UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY); 
+		if(user == null) {
+			user = new UserDTO();
+			user.setU_idx(9999);
+		}
+		BoardDTO dto = new BoardDTO();
+		
+		dto.setNoticeYn((String) param.get("noticeYn"));
+		dto.setTitle((String) param.get("title"));
+		dto.setContents((String) param.get("contents"));
+		dto.setUser(user.getU_idx());
+		dto.setRegUser(user.getU_idx());
+		dto.setModUser(user.getU_idx());
+		
+		dto = service.insert(dto);
+		mv.addObject(dto);
+		return mv;
+	}
 	
 	
 	@RequestMapping(value = {"/board_fileUpload.ajax"})
