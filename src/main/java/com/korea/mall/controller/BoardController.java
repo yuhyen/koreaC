@@ -157,6 +157,28 @@ public class BoardController {
 			user.setU_idx(9999);
 		}
 		BoardDTO dto = new BoardDTO();
+		dto.setNoticeYn((String) param.get("noticeYn"));
+		dto.setTitle((String) param.get("title"));
+		dto.setContents((String) param.get("contents"));
+		dto.setUser(user.getU_idx());
+		dto.setRegUser(user.getU_idx());
+		dto.setModUser(user.getU_idx());
+		
+		dto = service.insert(dto);
+		mv.addObject(dto);
+		return mv;
+	}
+	@RequestMapping(value = {"/board_reply"})
+	public ModelAndView reply(@RequestBody HashMap<String, Object> param) {
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		//세션체크 필요함.
+		UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY); 
+		if(user == null) {
+			user = new UserDTO();
+			user.setU_idx(9999);
+		}
+		BoardDTO dto = new BoardDTO();
 		
 		dto.setNoticeYn((String) param.get("noticeYn"));
 		dto.setTitle((String) param.get("title"));
