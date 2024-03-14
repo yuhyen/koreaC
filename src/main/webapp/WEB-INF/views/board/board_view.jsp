@@ -92,11 +92,11 @@
     		document.getElementById("btnUpd").style.display = "";
     		
 	    	//index가 0번이면 제목 , 공지여부 수정 가능 리드온니 변경
-	    	if(input.index == 0){
+// 	    	if(input.index == 0){
 	    		
-	    		document.getElementById("title").readOnly = false;
-	    		document.getElementById("noticeYn").disabled = false;
-	    	}
+// 	    		document.getElementById("title").readOnly = false;
+// 	    		document.getElementById("noticeYn").disabled = false;
+// 	    	}
     	}
     	
     	
@@ -150,9 +150,10 @@
             
 	}
     
-    let setSendObj = (seq) =>{
+    let setSendObj = (seq , reply) =>{
     	sendObj = {
     	            seq : seq
+    	           ,reply : reply
     	}
     	
     	return sendObj;
@@ -160,6 +161,7 @@
     
     	
     let sendDate = (dvCd) =>{
+    	
     	output = sendRequestContent("board_"+dvCd , JSON.stringify(sendObj) , "" ,"POST" , true , "application/json");
     }
     
@@ -185,7 +187,7 @@
     	}
     	
 		nameEl.text = name;
-		nameEl.href = "mall/board_list?type="+type;
+		nameEl.href = "/mall/board_list?type="+type;
 		
 		return name;
     } 
@@ -195,11 +197,18 @@
         methods: {
               update:function(){
               	alert("수정 클릭");
-              	sendDate("update");
-				
+              	let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+              	let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+              	let path = contextPath+"/board_reg?seq="+seq+"&reply="+list.length;
+              	location.href = path;
+              	
               },
               reply:function(){
-                	alert("답글 클릭");
+               	alert("답글 클릭");
+               	let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+              	let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+              	let path = contextPath+"/board_reg?seq="+seq;
+              	location.href = path;
                 },
               cancel:function(){
             	alert("취소 클릭")  

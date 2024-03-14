@@ -1,5 +1,6 @@
 package com.korea.mall.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.korea.mall.common.Common;
 import com.korea.mall.dao.ProductDAO;
 import com.korea.mall.dto.ProductDTO;
 import com.korea.mall.service.ProductService;
+import com.korea.mall.util.Paging;
 
 import lombok.RequiredArgsConstructor;
 
@@ -47,11 +50,32 @@ public class AdminController {
 	
 	// 상품 리스트 페이지
 	@RequestMapping("pList_form")
-	public String pList_form(Model model) {
-		List<ProductDTO> list = product_dao.selectList();
-
+	public String pList_form(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
+		int start = (page - 1) * Common.pList.BLOCKLIST + 1;
+		int end = start + Common.pList.BLOCKLIST - 1;
+		
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<ProductDTO> list = product_dao.selectList(map);
+		
+		// 전체 상품 수 조회
+		int rowTotal = product_dao.getRowTotal();
+		
+		// 페이지 메뉴 생성
+		String pageMenu = Paging.getPaging("pList_form",
+											page,
+											rowTotal, 
+											Common.Main.BLOCKLIST, 
+											Common.Main.BLOCKPAGE);
+		
+		request.getSession().removeAttribute("show");
+		
 		model.addAttribute("list",list);
-		return "admin/product_list";
+		model.addAttribute("pageMenu", pageMenu);
+		
+		return "admin/product_list.jsp?page="+page;
 	}
 	
 	// 상품 카테고리별

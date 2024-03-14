@@ -1,10 +1,13 @@
 package com.korea.mall.service;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.korea.mall.common.Common;
 import com.korea.mall.dto.ProductDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -17,8 +20,6 @@ public class ProductService {
 	
 	@Autowired
 	HttpServletRequest request;
-	
-	
 	
 	// 상품 수정 및 등록시 사진 업로드 
 	public ProductDTO photo_upload(ProductDTO dto) {
