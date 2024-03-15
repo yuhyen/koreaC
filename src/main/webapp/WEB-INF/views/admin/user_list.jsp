@@ -6,10 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
+<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 <body>
-	<table border="1" align="center">
-		<tr>
+<div class="container mx-auto p-6">
+	<div class="bg-white shadow-md rounded my-6">
+	<table class="divide-y divide-black text-center w-full">
+		<tr class="divide-x divide-black">
 			<th>회원번호</th>
 			<th>아이디</th>
 			<th>비밀번호</th>
@@ -21,7 +25,7 @@
 			<th>적립금</th>
 		</tr>
 		<c:forEach var="u" items="${list }">
-		<tr>
+		<tr class="divide-x divide-black">
 			<td>${u.u_idx }</td>
 			<td>${u.u_id }</td>
 			<td>${u.u_pwd }</td>
@@ -31,9 +35,10 @@
 			<td>${u.u_ip}</td>
 			<td>${u.u_total}</td>
 			<td>${u.u_reserve}</td>
-			
 		</tr>
 		</c:forEach>	
 	</table>
+	</div>
+</div>
 </body>
 </html>

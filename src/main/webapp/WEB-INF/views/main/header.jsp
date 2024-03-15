@@ -46,6 +46,7 @@
 		               <a href="delay" class="text-gray-500 hover:text-gray-900">Delay</a> <!-- 관리자로 로그인 했을 시 -->
 		               <a href="search" class="text-gray-500 hover:text-gray-900">Search</a>
 		               <a href="logout" class="text-gray-500 hover:text-gray-900">Logout</a>
+		               <a href="user" class="text-gray-500 hover:text-gray-900">User</a>
 		               <a href="pList_form" class="text-gray-500 hover:text-gray-900">Product</a>
 		           </nav>
             	</c:when>

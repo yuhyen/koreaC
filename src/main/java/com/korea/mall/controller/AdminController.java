@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.korea.mall.common.Common;
 import com.korea.mall.dao.ProductDAO;
+import com.korea.mall.dao.UserDAO;
 import com.korea.mall.dto.ProductDTO;
 import com.korea.mall.service.ProductService;
 import com.korea.mall.util.Paging;
@@ -24,8 +25,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminController {
 	
-	final ProductDAO product_dao;
-	final ProductService productService;
+	private final ProductDAO product_dao;
+	private final ProductService productService;
+	private final UserDAO user_dao;
 	
 	@Autowired
 	HttpServletRequest request;
@@ -124,5 +126,14 @@ public class AdminController {
 			return "redirect:pList_form";
 		}
 		return null;
+	}
+	
+	// 회원 관리
+	@RequestMapping(value = {"user"})
+	public String list(Model model) {
+		
+		model.addAttribute("list",user_dao.selectList());
+		
+		return "admin/user_list";
 	}
 }
