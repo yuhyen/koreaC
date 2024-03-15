@@ -64,6 +64,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT * FROM TB_ORDERHISTORY WHERE O_ID = #{u_id} ORDER BY O_ORDERNUM
 	</select>
 	
+	<select id="orderSearch" resultType="order">
+		SELECT * FROM TB_ORDERHISTORY WHERE O_ID = #{userid}
+	<choose>
+		<when test="startdate != 11111111  and enddate != 11111111 and orderstatus != null">
+		AND O_ORDER_DATE BETWEEN TO_DATE(#{startdate},'YYYYMMDD') AND TO_DATE(#{enddate},'YYYYMMDD')
+			AND O_STATE = #{orderstatus}
+			ORDER BY O_ORDERNUM
+		</when>
+		<when test="startdate != 11111111  and enddate != 11111111 and orderstatus == null">
+		AND O_ORDER_DATE BETWEEN TO_DATE(#{startdate},'YYYYMMDD') AND TO_DATE(#{enddate},'YYYYMMDD')
+			ORDER BY O_ORDERNUM
+		</when>
+		<when test="startdate != 11111111  and enddate == 11111111 and orderstatus == null">
+		AND O_ORDER_DATE >= TO_DATE(#{startdate},'YYYYMMDD')
+			ORDER BY O_ORDERNUM
+		</when>
+		<when test="startdate == 11111111  and enddate != 11111111 and orderstatus == null">
+		AND  TO_DATE(#{enddate},'YYYYMMDD')	>= O_ORDER_DATE
+			ORDER BY O_ORDERNUM
+		</when>
+		<when test="startdate == 11111111  and enddate == 11111111 and orderstatus != null">
+		AND O_STATE = #{orderstatus}
+			ORDER BY O_ORDERNUM
+		</when>
+		<when test="startdate == 11111111  and enddate == 11111111 and orderstatus == null">
+		ORDER BY O_ORDERNUM
+		</when>
+	</choose>	
+		
+		
+	</select>
 </mapper>
 
 

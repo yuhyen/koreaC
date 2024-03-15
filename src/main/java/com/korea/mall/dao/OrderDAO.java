@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.korea.mall.dto.BasketDTO;
 import com.korea.mall.dto.OrderDTO;
 import com.korea.mall.dto.ProductDTO;
+import com.korea.mall.dto.SearchDTO;
 import com.korea.mall.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,7 @@ public class OrderDAO {
 		 return sqlSession.selectList("order.orderList", u_id);
 	 }
 	 
-	 
+	 public List<OrderDTO> selectSearch(SearchDTO dto){
+		 return sqlSession.selectList("order.orderSearch", dto);
+	 }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.google.common.base.CharMatcher;
 import com.korea.mall.dao.BasketDAO;
 import com.korea.mall.dao.OrderDAO;
 import com.korea.mall.dao.ProductDAO;
@@ -19,6 +20,7 @@ import com.korea.mall.dao.UserupdateDAO;
 import com.korea.mall.dto.BasketDTO;
 import com.korea.mall.dto.OrderDTO;
 import com.korea.mall.dto.ProductDTO;
+import com.korea.mall.dto.SearchDTO;
 import com.korea.mall.dto.UserDTO;
 
 import lombok.RequiredArgsConstructor;
@@ -156,8 +158,89 @@ private final OrderDAO orderDAO;
 	  
   }
  
+// public List<OrderDTO> selectSearch(HashMap<String, Object> jsonString){
+//	 Object enddatejs = jsonString.get("enddatejs");
+//	 Object startdatejs = jsonString.get("startdatejs");
+//	 Object orderstatusjs = jsonString.get("orderstatusjs");
+//	 Object useridjs = jsonString.get("useridjs");
+//	 
+//	 String enddate = enddatejs.toString();
+//	 String startdate = startdatejs.toString();
+//	 String orderstatus = orderstatusjs.toString();
+//	 String userid = useridjs.toString();
+//
+//	 if(enddate == "") {
+//	 
+//		 enddate = "1111-11-11";
+//	 }
+//	 if(startdate == "") {
+//		startdate = "1111-11-11";
+//		
+//	 }
+//	 
+//	 
+//	 String str = "0123456789";
+//	 enddate = CharMatcher.anyOf(str).retainFrom(enddate);
+//	 startdate = CharMatcher.anyOf(str).retainFrom(startdate);
+//	
+//		 long psenddate = Integer.parseInt(enddate);
+//		 long psstartdate = Integer.parseInt(startdate);
+//	 
+//		 
+//		 
+//		 
+//	 if(orderstatus.equals("--전체--")) {
+//		 orderstatus = null;
+//	 }
+//	
+//	 SearchDTO serdto = new SearchDTO(); serdto.setEnddate(psenddate);
+//		  serdto.setOrderstatus(orderstatus); serdto.setStartdate(psstartdate);
+//		  serdto.setUserid(userid);
+//		  
+//		  List<OrderDTO> orderdto = orderDAO.selectSearch(serdto);
+//		 
+//	 
+//	 
+//	 return orderdto;
+// }
  
- 
- 
+ public List<OrderDTO> selectSearch(String orderstatus, String startdate, String enddate, String userid){
+	 
+	 if(enddate == "") {
+		 
+		 enddate = "1111-11-11";
+	 }
+	 if(startdate == "") {
+		startdate = "1111-11-11";
+		
+	 }
+	
+	 String str = "0123456789";
+	 enddate = CharMatcher.anyOf(str).retainFrom(enddate);
+	 startdate = CharMatcher.anyOf(str).retainFrom(startdate);
+	
+		 long psenddate = Integer.parseInt(enddate);
+		 long psstartdate = Integer.parseInt(startdate);
+	 
+		 
+		 
+		 
+	 if(orderstatus.equals("--전체--")) {
+		 orderstatus = null;
+	 }
+	
+	 	 SearchDTO serdto = new SearchDTO(); 
+	 	  serdto.setEnddate(psenddate);
+		  serdto.setOrderstatus(orderstatus); 
+		  serdto.setStartdate(psstartdate);
+		  serdto.setUserid(userid);
+		  
+		  List<OrderDTO> orderdto = orderDAO.selectSearch(serdto);
+		 
+	 
+	 
+	 return orderdto;
+	 
+ }
  
 }

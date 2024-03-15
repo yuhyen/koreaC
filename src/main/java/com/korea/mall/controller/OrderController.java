@@ -80,14 +80,31 @@ public class OrderController {
 	
 
 	
-	@RequestMapping("histroy_search")
-	@ResponseBody
-	public String history_search(@RequestBody HashMap<String, Object> jsonString) {
-		System.out.println(jsonString);
-		
-		return null;
-	}
+//	@RequestMapping("histroy_search")
+//	@ResponseBody
+//	public String history_search(@RequestBody HashMap<String, Object> jsonString, Model model) {
+//		
+//		List<OrderDTO> dto = orderService.selectSearch(jsonString);
+//		model.addAttribute("order", dto);
+//		int res = dto.size();
+//		if(res >= 1) {
+//			return "[{'param' : 'yes'}]";
+//		}
+//		
+//		return "[{'param' : 'no'}]";
+//	}
 
+	
+	@RequestMapping("history_search")
+	public String history_search(String orderstatus, String startdate, String enddate, String userid, Model model) {
+		List<OrderDTO> dto = orderService.selectSearch(orderstatus, startdate, enddate, userid);
+		UserDTO uesrdto = (UserDTO)session.getAttribute("u_id");
+		
+		model.addAttribute("order", dto);
+		model.addAttribute("user", uesrdto);
+		return  "order/orderhistory_page";
+	}
+	
 	
 	
 	@RequestMapping("user_update_login")
