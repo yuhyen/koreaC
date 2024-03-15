@@ -3,18 +3,12 @@ package com.korea.mall.service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,11 +39,9 @@ public class CustomInterceptor implements HandlerInterceptor {
 			//pageURL경로 추가
 			resourceSrc += "resources/pageURL/pageURL";
 			
-			//System.out.println(resourceSrc);
 			
-			//System.out.println(request.getParameter("type"));
-		
-			
+			if(u_id == null) {
+				
 	        // 파일에서 URL을 읽어와 처리
 	        try (BufferedReader br = new BufferedReader(new FileReader(resourceSrc))) {
 	        	
@@ -58,7 +50,31 @@ public class CustomInterceptor implements HandlerInterceptor {
 	            	
 	                //기본 URL값에 파일에 있는 주소값 더해서 적용 
 	                if (request.getRequestURL().toString().equals(url+line)) {
-	                	if(u_id == null) {
+	                	
+
+	                	Map<String, String[]> map = request.getParameterMap();
+	        			
+	                	StringBuilder urlString = new StringBuilder();
+	                    urlString.append("?");
+	                    for (String key : map.keySet()) {
+	                        for(String value : map.get(key)) {
+	                            urlString.append(key).append("=").append(value).append("&");
+	                        }
+	                    }
+	                    // 마지막 '&' 문자 제거를 위해 길이가 0보다 큰 경우에만 수행
+	                    if (urlString.length() > 0) {
+	                        urlString.setLength(urlString.length() - 1);
+	                    }
+	                    String param = urlString.toString();
+	                    
+	                    System.out.println(param);
+	        			
+	                    	if(param!="") {
+	                    		session.setAttribute("line", line+param);
+	                			 response.sendRedirect(request.getContextPath() + "/login_form");
+	 		                    return false;
+	                    	}
+	                	
 	                		if(request.getParameter("type")!=null) {
 	                			session.setAttribute("line", line+"?type="+request.getParameter("type"));
 	                			 response.sendRedirect(request.getContextPath() + "/login_form");
@@ -70,10 +86,11 @@ public class CustomInterceptor implements HandlerInterceptor {
 	                	}
 	                }
 	            }
-	        } catch (IOException e) {
+	       
+			catch (IOException e) {
 	            e.printStackTrace();
 	        }
-
+	}
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
 
