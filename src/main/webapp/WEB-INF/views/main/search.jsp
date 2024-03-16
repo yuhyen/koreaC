@@ -31,8 +31,7 @@
 <div class="relative h-full flex">
 	<aside class="float-left w-64 bg-white p-6 shadow-md">
        <div class="flex flex-col space-y-4">
-           <a href=""><button class="text-gray-700 font-semibold">New</button></a>
-           <a href=""><button class="text-gray-700 font-semibold">Top50</button></a>
+           <a href="main"><button class="text-gray-700 font-semibold">New</button></a>
            <a href="category?p_id=1"><button class="text-gray-700 font-semibold">Outer</button></a>
            <a href="category?p_id=2"><button class="text-gray-700 font-semibold">Top</button></a>
            <a href="category?p_id=3"><button class="text-gray-700 font-semibold">Bottom</button></a>

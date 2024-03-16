@@ -5,7 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="user">
 
 	<select id="user_list" resultType="user">
-		select * from TB_user order by u_idx
+		select * from
+		(select rank() over(order by u_idx desc) no, u.* from tb_user u)
+		where no between #{start} and #{end}
 	</select>
 	
 	<select id="loginCheck" parameterType="String" resultType="user">

@@ -16,6 +16,7 @@ import com.korea.mall.common.Common;
 import com.korea.mall.dao.ProductDAO;
 import com.korea.mall.dao.UserDAO;
 import com.korea.mall.dto.ProductDTO;
+import com.korea.mall.dto.UserDTO;
 import com.korea.mall.service.ProductService;
 import com.korea.mall.util.Paging;
 
@@ -130,9 +131,30 @@ public class AdminController {
 	
 	// 회원 관리
 	@RequestMapping(value = {"user"})
-	public String list(Model model) {
+	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
+		int start = (page - 1) * Common.uList.BLOCKLIST + 1;
+		int end = start + Common.uList.BLOCKLIST - 1;
 		
-		model.addAttribute("list",user_dao.selectList());
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<UserDTO> list = user_dao.selectList(map);
+		
+		// 전체 회원 수 조회
+		int rowTotal = product_dao.getRowTotal();
+		
+		// 페이지 메뉴 생성
+		String pageMenu = Paging.getPaging("user",
+											page,
+											rowTotal, 
+											Common.Main.BLOCKLIST, 
+											Common.Main.BLOCKPAGE);
+		
+		request.getSession().removeAttribute("show");
+		
+		model.addAttribute("list",list);
+		model.addAttribute("pageMenu", pageMenu);
 		
 		return "admin/user_list";
 	}

@@ -66,7 +66,7 @@
 <body>
 
 	<!-- <h1 id="header" class="bg-gray-50 flex text-4xl font-bold"><a href="main">KoreaMall</a></h1> -->
-
+	<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 	<div id="body" class="bg-gray-50 flex items-center justify-center h-screen">
 
 	<div class="bg-white shadow-lg rounded-lg p-8">
@@ -97,4 +97,5 @@
 	
 </div>
 </body>
+<jsp:include page="/WEB-INF/views/main/footer.jsp"></jsp:include>
 </html>

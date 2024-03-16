@@ -1,5 +1,6 @@
 package com.korea.mall.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,8 +14,8 @@ import lombok.RequiredArgsConstructor;
 public class UserDAO {
 	private final SqlSession sqlSession;
 	
-	public List<UserDTO> selectList(){
-		return sqlSession.selectList("user.user_list");
+	public List<UserDTO> selectList(HashMap<String, Integer> map){
+		return sqlSession.selectList("user.user_list", map);
 	}
 	
 	//로그인 체크

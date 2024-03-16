@@ -28,4 +28,13 @@ public class Common {
 		// 페이지 메뉴 수
 		public final static int BLOCKPAGE = 5;
 	}
+	
+	public static class uList{
+		
+		// 한 페이지에 보여줄 회원 수
+		public final static int BLOCKLIST =	15;
+		
+		// 페이지 메뉴 수
+		public final static int BLOCKPAGE = 5;
+	}
 }

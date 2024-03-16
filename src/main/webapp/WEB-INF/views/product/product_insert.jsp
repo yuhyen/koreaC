@@ -106,12 +106,12 @@
                 </tbody>
             </table>
             <div align="center">
-            <button class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="send_check()">
-               	등록
-            </button>
-            <button class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="location.href='pList_form'">
-               	취소
-            </button>
+	            <button class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="send_check()">
+	               	등록
+	            </button>
+	            <button class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="location.href='pList_form'">
+	               	취소
+	            </button>
             </div>
         </div>
         </form>
