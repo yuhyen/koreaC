@@ -44,6 +44,11 @@ public class UserDAO {
 				public UserDTO selectUserEmail(String u_email) {
 					return sqlSession.selectOne("user.EmailCheck",u_email);
 				}
+				
+	// 회원 조회
+	public List<UserDTO> search(String u_username){
+		return sqlSession.selectList("user.u_search", u_username);
+	}
 		
 	
 }

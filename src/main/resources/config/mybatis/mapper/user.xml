@@ -44,6 +44,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select * from TB_user where u_email=#{u_email}
 		</select>
 		
+		<!-- 회원 조회 -->
+		<select id="u_search" resultType="user">
+			select * from tb_user where u_username like '%'||#{u_username}||'%'
+		</select>
+		
 </mapper>
 
 

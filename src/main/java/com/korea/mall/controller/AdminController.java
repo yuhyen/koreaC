@@ -130,16 +130,14 @@ public class AdminController {
 	}
 	
 	// 회원 관리
-	@RequestMapping(value = {"user"})
-	public String list(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
+	@RequestMapping("user")
+	public String list(Model model, @RequestParam(value = "u_username", required = true) String u_username, @RequestParam(required = false, defaultValue = "1") int page) {
 		int start = (page - 1) * Common.uList.BLOCKLIST + 1;
 		int end = start + Common.uList.BLOCKLIST - 1;
 		
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		map.put("start", start);
 		map.put("end", end);
-		
-		List<UserDTO> list = user_dao.selectList(map);
 		
 		// 전체 회원 수 조회
 		int rowTotal = product_dao.getRowTotal();
@@ -153,9 +151,24 @@ public class AdminController {
 		
 		request.getSession().removeAttribute("show");
 		
+		u_username = "all";
+		String name = request.getParameter("u_username");
+		
+		if(name != null && !name.isEmpty()) {
+			u_username = name;
+		}
+		
+		List<UserDTO> list = null;
+		
+		if(u_username.equalsIgnoreCase("all")) {
+			list = user_dao.selectList(map);
+		} else {
+			list = user_dao.search(name);
+		}
+		
 		model.addAttribute("list",list);
 		model.addAttribute("pageMenu", pageMenu);
 		
-		return "admin/user_list";
+		return "admin/user_list.jsp?page="+page;
 	}
 }

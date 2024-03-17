@@ -15,6 +15,7 @@
 		
 		if(p_name == ''){
 			alert("상품을 입력하세요")
+			return;
 		}
 		
 		location.href = "p_search?p_name="+p_name+"&p_id="+p_id
