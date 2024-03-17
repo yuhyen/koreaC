@@ -5,15 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BoardView</title>
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-<script src="resources/js/HttpRequest.js"></script>
+<title></title>
+<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/common/common.jsp"></jsp:include>
 <body>
-
 <div id="app" class="container mx-auto mt-10 p-6 bg-white rounded-lg">
 	  <div class="flex justify-between items-center mb-6">
             <div class="space-x-4">
@@ -100,8 +95,6 @@
     	}
 
     	//공지사항이면 답글 못하게 하기
-    	
-    	
     }
     
     let makeViewElement = (input) =>{
@@ -159,7 +152,6 @@
     	
     	return sendObj;
     }
-    
     	
     let sendDate = (dvCd) =>{
     	
@@ -218,20 +210,8 @@
 
     }
    });
-   
-    
-
-    
-      
-//    const viewer = toastui.Editor.factory({
-//       el : document.querySelector("#viewer"),
-//       viewer : true,
-//       initialValue : "view Test"
-//    }); 
-        
-        
-        
          
     </script>
 </body>
+<jsp:include page="/WEB-INF/views/main/footer.jsp"></jsp:include>
 </html>

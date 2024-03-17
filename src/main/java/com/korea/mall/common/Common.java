@@ -4,37 +4,47 @@ public class Common {
 	
 	public static class Board{
 		
-		// ÇÑ ÆäÀÌÁö¿¡ º¸¿©ÁÙ °Ô½Ã¹° ¼ö
+		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½
 		public final static int BLOCKLIST = 10;
 		
-		// ÆäÀÌÁö ¸Þ´º ¼ö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½
 		public final static int BLOCKPAGE = 5;
 	}
 	
 	public static class Main{
 		
-		// ÇÑ ÆäÀÌÁö¿¡ º¸¿©ÁÙ °Ô½Ã¹° ¼ö
+		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½
 		public final static int BLOCKLIST = 9;
 		
-		// ÆäÀÌÁö ¸Þ´º ¼ö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½
 		public final static int BLOCKPAGE = 5;
 	}
 	
 	public static class pList{
 		
-		// ÇÑ ÆäÀÌÁö¿¡ º¸¿©ÁÙ °Ô½Ã¹° ¼ö
+		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½Ã¹ï¿½ ï¿½ï¿½
 		public final static int BLOCKLIST = 20;
 		
-		// ÆäÀÌÁö ¸Þ´º ¼ö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½
 		public final static int BLOCKPAGE = 5;
 	}
 	
 	public static class uList{
 		
-		// ÇÑ ÆäÀÌÁö¿¡ º¸¿©ÁÙ È¸¿ø ¼ö
+		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½
 		public final static int BLOCKLIST =	15;
 		
-		// ÆäÀÌÁö ¸Þ´º ¼ö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½
 		public final static int BLOCKPAGE = 5;
 	}
+	
+	
+	public static class BoardConst {
+		
+		public final static String Q_N_A = "qna";
+		public final static String REVIEW = "review";
+		public final static String NOTICE = "notice";
+		
+	}
+	
 }
