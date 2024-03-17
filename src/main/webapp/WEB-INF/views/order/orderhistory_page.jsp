@@ -97,7 +97,7 @@
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg" >
-                                <table class="min-w-full divide-y divide-gray-200" id="tableid">
+                                <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-gray-50">
                                         <tr>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -129,8 +129,8 @@
                                     
                                     <c:forEach items="${order }" var="arr" varStatus="i">
                                     		
-                                    <tbody class="bg-white divide-y divide-gray-200" class="tbody">
-                                        <tr>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        <tr id="liad_id_list" class="load_list">
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900">${arr.o_ordernum }</div>
                                             </td>
@@ -138,8 +138,8 @@
                                                 <img src="https://source.unsplash.com/random/128x128?clothes" alt="Product Image" class="h-12 w-12 rounded-full">
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">${arr.o_proname },
-                                                									${arr.o_size },
+                                                <div class="text-sm text-gray-900">${arr.o_proname }<br>
+                                                									${arr.o_size }<br>
                                                 									${arr.o_pabrice }
                                                 </div>
                                             </td>
@@ -182,19 +182,25 @@
                 
              
             </div>
-             
+             		 
         </div>
-							 <div>
-                               	<button id="moreView" class = "bb"><span>더보기</span></button>
-                               </div>    
+		<p class="btn">더보기</p>	    
     </div>
     
     <script type="text/javascript">
-    let startNum = $("#tableid tbody").length;
-    let addListHTML = "";
-	console.log(startNum);
-    
-	
+  	  $(function(){
+  		$('#load_list').attr('class').slice(0,4).show();
+  		 $('#liad_id_list').attr('class').click(function(e){
+  			 
+  			 e.prevenDefault();
+  			 $('#load_list').attr('class').slice(0,4).show();
+  			 
+  			 if($('#load_list').attr('class').length == 0){
+  				 $('#liad_id_list').attr('class').hide();
+  			 }
+  		 });
+  		 
+  	  });
     </script>
 </body>
 </html>
