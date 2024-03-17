@@ -59,11 +59,9 @@
     window.onload = () => { 
     	const qa =  location.search
     	const urlParam = new URLSearchParams(qa);
-    	
     	typeCategory =  urlParam.get("type");
     	seq = urlParam.get("seq")
     	reply = urlParam.get("reply")
-    	
     	if(typeCategory != undefined || typeCategory != "" || typeCategory != null){
 	    	getBoardName(urlParam.get("type"))
     	}
@@ -85,6 +83,7 @@
 	    		getBoardName(typeCategory);
 	    		
 	    		document.getElementById("title").value = data.B_TITLE;
+	    		
 	    		if(noticeYn == "Y"){
 	    			document.getElementById("noticeYn").checked = true;
 	    		} else if(noticeYn == "N"){
@@ -93,14 +92,14 @@
 		    		
 	    		if(reply != null){
 		    		editor.setHTML(contents);
-		    		
-	    		}else{
+	    		}
+	    		if(reply != "1"){
+	    		
 	    			document.getElementById("title").readOnly = true;
 	    			document.getElementById("noticeYn").disabled = true;
 	    		}
 	    	}
     	}
-
 //     	seq가 있고 reply가 없으면 seq reply가 둘다 없을때 등록버튼 활성화
 // 	   	btnReg
 		if(seq !=null  && reply == null){
@@ -204,29 +203,46 @@
         el: '#app',
         methods: {
               registBoard:function(){
-              	alert("글쓰기 클릭");
+              	alert("insert reply");
               	//공지사항여부 체크?
-                let noticeYn = document.getElementById("noticeYn").checked ? "Y" : "N"; 
+                noticeYn = document.getElementById("noticeYn").checked ? "Y" : "N"; 
 				//글제목 관련
-				let title = document.getElementById("title").value;
-				let contents = editor.getHTML();
-              	setSendObj("" , "" , typeCategory , noticeYn , "" , title , contents);
-              	sendDate("insert");
+				title = document.getElementById("title").value;
+				contents = editor.getHTML();
+              	setSendObj(seq , "" , typeCategory , noticeYn , "" , title , contents);
+				
+              	if(seq == null || seq == "" ){
+	              	sendDate("insert");
+              	}else if(seq != null || seq != "" ){
+              		sendDate("reply");
+              	}
+              	
               	console.log(xhr);
               	if(xhr.status == "200"){
               		let returnObj = JSON.parse(xhr.response);
               		console.log(returnObj.boardDTO)
-					alert("insert end")
+					alert("insert reply end")
               	}else{
               		console.log("오류처리")
-              		alert("insert 실패")
+              		alert("insert reply 실패")
               	}
               },
               updateBoard:function(){
               	alert("수정 클릭");
+              	
+                noticeYn = document.getElementById("noticeYn").checked ? "Y" : "N"; 
+				title = document.getElementById("title").value;
+				contents = editor.getHTML(); 
+              		
+              	setSendObj(seq , reply , typeCategory , noticeYn , "" , title , contents);
               	sendDate("update");
-				console.log("update end")
-				
+			 	if(xhr.status == "200"){
+              		let returnObj = JSON.parse(xhr.response);
+              		console.log(returnObj.boardDTO)
+              		//성공시 페이지 이동
+              	}else{
+              		alert("실패")
+              	}
               },
               cancel:function(){
             	alert("취소 클릭")  
@@ -238,12 +254,9 @@
 	            const dataTransfer = new DataTransfer(); //TODO:이걸로 표시할지 결정해야함.
 //             	let files = document.getElementById("file_input");
             	fileUpload();
-	            
-	            
               }
         }
       });
-    
         const editor = new toastui.Editor({
             el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
             height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)

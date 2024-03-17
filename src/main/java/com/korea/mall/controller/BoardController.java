@@ -66,7 +66,6 @@ public class BoardController {
 		return mv;
 	}
 	
-	
 	@RequestMapping(value = {"/board_view"})
 	public ModelAndView view() {
  		ModelAndView mv = new ModelAndView("/board/board_view");
@@ -137,6 +136,7 @@ public class BoardController {
 		dto.setNoticeYn((String) param.get("noticeYn"));
 		dto.setTitle((String) param.get("title"));
 		dto.setContents((String) param.get("contents"));
+		dto.setImgPath((String) param.get("imgPath"));
 		dto.setUser(user.getU_idx());
 		dto.setRegUser(user.getU_idx());
 		dto.setModUser(user.getU_idx());
@@ -157,14 +157,18 @@ public class BoardController {
 			user.setU_idx(9999);
 		}
 		BoardDTO dto = new BoardDTO();
+		
+		dto.setSeq((String) param.get("seq"));
+		dto.setReply((String) param.get("reply"));
 		dto.setNoticeYn((String) param.get("noticeYn"));
 		dto.setTitle((String) param.get("title"));
 		dto.setContents((String) param.get("contents"));
+		dto.setImgPath((String) param.get("imgPath"));
 		dto.setUser(user.getU_idx());
 		dto.setRegUser(user.getU_idx());
 		dto.setModUser(user.getU_idx());
 		
-		dto = service.insert(dto);
+		dto = service.update(dto);
 		mv.addObject(dto);
 		return mv;
 	}
@@ -179,15 +183,13 @@ public class BoardController {
 			user.setU_idx(9999);
 		}
 		BoardDTO dto = new BoardDTO();
-		
-		dto.setNoticeYn((String) param.get("noticeYn"));
-		dto.setTitle((String) param.get("title"));
+		dto.setSeq((String) param.get("seq"));
 		dto.setContents((String) param.get("contents"));
 		dto.setUser(user.getU_idx());
 		dto.setRegUser(user.getU_idx());
 		dto.setModUser(user.getU_idx());
 		
-		dto = service.insert(dto);
+		dto = service.reply(dto);
 		mv.addObject(dto);
 		return mv;
 	}

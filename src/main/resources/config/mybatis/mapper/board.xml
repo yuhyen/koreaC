@@ -17,8 +17,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						SELECT * FROM TB_BOARD_BASE  A1 
 				  	             ,(SELECT COUNT(1) CNT, B_SEQ AS SEQ FROM TB_BOARD_DTLS GROUP BY B_SEQ )  B1 
 				  	    WHERE A1.B_SEQ  = B1.SEQ
-				  	     AND  A1.B_CATEGORY = #{category}
-						ORDER BY TO_NUMBER(A1.B_SEQ) DESC
+				  	    AND  A1.B_CATEGORY = #{category}
+				  	    
+<!-- 				  	    공지만 볼때 -->
+				  	    <if test='showNotice.equalsIgnoreCase("Y")'> 
+					  	    AND  A1.B_NOTICE_YN = UPPER(#{showNotice})
+				  	    </if>
+<!-- 				  	    공지를 포함안시킬때  -->
+				  	    <if test='showNotice.equalsIgnoreCase("N")'>
+					  	    AND  A1.B_NOTICE_YN = UPPER(#{showNotice})
+				  	    </if>
+				  	    
+						ORDER BY  
+								  B_NOTICE_YN DESC , TO_NUMBER(A1.B_SEQ) DESC
 						) A
 				)
 		WHERE 1=1
@@ -42,8 +53,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 						SELECT * FROM TB_BOARD_BASE  A1 
 				  	             ,(SELECT COUNT(1) CNT, B_SEQ AS SEQ FROM TB_BOARD_DTLS GROUP BY B_SEQ )  B1 
 				  	    WHERE A1.B_SEQ  = B1.SEQ
-				  	     AND  A1.B_CATEGORY = #{category}
-						ORDER BY TO_NUMBER(A1.B_SEQ) DESC
+  			  	       <!-- 공지랑 글이랑 같이 볼때 -->
+  			  	       <if test='showNotice.equalsIgnoreCase("A")'>
+  			  	       		AND  ( A1.B_CATEGORY = #{category} 	 OR  A1.B_CATEGORY = 'notice' ) 
+  			  	       </if>
+				  	   <!-- 공지만 볼때 -->
+				  	    <if test='showNotice.equalsIgnoreCase("Y")'> 
+					  	    AND  A1.B_CATEGORY = 'notice'  
+				  	    </if>
+<!-- 				  	    공지를 포함안시킬때  -->
+				  	    <if test='showNotice.equalsIgnoreCase("N")'>
+				  	    	AND  ( A1.B_CATEGORY = #{category} )
+					  	    AND  A1.B_NOTICE_YN = UPPER(#{showNotice})
+				  	    </if>
+				  	    
+						ORDER BY  
+								  B_NOTICE_YN DESC , TO_NUMBER(A1.B_SEQ) DESC
 						) A
 				)
 		WHERE 1=1
@@ -99,7 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="selectReply" resultType="String">
-		SELECT NVL(MAX(TO_NUMBER(B_REPLY)) , 0) +1 FROM TB_BOARD_BASE
+		SELECT NVL(MAX(TO_NUMBER(B_REPLY)) , 0) +1 FROM TB_BOARD_DTLS
 		WHERE B_SEQ = #{seq} 
 	</select>
 
@@ -166,12 +191,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<update id="updateBase">
+	UPDATE TB_BOARD_BASE
+	SET   
+		  B_NOTICE_YN =  #{noticeYn}
+		, B_IMG_PATH= #{imgPath}
+		, B_TITLE= #{title}
+		, B_MOD_DATE= SYSDATE 
+		, B_MOD_USER= #{modUser} 
+	WHERE 
+			B_SEQ =  #{seq}
+<!-- 		AND B_CATEGORY = ?  -->
+<!-- 		AND B_USER = ?  -->
+<!-- 		AND B_NOTICE_YN = ?  -->
+<!-- 		AND B_IMG_PATH = ?  -->
+<!-- 		AND B_TITLE = ?  -->
+<!-- 		AND B_CRTR = ?  -->
+<!-- 		AND B_REPLY = ?  -->
+<!-- 		AND B_DEEP = ?  -->
+<!-- 		AND B_REG_DATE = ?  -->
+<!-- 		AND B_REG_USER = ?  -->
+<!-- 		AND B_MOD_DATE = ?  -->
+<!-- 		AND B_MOD_USER = ?  -->
 	
 	</update>
 	
 	<update id="updateDtls">
-	
-	</update>
+		UPDATE TB_BOARD_DTLS
+		SET
+		  B_CONTENTS= #{contents}
+		, B_MOD_DATE= SYSDATE
+		, B_MOD_USER= #{modUser}  
+		WHERE 
+			B_SEQ = #{seq} 
+		AND B_REPLY = #{reply} 
+		</update>
 	
 	
 </mapper>

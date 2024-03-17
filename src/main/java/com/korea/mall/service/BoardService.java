@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.korea.mall.common.Common;
 import com.korea.mall.dao.BoardDAO;
 import com.korea.mall.dto.BoardDTO;
 import com.korea.mall.dto.pagingDTO;
@@ -23,9 +24,25 @@ public class BoardService {
 	public Object selectPage(HashMap<String, Object> param) {
 
 		HashMap<String, Object> output = new HashMap<String, Object>();
-		int totalCnt = boardDao.selectCnt(param);
+		String category = (String) param.get("category");
+		int totalCnt;
 		int nowPage = param.get("pageNo") == null ? 0 : (int) param.get("pageNo");
 		int cntPerPage = param.get("cntPerPage") == null ? 0 : (int) param.get("cntPerPage");
+		//카테고리별 공지노출 로직
+		switch (category) {
+		case Common.BoardConst.Q_N_A:
+			param.put("showNotice", "A");
+			break;
+		case Common.BoardConst.REVIEW:
+			param.put("showNotice", "N");
+			
+			break;
+		case Common.BoardConst.NOTICE:
+			param.put("showNotice", "Y");
+			break;
+			
+		}
+		totalCnt = boardDao.selectCnt(param);
 
 		if (nowPage == 0 && cntPerPage == 0) {
 			nowPage = 1;
@@ -43,6 +60,7 @@ public class BoardService {
 
 		param.put("start", pagingDTO.getStart());
 		param.put("end", pagingDTO.getEnd());
+		
 		output.put("list", boardDao.selectPage(param));
 		output.put("page", pagingDTO);
 
@@ -67,15 +85,6 @@ public class BoardService {
 		return boardDao.selectOne(param);
 	}
 
-	/**
-	 * 
-	 * 해당 주석은 javadoc
-	 * 
-	 * @exception 발생할 수 있는 Exception 정의
-	 * @throws 코드에서 throw 할 수 있는 예외상황 정의
-	 * 
-	 * 
-	 */
 	public BoardDTO insert(BoardDTO param) {
 
 		String seq = "";
@@ -103,6 +112,42 @@ public class BoardService {
 		boardDao.insertBase(param);
 		boardDao.insertDtls(param);
 
+		return param;
+	}
+	public BoardDTO update(BoardDTO param) {
+		
+		if(param.getImgPath() == null) {
+			param.setImgPath("");
+		}
+		
+		if(param.getReply() != null && param.getReply().equals("1")) {
+			//upate base\
+			boardDao.updateBase(param);
+		}
+		boardDao.updateDtls(param);
+		
+		return param;
+	}
+	
+	public BoardDTO reply(BoardDTO param) {
+		
+		String reply = "";
+		String crtr = "";
+		String deep = "";
+		String imgPath = "";
+		
+		reply = boardDao.selectReply(param.getSeq());
+		crtr = param.getCrtr() == null ? reply : param.getCrtr();
+		deep = param.getDeep() == null ? reply : param.getDeep();
+		imgPath = param.getImgPath() == null ? "" : param.getImgPath();
+
+		param.setCrtr(crtr);
+		param.setReply(reply);
+		param.setDeep(deep);
+		param.setImgPath(imgPath);
+
+		boardDao.insertDtls(param);
+		
 		return param;
 	}
 

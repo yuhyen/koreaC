@@ -98,10 +98,11 @@
 // 	    		document.getElementById("noticeYn").disabled = false;
 // 	    	}
     	}
+
+    	//공지사항이면 답글 못하게 하기
     	
     	
     }
-    
     
     let makeViewElement = (input) =>{
     	let viewDiv = document.getElementById("viewer");
@@ -109,7 +110,7 @@
     	let outerDiv = document.createElement("div");
     	let newDiv = document.createElement("div");
     	let reDiv = document.createElement("div");
-    	let px = 2+(input.index * 8);
+    	let px = 2+(input.index * 2);
     	
     	outerDiv.classList.add("pl-"+px , "py-2" , "pr-2");
 	    	

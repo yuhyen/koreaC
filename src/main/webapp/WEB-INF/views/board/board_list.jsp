@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shopping Cart</title>
+<title>board</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
@@ -37,25 +37,17 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in boardItems" :key="index">
-        <td class="border px-1 py-2 text-center"> {{ item.no }}</td>
+        <td v-if="item.notice === 'N' " class="border px-1 py-2 text-center"> {{ item.no }}</td>
+        <td v-if="item.notice === 'Y' " class="border px-1 py-2 text-center"> 공지 </td>
         <td class="border px-4 py-2">
           <img :src="item.product" alt="" class="h-16 mx-auto">
         </td>
-        <td class="border px-6 py-2 text-left" @click="subjectClicked(item.no)">{{ item.subject }}</td>
+        <td class="border px-6 py-2 text-left" > <a href="#" @click="subjectClicked(item.no)"> {{ item.subject }}</a></td>
         <td class="border px-4 py-2 text-center">{{ item.name }}</td>
         <td class="border px-6 py-2 text-center" >{{ item.date }}</td>
       </tr>
     </tbody>
   </table>
-<!--   <div class="flex justify-end mt-4"> -->
-<!--     <div class="text-lg font-semibold"> -->
-<!--       총 가격: {{ total.toLocaleString() }}원 -->
-<!--     </div> -->
-<!--   </div> -->
-<!--   <div class="flex justify-end mt-4 space-x-2"> -->
-<!--     <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" @click="purchaseAll">전체 상품 구매</button> -->
-<!--     <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700" @click="purchaseSelected">선택 상품 구매</button> -->
-<!--   </div> -->
 	<div class="flex px-4 py-2 justify-center">
 		<div class="inline-flex items-center" v-for="(item, index) in pageNumList" :key="index">
 	        <button v-if="item === startPage" class="text-sm hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-l"  @click="prevPage">
@@ -73,29 +65,12 @@
 	        
 	    </div>
     </div>
-<!-- 	<div class="flex px-4 py-2 justify-center"> -->
-<!-- 		<div class="inline-flex items-center" v-for="(item, index) in pageItems" :key="index"> -->
-<!-- 	        <button v-if="item.no === 0" class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l"> -->
-<!-- 	            < -->
-<!-- 	        </button> -->
-<!-- 	        <button  class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4"> -->
-<!-- 	            {{ item.no }}   -->
-<!-- 	        </button> -->
-<!-- 	        Repeat for other page numbers -->
-<!-- 	        <button v-if="item.no === 2"  class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r"> -->
-<!-- 	            > -->
-<!-- 	        </button> -->
-<!-- 	    </div> -->
-<!--     </div> -->
   <div class="flex mt-4 space-x-2">
-<!--   	<div class="mb-4"> -->
-<!--          <label for="search" class="block text-gray-700 text-sm font-semibold mb-2">검색조건</label> -->
          <select id="searchType" class="block w-100 bg-gray-50 border border-gray-300 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
              <option>SUBJECT</option>
              <option>NAME</option>
          </select>
          <input id="searchKey"type="text" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"/>
-<!--     </div> -->
 	
 	<button id="searchBtn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" @click="searchBoard">검색</button>
     <button id="regBtn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" @click="registBoard">글쓰기</button>
@@ -128,6 +103,12 @@
       		data.forEach( (obj) =>{
       			let date = new Date(Number(obj.B_MOD_DATE));
       			obj.no = obj.B_SEQ
+      			
+				if(obj.B_NOTICE_YN == "Y"){
+					obj.notice = 'Y'
+				}else{  			
+					obj.notice = 'N'
+				}      			
       		    obj.product = ''
       		    obj.subject = obj.B_TITLE
       		    obj.name = obj.B_USER
@@ -233,7 +214,7 @@
           	alert("글쓰기 클릭");
           	let hostIndex = location.href.indexOf( location.host ) + location.host.length;
           	let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
-          	let path = contextPath+"/board_reg"
+          	let path = contextPath+"/board_reg?type="+typeCategory;
           	location.href=path;
         },
         prevPage:function(){
