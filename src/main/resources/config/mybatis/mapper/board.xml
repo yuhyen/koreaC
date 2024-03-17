@@ -8,7 +8,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<result property="B_CONTENTS" column="B_CONTENTS" jdbcType="CLOB" javaType="java.lang.String"/>
 </resultMap>
 
-
 	<select id="selectCnt" resultType="int">
 		SELECT COUNT(1) 
 		FROM (
