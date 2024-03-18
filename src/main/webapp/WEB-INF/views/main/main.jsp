@@ -6,30 +6,51 @@
 <head>
 <meta charset="UTF-8">
 <title>KoreaMall</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
-<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-    body {
+	body {
         font-family: 'Roboto', sans-serif;
+   	}
+   	
+	.carousel-container {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    overflow: hidden;
+	 }
+
+	.carousel-slide {
+	    display: flex;
+	    transition: transform 0.5s ease;
+	    white-space: nowrap; /* 이미지가 한 줄에 모두 나타나도록 설정 */
+	}
+
+	.carousel-slide img {
+	    max-width: 100%; /* 이미지의 최대 너비를 부모 요소의 너비에 맞춤 */
+	    max-height: 100%; /* 이미지의 최대 높이를 부모 요소의 높이에 맞춤 */
+	    width: auto; /* 가로 크기를 유지하면서 세로 크기에 맞춤 */
+	    height: auto; /* 세로 크기를 유지하면서 가로 크기에 맞춤 */
+	    margin-right: -4px; /* 이미지들 사이에 여백이 없도록 설정 */
+	}
+	
+	 /* 화살표 버튼 스타일 */
+    .arrow {
+        cursor: pointer;
+        opacity: 1; /* 화살표 버튼이 투명하지 않도록 설정 */
+        top: 50%; /* 상위 요소의 50% 위치에 배치 */
+        transform: translateY(-50%); /* 상위 요소의 50% 위로 이동하여 정확한 중앙 정렬 */
+        z-index: 1; /* 다른 요소 위에 배치 */
+        background-color: rgba(0, 0, 0, 0.5); /* 배경색 지정 */
+        color: white; /* 텍스트 색상 지정 */
+        padding: 10px; /* 내부 여백 지정 */
+        border-radius: 50%; /* 원형 모양으로 설정 */
     }
 </style>
-<script type="text/javascript">
-	new Swiper('.swiper', {
-	    slidesPerView : 'auto',
-	    spaceBetween : 1, 
-	    direction: 'vertical',
-    	autoplay: {     //자동슬라이드 (false-비활성화)
- 	    	delay: 10, // 시간 설정
- 	   		disableOnInteraction: false, // false-스와이프 후 자동 재생
- 	   	}
-		loop:true
-	})
-</script>
 </head>
 <jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
-<body class="bg-gray-50">
+<body class="bg-gray-50"></body>
 	<div class="relative h-full flex">
         <aside class="float-left w-64 bg-white p-6 shadow-md">
             <div class="flex flex-col space-y-4">
@@ -53,30 +74,22 @@
         </aside>
         <main class="flex overscroll-auto">
             <div class="py-6 px-4 sm:px-6 lg:px-8">
-            <div class="swiper-scrollbar">
-	            <div class="grid grid-cols-3">
-	            	<div class="swiper-wrapper">
-			         	<div class="swiper-slide">
-			         		<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
-			         	</div>
-			         	<div class="swiper-slide">
-			         		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
-			         	</div>
-			         	<div class="swiper-slide">
-			         		<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
-			         	</div>
-			         	<div class="swiper-slide">
-			         		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
-			         	</div>
-			         	<div class="swiper-slide">
-			         		<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
-			         	</div>
-			         	<div class="swiper-slide">
-			         		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
-			         	</div>
-		         	</div>
-		       	</div>
-		    </div>
+		       	<div class="grid grid-cols-4">
+					<div class="carousel-container">
+					    <div class="arrow" onclick="moveSlide(-1)">&#10094;</div>
+							<div id="carousel" class="carousel-slide">
+						      	<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			        			<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
+			        			<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+				        		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg"> 
+				        		<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+				        		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
+				        		<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+				        		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
+						    </div>
+					    <div class="arrow" onclick="moveSlide(1)">&#10095;</div>
+				  	</div>
+				</div>
             	<br>
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">New</h2>
                 <div class="grid gap-3 grid-cols-3 grid-rows-3">
@@ -102,5 +115,23 @@
     	${pageMenu}
     </div>
     <jsp:include page="/WEB-INF/views/main/footer.jsp"></jsp:include>
+<script>
+    var currentSlide = 0;
+    var totalSlides = document.querySelectorAll('#carousel img').length;
+    var carouselWidth = document.querySelector('.carousel-slide').offsetWidth;
+
+    function moveSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) {
+            currentSlide = totalSlides - 1; // 왼쪽으로 넘어갈 경우 마지막 이미지로 이동
+        } else if (currentSlide >= totalSlides) {
+            currentSlide = 0; // 마지막 이미지에서 오른쪽으로 넘어갈 경우 첫 번째 이미지로 이동
+        }
+        var displacement = -currentSlide * carouselWidth;
+        
+        document.getElementById('carousel').style.transition = 'transform 0.5s ease';
+        document.getElementById('carousel').style.transform = 'translateX(' + displacement + 'px)';
+    }
+</script>
 </body>
 </html>
