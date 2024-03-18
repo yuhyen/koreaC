@@ -39,7 +39,7 @@ public class CustomInterceptor implements HandlerInterceptor {
 			//pageURL경로 추가
 			resourceSrc += "resources/pageURL/pageURL";
 			
-			
+			//세션이 null인경우
 			if(u_id == null) {
 				
 	        // 파일에서 URL을 읽어와 처리
@@ -51,7 +51,7 @@ public class CustomInterceptor implements HandlerInterceptor {
 	                //기본 URL값에 파일에 있는 주소값 더해서 적용 
 	                if (request.getRequestURL().toString().equals(url+line)) {
 	                	
-
+	                	//파라미터값 뽑아오기
 	                	Map<String, String[]> map = request.getParameterMap();
 	        			
 	                	StringBuilder urlString = new StringBuilder();
@@ -68,7 +68,8 @@ public class CustomInterceptor implements HandlerInterceptor {
 	                    String param = urlString.toString();
 	                    
 	                    System.out.println(param);
-	        			
+	        				
+	                    //파라미터값이 있으면 주소에 파라미터 추가
 	                    	if(param!="") {
 	                    		session.setAttribute("line", line+param);
 	                			 response.sendRedirect(request.getContextPath() + "/login_form");

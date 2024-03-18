@@ -4,8 +4,8 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	
 	<title>로그인</title>
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script src="resources/js/HttpRequest.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -17,6 +17,27 @@
         #header{
         	padding-left: 100px;
         	padding-top: 25px;
+        }
+        
+          .kakao-login-btn {
+         	padding-top : 30px;
+            background-color: #FEE500;
+            color: #3C1E1E;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .kakao-login-btn:hover {
+            background-color: #F7DD00;
+        }
+        .kakao-login-btn img {
+            margin-right: 8px;
         }
     </style>
 <script type="text/javascript">
@@ -60,6 +81,26 @@
 			}		
 		}
 	}
+	
+	//카카오 로그인
+	window.Kakao.init("8cf2f7de1ae63b213348180521b4676f");
+	function kakaoLogin(){
+		
+		window.Kakao.Auth.login({
+			scope:'profile_nickname',
+			success: function(authObj){
+				console.log(authObj);
+				window.Kakao.API.request({
+					url:'/v2/user/me',
+					success: res=>{
+						const kakao_account = res.kakao_account;
+						console.log(kakao_account);
+					}
+				});
+			}
+		});
+	}
+	
 </script>
 </head>
 	
@@ -87,11 +128,18 @@
             </div>
            
             
-			 <div class="flex items-center justify-between">
-                <a href="find_id_form" class="inline-block align-baseline font-bold text-black text-white-500 hover:text-white-800" >아이디찾기</a>
-                <a href="find_pwd_form" class="inline-block align-baseline font-bold text-black text-white-500 hover:text-white-800" >비밀번호찾기</a>
+			 <div class="flex items-center justify-between mb-2">
+                <a href="find_id_form" class="inline-block align-baseline font-bold text-black text-white-500 hover:text-white-800" >아이디찾기 |</a>
+                <a href="find_pwd_form" class="inline-block align-baseline font-bold text-black text-white-500 hover:text-white-800" >비밀번호찾기|</a>
                 <a href="user_insert_form" class="inline-block align-baseline font-bold text-black text-white-500 hover:text-white-800" >회원가입</a>
             </div>
+            
+             <hr class="mb-3">
+  
+            <button class="kakao-login-btn" onclick="kakaoLogin()">
+        <img src="https://commons.wikimedia.org/wiki/File:KakaoTalk_logo.svg" alt="KakaoTalk logo" width="20" height="20">
+        카카오톡으로 로그인하기
+    </button>
 	</form>
 	</div>
 	

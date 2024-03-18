@@ -18,6 +18,8 @@
 		
 		location.href="user?u_username="+u_username;
 	}
+	
+	
 </script>
 </head>
 <jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>

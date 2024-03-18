@@ -51,7 +51,14 @@
 	}
 	</script>
 </head>
-<body class="bg-gray-50 flex items-center justify-center h-screen">
+
+<body >
+
+<!-- <h1 id="header" class="bg-gray-50 flex text-4xl font-bold"><a href="main">KoreaMall</a></h1> -->
+	<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
+
+<div id="body" class="bg-gray-50 flex items-center justify-center h-screen">
+
 	<div class="bg-white shadow-lg rounded-lg p-8">
         <h1 class="text-3xl font-bold mb-6 text-center">아이디 찾기</h1>
 	<form>
@@ -69,5 +76,6 @@
             </div>
 	</form>
 	</div>
+</div>	
 </body>
 </html>
