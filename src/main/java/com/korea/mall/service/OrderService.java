@@ -16,6 +16,7 @@ import com.google.common.base.CharMatcher;
 import com.korea.mall.dao.BasketDAO;
 import com.korea.mall.dao.OrderDAO;
 import com.korea.mall.dao.ProductDAO;
+import com.korea.mall.dao.UserDAO;
 import com.korea.mall.dao.UserupdateDAO;
 import com.korea.mall.dto.BasketDTO;
 import com.korea.mall.dto.OrderDTO;
@@ -34,6 +35,7 @@ public class OrderService {
 	HttpSession session;
 private final ProductDAO productDAO; 
 private final OrderDAO orderDAO;
+private final UserDAO userDAO;
  
  //�쉶�썝�젙蹂� �닔�젙
  public int update(UserDTO dto) {
@@ -103,6 +105,7 @@ private final OrderDAO orderDAO;
 		Object p_numjs = jsonString.get("p_numjs"); //int
 		Object b_idxjs = jsonString.get("b_idxjs"); //int
 		Object quantityjs = jsonString.get("quantityjs"); //int
+		Object totaljs = jsonString.get("totaljs"); //int 
 		
 		ObjectMapper obj = new ObjectMapper();
 		String u_username = u_usernamejs.toString();
@@ -145,6 +148,19 @@ private final OrderDAO orderDAO;
 			 basketDAO.deleteList(b_idxlist);
 		}
 		
+		String total = totaljs.toString();
+		
+		int pstotal = Integer.parseInt(total);
+		
+		int u_reserve = (int)(pstotal * 0.3);
+		
+		UserDTO userdto = new UserDTO();
+		
+		userdto.setU_id(u_id);
+		userdto.setU_total(pstotal);
+		userdto.setU_reserve(u_reserve);
+		
+		int udatetotal = orderDAO.updateTotal(userdto);
 		
 		return res;
 		

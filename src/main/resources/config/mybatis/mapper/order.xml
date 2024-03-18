@@ -95,6 +95,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 		
 	</select>
+	
+	<update id="updateTotal">
+	UPDATE TB_USER SET
+	U_TOTAL = U_TOTAL + #{u_total},
+	U_RESERVE = U_RESERVE + #{u_reserve}
+	WHERE U_ID = #{u_id}
+	</update>
+	
 </mapper>
 
 

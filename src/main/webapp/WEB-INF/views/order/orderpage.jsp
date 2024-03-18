@@ -8,6 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Form</title>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -31,7 +32,12 @@
             <div class="mb-4">
                 <label for="address" class="block text-sm font-medium text-gray-700">주소</label>
                 <input type="text" id="address" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="${user.u_ip }">
+                <button type="button" class="mt-2 text-indigo-600 hover:text-indigo-900 text-sm" onclick="ipsearch(this.form)">주소 찾기</button>
             </div>
+             <div class="mb-4">
+                    <label for="phone" class="block text-sm font-medium text-gray-700">상세주소</label>
+                    <input type="text" name="u_ipExtraAddr" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" placeholder="상세주소">
+                </div>
             <div class="mb-4">
                 <label for="phone" class="block text-sm font-medium text-gray-700">핸드폰 번호</label>
                 <input type="tel" id="phone" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="${user.u_tel }">
@@ -122,12 +128,48 @@
     let alltotalhtml2 =  document.getElementById("alltotalhtml2");
     alltotalhtml2.innerHTML = alltotal.toString() + "원 결제하기";
 	 
+    let u_addres = document.getElementById("address").value.trim();
+    function ipsearch(f){
+    	
+		 new daum.Postcode({
+		        oncomplete: function(data) {
+		        	
+		        	console.log(data);
+		        	let u_ipNumber='';
+		        	let u_ipAddr='';
+		        	let u_ipExtraAddr='';
+		        	u_ipNumber = data.zonecode;
+		        	
+		        	if(data.userSelectedType === 'R'){
+		        		u_ipAddr = data.roadAddress;
+		        	}else{
+		        		u_ipAddr = data.jibunAddress;
+		        	}
+		        	
+		        	if(data.userSelectedType =='R'){
+		        		if(data.bname !== ''){
+		        			u_ipExtraAddr += data.bname;
+		        		}
+		        		if(data.buildingName !==''){
+		        			u_ipExtraAddr += (u_ipExtraAddr !== '' ?',' + data.buildingName : data.buildingName);	
+		        		}
+		        		u_ipAddr += (u_ipExtraAddr !=='' ?'(' + u_ipExtraAddr + ')' : '');	
+		        	}        	
+		   	
+		        	u_addres = '('+u_ipNumber+')' + u_ipAddr;
+		        	
+		            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+		            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+		        }
+		    }).open();
+	}
     
     
     function pay(){
+    	let u_ipExtraAddr = document.getElementsByName('u_ipExtraAddr')[0].value.trim();
     	let u_username = document.getElementById("recipient").value;
     	let u_id = document.getElementById("u_id").value;
-    	let u_addres = document.getElementById("address").value;
+    	let u_addplus = u_addres + u_ipExtraAddr
     	let u_tel = document.getElementById("phone").value;
     	let u_email = document.getElementById("email").value;
     	let message = document.getElementById("message").value;
@@ -162,7 +204,8 @@
     			messagejs : message,
     			p_numjs : p_numTotal,
     			b_idxjs : b_idxTotal,
-    			quantityjs : quantityTotal
+    			quantityjs : quantityTotal,
+    			totaljs : total
     	}
     	
     	

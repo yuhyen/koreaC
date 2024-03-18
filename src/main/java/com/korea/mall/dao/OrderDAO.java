@@ -36,4 +36,8 @@ public class OrderDAO {
 	 public List<OrderDTO> selectSearch(SearchDTO dto){
 		 return sqlSession.selectList("order.orderSearch", dto);
 	 }
+	 public int updateTotal(UserDTO dto) {
+		 return sqlSession.update("order.updateTotal", dto);
+	 }
+	 
 }
