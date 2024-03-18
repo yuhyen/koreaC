@@ -18,7 +18,19 @@ public class BasketDAO {
  public List<BasketDTO> selectList(BasketDTO dto) {
 	 return sqlSession.selectList("order.basket_list", dto);
  }
+ 
+ public BasketDTO selectByProduct(BasketDTO dto) {
+	 return sqlSession.selectOne("order.basket_producnt", dto);
+ }
 
+ public int update(BasketDTO dto) {
+	 return sqlSession.insert("order.basket_update", dto);
+ }
+ 
+ public int insert(BasketDTO dto) {
+	 return sqlSession.insert("order.basket_insert", dto);
+ }
+ 
  public int delete(int idx) {
 	 return sqlSession.delete("order.basket_del", idx);
  }
