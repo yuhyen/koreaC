@@ -10,6 +10,7 @@
 <body>
 <div class="absolute h-0 left-0 right-0">
 	<div class="bg-white shadow-md">
+		<hr>
 		<div align="center">
 			<p>정확한 응대를 위해 전화 상담 업무가 종료되며</p>
 			<p>모든 상담은 카톡 상담이나 게시판 문의를 통해 진행됨을 안내드립니다</p>
