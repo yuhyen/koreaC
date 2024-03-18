@@ -131,7 +131,7 @@ public class AdminController {
 	
 	// 회원 관리
 	@RequestMapping("user")
-	public String list(Model model, @RequestParam(value = "u_username", required = true) String u_username, @RequestParam(required = false, defaultValue = "1") int page) {
+	public String list(Model model, @RequestParam(value = "u_username", required = false) String u_username, @RequestParam(required = false, defaultValue = "1") int page) {
 		int start = (page - 1) * Common.uList.BLOCKLIST + 1;
 		int end = start + Common.uList.BLOCKLIST - 1;
 		
