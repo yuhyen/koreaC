@@ -137,6 +137,14 @@ public class OrderController {
 		
 	}
 	
+	@RequestMapping("basket_insert")
+	public String basket_insert(String pronum) {
+		
+		orderService.basketInsert(pronum);
+		
+		return "redirect:basket_page";
+	}
+	
 	
 	@RequestMapping("order_page")
 	public String orderpage(String type, Model model, String pronum, Integer num) {

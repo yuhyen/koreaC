@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>KoreaMall</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -13,6 +15,18 @@
         font-family: 'Roboto', sans-serif;
     }
 </style>
+<script type="text/javascript">
+	new Swiper('.swiper', {
+	    slidesPerView : 'auto',
+	    spaceBetween : 1, 
+	    direction: 'vertical',
+    	autoplay: {     //자동슬라이드 (false-비활성화)
+ 	    	delay: 10, // 시간 설정
+ 	   		disableOnInteraction: false, // false-스와이프 후 자동 재생
+ 	   	}
+		loop:true
+	})
+</script>
 </head>
 <jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 <body class="bg-gray-50">
@@ -39,6 +53,31 @@
         </aside>
         <main class="flex overscroll-auto">
             <div class="py-6 px-4 sm:px-6 lg:px-8">
+            <div class="swiper-scrollbar">
+	            <div class="grid grid-cols-3">
+	            	<div class="swiper-wrapper">
+			         	<div class="swiper-slide">
+			         		<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			         	</div>
+			         	<div class="swiper-slide">
+			         		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
+			         	</div>
+			         	<div class="swiper-slide">
+			         		<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			         	</div>
+			         	<div class="swiper-slide">
+			         		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
+			         	</div>
+			         	<div class="swiper-slide">
+			         		<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			         	</div>
+			         	<div class="swiper-slide">
+			         		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
+			         	</div>
+		         	</div>
+		       	</div>
+		    </div>
+            	<br>
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">New</h2>
                 <div class="grid gap-3 grid-cols-3 grid-rows-3">
                 <c:forEach var="dto" items="${list}">

@@ -48,12 +48,6 @@
 	<div class="flex overscroll-auto">
 		<div class="py-6 px-4 sm:px-6 lg:px-8">
 			<div>
-				<select id="p_id">
-					<option value="1">Outer</option>
-					<option value="2">Top</option>
-					<option value="3">Bottom</option>
-					<option value="4">Suit</option>
-				</select>
 		  		<input type="text" id="p_name" placeholder="상품">
 				<input type="button" value="검색" onclick="search()">
 		  	</div>

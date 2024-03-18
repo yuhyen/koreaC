@@ -26,7 +26,7 @@
 <body>
 <div class="container mx-auto p-6">
 	<div>
-		<input type="text" id="u_username">
+		<input type="text" id="u_username" placeholder="이름">
 		<input type="button" value="검색" onclick="search()">
 	</div>
 	<br>
