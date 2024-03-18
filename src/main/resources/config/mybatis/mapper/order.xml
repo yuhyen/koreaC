@@ -21,6 +21,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and B.B_NUM = P.P_NUM
 	</select>
 	
+	<select id="basket_producnt"  resultType="basket">
+		select * from TB_BASKET B, TB_PRODUCT P
+		WHERE B.B_ID = #{b_id} 
+		and B.B_NUM = P.P_NUM
+		and b.B_NUM = #{b_num}
+	</select>
+	
+	<update id="basket_update">
+	
+		UPDATE ADMIN.TB_BASKET
+			 SET 
+			 B_QUANTITY= #{b_quantity}, 
+			 B_SHIPPING= #{b_shipping} 
+		WHERE 
+				B_IDX = #{b_idx} 
+			AND B_ID = #{b_id} 
+	</update>
+	
+	<insert id="basket_insert">
+	INSERT INTO TB_BASKET
+		(
+	 B_IDX, 
+	 B_ID, 
+	 B_NUM, 
+	 B_QUANTITY
+	 ) 
+	VALUES 
+		( 
+	 SEQ_BASKET_IDX.NEXTVAL, 
+	 #{b_id},
+	 #{b_num},
+	 #{b_quantity}
+	 )
+	
+	</insert>
+	
 	<delete id="basket_del" parameterType="int">
 		DELETE FROM TB_BASKET
 		WHERE B_IDX = #{b_idx}	
