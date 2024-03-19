@@ -12,7 +12,7 @@
 <div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
   <div class="flex justify-between items-center mb-6">
     <a id="boardName" href="#" class="text-lg font-semibold text-blue-600 hover:text-blue-800">게시판종류</a>
-    <span id="userName" class="text-gray-600">로그인아이디넣기</span>
+    <span id="userName" class="text-gray-600"></span>
   </div>
   <table class="min-w-full table-fixed">
     <thead>
@@ -75,8 +75,6 @@
 		console.log(typeCategory);
 		getBoardName(urlParam.get("type"))
 		let uid = pageLoad(1 , typeCategory , "" , "");
-//   		document.getElementById("userName").textContent = uid;
-		
 	}
 	
 	let pageLoad = (pageNo , typeCategory , searchType ,searchKey ) =>{
@@ -108,6 +106,9 @@
       		
       		//아이디
       		output = returnObj.u_id;
+      		if(output != null){
+      			document.getElementById("userName").textContent =  output.u_idx; 
+      		}
 
 			//페이징용
 			let page = returnObj.data.page;

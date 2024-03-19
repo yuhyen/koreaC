@@ -8,7 +8,74 @@
 <title></title>
 <jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/common/common.jsp"></jsp:include>
+<style type="text/css">
+	h2{
+	    text-align: center;
+	}
+	.modal_btn {
+	    display: block;
+	    margin: 40px auto;
+	    padding: 10px 20px;
+	    background-color: royalblue;
+	    border: none;
+	    border-radius: 5px;
+	    color: #fff;
+	    cursor: pointer;
+	    transition: box-shadow 0.2s;
+	}
+	.modal_btn:hover {
+	    box-shadow: 3px 4px 11px 0px #00000040;
+	}
+	
+	/*모달 팝업 영역 스타일링*/
+	.modal {
+	/*팝업 배경*/
+		display: none; /*평소에는 보이지 않도록*/
+	    position: absolute;
+	    top:0;
+	    left: 0;
+	    width: 100%;
+	    height: 100vh;
+	    overflow: hidden;
+	    background: rgba(0,0,0,0.5);
+	    z-index: 1500;
+	}
+	.modal_popup {
+		width: 100rem;
+	    height: 50rem;
+	}
+	.modal .modal_popup {
+	/*팝업*/
+	    position: absolute;
+	    top: 50%;
+	    left: 50%;
+	    transform: translate(-50%, -50%);
+	    padding: 20px;
+	    background: #ffffff;
+	    border-radius: 20px;
+	}
+	.modal .modal_popup .close_btn {
+	    display: block;
+	    padding: 10px 20px;
+	    background-color: rgb(116, 0, 0);
+	    border: none;
+	    border-radius: 5px;
+	    color: #fff;
+	    cursor: pointer;
+	    transition: box-shadow 0.2s;
+	}
+</style>
 <body>
+	
+    <div class="modal">
+    <div class="modal_popup">
+        <h3>모달 팝업</h3>
+         <iframe id="innerFrame" src="" width="100%" height="100%"></iframe>
+        <button id="BtnModalClose" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right">닫기</button>
+    </div>
+</div>
+
+
 <div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
 	  <div class="flex justify-between items-center mb-6">
             <div class="space-x-4">
@@ -19,13 +86,19 @@
         </div>
 
   	<div id=regGrp>
+  	   <div id="pGrp" style="display:none;">
+  	   			<input type="hidden" id="pNum" value="">
+	 			<img id="pImg" src="https://source.unsplash.com/random/100x100?product" alt="Product Image" class="w-24 h-24 object-cover rounded mr-4">
+<%-- 			                <img src="resources/product_img/${dto.p_picture}"> --%>
+                <span id="pName" class="text-sm mt-2" align="left"></span>
+		</div>
 	    <!-- 에디터를 적용할 요소 (컨테이너) -->
 	    <div id="content">
 	    
 	    </div>
 	    
 	    <div id="fileupload">
-			<input class="px-4 py-2 text-black rounded" id="file_input" type="file" multiple="multiple" @change="fileListChange">
+<!-- 			<input class="px-4 py-2 text-black rounded" id="file_input" type="file" multiple="multiple" @change="fileListChange"> -->
 	    </div>
   	</div>
     
@@ -36,6 +109,7 @@
     	
     </div>
     <div id="regBtnGrp" class="flex justify-end mt-4 space-x-2">
+       	<button id="btnModal" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right">상품선택</button>
     	<button id="btnReg" style="display:none;" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="registBoard">등록</button>
     	<button id="btnUpd" style="display:none;" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="updateBoard">수정</button>
     	<button id="btnCel" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 right" @click="cancel">취소</button>
@@ -44,24 +118,54 @@
     <!-- TUI 에디터 JS CDN -->
     <script>
     
+    //모달창은 vue로 구현하지않는다-> 외부에서 사용될수을듯.
+    const modal = document.querySelector('.modal');
+    
     let typeCategory = "";
     let seq ="";
     let reply ="";
     let noticeYn = "";
     let title = "";
     let contents = "";
+    let product = ""; 
     
     window.onload = () => { 
+	   	 document.getElementById("btnModal").addEventListener('click', function(){
+   	        modal.style.display = 'block';
+   	        document.body.style.overflowY = "hidden";
+   	     	document.getElementById("innerFrame").src = "searchPopup" 
+   	    });
+	   	    
+   	    document.getElementById("BtnModalClose").addEventListener('click',function(){
+   	        modal.style.display = 'none';
+   	        document.body.style.overflowY = "auto";
+   	        if(document.getElementById("pNum").value != ""){
+	   	     	document.getElementById("pGrp").style.display = "";
+   	        }
+	   	});
+    	    
     	const qa =  location.search
     	const urlParam = new URLSearchParams(qa);
     	typeCategory =  urlParam.get("type");
+    	product = urlParam.get("type"); 
     	seq = urlParam.get("seq")
     	reply = urlParam.get("reply")
     	if(typeCategory != undefined || typeCategory != "" || typeCategory != null){
 	    	getBoardName(urlParam.get("type"))
     	}
-    	console.log("seq" , seq)
-    	console.log("reply " , reply)
+    
+    	if(product != null){
+    		console.log("상품조회");
+    		sendRequestContent("detail.json" , JSON.stringify({p_num : 123}) , "" ,"POST" , true , "application/json");
+    	    console.log(xhr.response);
+    	    product = JSON.parse(xhr.response).dto
+    	    document.getElementById("pNum").value = product.p_num;
+    	    document.getElementById("pName").textContent = product.p_name;
+    	    if(document.getElementById("pNum").value != ""){
+    		     	document.getElementById("pGrp").style.display = "";
+    	    }
+    	}
+    	
     	if(seq != null){
 	    	alert(seq);
 	    	setSendObj(seq , reply , "" , "" , "" , "" , "");
@@ -111,7 +215,6 @@
 	   	if(seq ==null  && reply == null){
 			document.getElementById("btnReg").style.display = ""; 
 		}
-			    	
     }
     
     let sendObj = {
@@ -153,7 +256,7 @@
 		return name;
     } 
     
-    let setSendObj = (seq , reply , category , noticeYn , files , title , contents) =>{
+    let setSendObj = (seq , reply , category , noticeYn , files , title , contents , product) =>{
     	sendObj = {
     	            seq : seq
     	         ,  reply : reply
@@ -162,6 +265,7 @@
     			 ,  files : files
     			 ,  title : title
     			 ,  contents : contents
+    			 ,  product : product
     		}
     	
     	return sendObj;
@@ -217,6 +321,7 @@
               		let returnObj = JSON.parse(xhr.response);
               		console.log(returnObj.boardDTO)
 					alert("insert reply end")
+					history.back()
               	}else{
               		console.log("오류처리")
               		alert("insert reply 실패")
@@ -235,6 +340,7 @@
               		let returnObj = JSON.parse(xhr.response);
               		console.log(returnObj.boardDTO)
               		//성공시 페이지 이동
+              		history.back()
               	}else{
               		alert("실패")
               	}

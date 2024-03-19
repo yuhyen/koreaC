@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.korea.mall.common.Common;
 import com.korea.mall.dao.ProductDAO;
@@ -101,6 +103,7 @@ public class MainController {
 		return "main/search.jsp?page="+page;
 	}
 	
+	
 	// 카테고리별로 보기
 	@RequestMapping("category")
 	public String view_list(Model model,@RequestParam(value = "p_id", required = true) int p_id) {
@@ -151,4 +154,90 @@ public class MainController {
 		
 		return "main/search.jsp?page="+page;
 	}
+	
+	
+		// 검색 페이지
+		@RequestMapping("searchPopup")
+		public String searchPopup(Model model, @RequestParam(required = false, defaultValue = "1") int page) {
+			int start = (page - 1) * Common.Main.BLOCKLIST + 1;
+			int end = start + Common.Main.BLOCKLIST - 1;
+			
+			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			map.put("start", start);
+			map.put("end", end);
+			
+			// 전체 상품 수 조회
+			int rowTotal = product_dao.getRowTotal();
+			
+			// 페이지 메뉴 생성
+			String pageMenu = Paging.getPaging("search",
+												page,
+												rowTotal, 
+												Common.Main.BLOCKLIST, 
+												Common.Main.BLOCKPAGE);
+			
+			request.getSession().removeAttribute("show");
+
+			List<ProductDTO> list = product_dao.selectList(map);
+			
+			model.addAttribute("list", list);
+			model.addAttribute("pageMenu", pageMenu);
+			
+			return "main/searchPopup.jsp?page="+page;
+	}
+		
+	// 상품 검색
+	@RequestMapping("p_searchPopup")
+	public String p_searchPopup(Model model,@RequestParam(value = "p_name", required = true) String p_name, @RequestParam(required = false, defaultValue = "1") int page) {
+		int start = (page - 1) * Common.Main.BLOCKLIST + 1;
+		int end = start + Common.Main.BLOCKLIST - 1;
+		
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("start", start);
+		map.put("end", end);
+		
+		// 전체 상품 수 조회
+		int rowTotal = product_dao.getRowTotal();
+		
+		// 페이지 메뉴 생성
+		String pageMenu = Paging.getPaging("main",
+											page,
+											rowTotal, 
+											Common.Main.BLOCKLIST, 
+											Common.Main.BLOCKPAGE);
+		
+		request.getSession().removeAttribute("show");
+		
+		p_name = "all";
+		String name = request.getParameter("p_name");
+		
+		if(name != null && !name.isEmpty()) {
+			p_name = name;
+		}
+		
+		List<ProductDTO> list = null;
+		
+		if(p_name.equalsIgnoreCase("all")) {
+			list = product_dao.selectList(map);
+		} else {
+			list = product_dao.search(name);
+		}
+		
+		model.addAttribute("pageMenu", pageMenu);
+		model.addAttribute("list", list);
+		
+		return "main/searchPopup.jsp?page="+page;
+	}
+	
+	
+	@RequestMapping("detail.json")
+	public ModelAndView detailJson(@RequestBody HashMap<String, Object> param) {
+		ModelAndView mv = new ModelAndView("jsonView");
+		ProductDTO dto = product_dao.selectOne((int) param.get("p_num"));
+		mv.addObject("dto", dto);
+		
+		return mv;
+	}
+		
+		
 }

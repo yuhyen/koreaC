@@ -28,7 +28,6 @@
     </div>
 </div>
 
-    <!-- TUI 에디터 JS CDN -->
     <script>
     
     let seq = "";
@@ -54,6 +53,7 @@
       				 , content : obj.B_CONTENTS
       				 , index : idx
       				 , updateYn : returnObj.update
+      				 , user : obj.B_MOD_USER
       			}
       			
       			if(document.getElementById("boardName").text == '' || document.getElementById("boardName").text === ''){
@@ -107,15 +107,14 @@
     	
     	outerDiv.classList.add("pl-"+px , "py-2" , "pr-2");
 	    	
-    	reDiv.textContent = "↪";
+    	reDiv.textContent = "↪ ";
     	
-    	
-      	newSpan.textContent = "아이디자리 ";
+      	newSpan.textContent = input.user;
     	newDiv.id = input.elName
     	newDiv.classList.add("mx-auto", "mt-10" ,"p-6" ,"bg-white" ,"shadow-lg" ,"rounded-lg");
     	
     	if(input.index != 0 || input.index != "0") {
-    		newSpan.textContent = "↪" + "아이디자리";
+    		newSpan.textContent = "↪ " +  input.user;
     	}
     	
     	outerDiv.appendChild(newSpan);
