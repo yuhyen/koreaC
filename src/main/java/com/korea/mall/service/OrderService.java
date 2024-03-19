@@ -19,6 +19,7 @@ import com.korea.mall.dao.ProductDAO;
 import com.korea.mall.dao.UserDAO;
 import com.korea.mall.dao.UserupdateDAO;
 import com.korea.mall.dto.BasketDTO;
+import com.korea.mall.dto.MoreDTO;
 import com.korea.mall.dto.OrderDTO;
 import com.korea.mall.dto.ProductDTO;
 import com.korea.mall.dto.SearchDTO;
@@ -194,11 +195,18 @@ private final UserDAO userDAO;
 		
  }
  
-  public List<OrderDTO> selectOrderList(){
-	  UserDTO userdto = (UserDTO)session.getAttribute("u_id");
+  public List<OrderDTO> selectOrderList(int count, String u_id){
+	  
+	  int startnum = count - 3;
+	  int endnum = count;
 	  
 	  
-	  return orderDAO.selectOrderList(userdto.getU_id());
+	  MoreDTO more = new MoreDTO();
+	  more.setStartnum(startnum);
+	  more.setEndnum(endnum);
+	  more.setU_id(u_id);
+	  
+	  return orderDAO.selectOrderList(more);
 	  
   }
  
@@ -248,7 +256,53 @@ private final UserDAO userDAO;
 //	 return orderdto;
 // }
  
- public List<OrderDTO> selectSearch(String orderstatus, String startdate, String enddate, String userid){
+ public List<OrderDTO> selectSearch(String orderstatus, String startdate, String enddate, String userid, int count){
+	 
+	 if(enddate == "") {
+		 
+		 enddate = "1111-11-11";
+	 }
+	 if(startdate == "") {
+		startdate = "1111-11-11";
+		
+	 }
+	
+	 String str = "0123456789";
+	 enddate = CharMatcher.anyOf(str).retainFrom(enddate);
+	 startdate = CharMatcher.anyOf(str).retainFrom(startdate);
+	
+		 long psenddate = Integer.parseInt(enddate);
+		 long psstartdate = Integer.parseInt(startdate);
+	 
+		 
+		 
+		 
+	 if(orderstatus.equals("--전체--")) {
+		 orderstatus = null;
+	 }
+	int startnum = count - 3;
+	int endnum = count;
+	 
+	 	 SearchDTO serdto = new SearchDTO(); 
+	 	  serdto.setEnddate(psenddate);
+		  serdto.setOrderstatus(orderstatus); 
+		  serdto.setStartdate(psstartdate);
+		  serdto.setUserid(userid);
+		  serdto.setStartnum(startnum);
+		  serdto.setEndnum(endnum);
+		  
+		  List<OrderDTO> orderdto = orderDAO.selectSearch(serdto);
+		 
+	 
+	 
+	 return orderdto;
+	 
+ }
+ 
+ 
+ 
+ // search count 조회
+ public int selectSearchCount(String orderstatus, String startdate, String enddate, String userid) {
 	 
 	 if(enddate == "") {
 		 
@@ -278,13 +332,12 @@ private final UserDAO userDAO;
 		  serdto.setOrderstatus(orderstatus); 
 		  serdto.setStartdate(psstartdate);
 		  serdto.setUserid(userid);
-		  
-		  List<OrderDTO> orderdto = orderDAO.selectSearch(serdto);
-		 
 	 
+	 int count = orderDAO.selectSearchCount(serdto);
 	 
-	 return orderdto;
-	 
+	 return count;
  }
+ 
+ 
  
 }

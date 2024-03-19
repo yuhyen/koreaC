@@ -24,7 +24,7 @@
 			let startdate = document.getElementById('start-date').value;
 			let enddate = document.getElementById('end-date').value;
 			let userid = document.getElementById('userid').value;
-			
+
 // 			let jsonString = {
 // 					orderstatusjs : orderstatus,
 // 					startdatejs : startdate,
@@ -71,6 +71,7 @@
                     <div class="flex items-center">
                         <label for="order-status" class="mr-2">주문 상태:</label>
                         <select id="order-status" class="bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <c:if test="${serdto.orderstatus != null }"><option>${serdto.orderstatus }</option></c:if>
                             <option>--전체--</option>
                             <option>배송중</option>
                             <option>배송완료</option>
@@ -80,11 +81,25 @@
                 <div class="flex items-center justify-between mt-4">
                     <div class="flex items-center">
                         <label for="start-date" class="mr-2">From:</label>
+                        <c:choose>
+                        	<c:when test="${serdto.startdate != ''}">
+                        		<input type="date" id="start-date" class="bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value = "${serdto.startdate}">
+                        	</c:when>
+                        	<c:otherwise>
                         <input type="date" id="start-date" class="bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+   							</c:otherwise>
+                    	</c:choose>
                     </div>
                     <div class="flex items-center">
                         <label for="end-date" class="mr-2">To:</label>
+                        <c:choose>
+                        	<c:when test="${serdto.enddate != '' }">
+                        <input type="date" id="end-date" class="bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value="${serdto.enddate }">	
+                        	</c:when>
+                        <c:otherwise>
                         <input type="date" id="end-date" class="bg-gray-200 border border-gray-200 text-gray-700 py-2 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    	</c:otherwise>
+                    	</c:choose>
                     </div>
                     <input type="hidden" id="userid" value="${user.u_id }">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="search()">
@@ -162,7 +177,7 @@
                                             </td>
                                         </tr>
                                     </tbody>
-                                     <c:if test="${order[i.index].o_ordernum < order[i.index + 1].o_ordernum }">
+                                     <c:if test="${order[i.index].o_ordernum > order[i.index + 1].o_ordernum }">
             							<thead class="bg-gray-50"> 
                                         <tr>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" colspan="8">
@@ -172,6 +187,7 @@
                                     </thead>
                               		</c:if>
                                     </c:forEach>
+                                   
                                 </table>
                             </div>
                         </div>
@@ -184,23 +200,35 @@
             </div>
              		 
         </div>
-		<p class="btn">더보기</p>	    
+        							<input type="hidden" id ="count" value="${count }">
+									<input type="button" value="더보기" id = "morebtn"  class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-100" onclick="more()">		    
     </div>
     
     <script type="text/javascript">
-  	  $(function(){
-  		$('#load_list').attr('class').slice(0,4).show();
-  		 $('#liad_id_list').attr('class').click(function(e){
-  			 
-  			 e.prevenDefault();
-  			 $('#load_list').attr('class').slice(0,4).show();
-  			 
-  			 if($('#load_list').attr('class').length == 0){
-  				 $('#liad_id_list').attr('class').hide();
-  			 }
-  		 });
-  		 
-  	  });
+    			
+    let count = document.getElementById('count').value.trim();
+    let morebtn = document.getElementById('morebtn');
+    	function more(){
+    		let orderstatus = document.getElementById('order-status').value;
+			let startdate = document.getElementById('start-date').value;
+			let enddate = document.getElementById('end-date').value;
+			
+    		location.href = "moreClick?count=" + count + "&orderstatus=" + orderstatus+"&startdate=" + startdate + "&enddate=" + enddate;
+    		
+//       	 	sendRequest(url, param, moreCallback, "POST");
+      	 
+    	}
+    		
+    	if(count <= 4){
+    		morebtn.remove();	
+    	}
+//     	function moreCallback(){
+//     		if(xhr.readyState == 4 && xhr.status == 200){
+//         		let data = xhr.responseText;
+//     			let json = (new Function('return' + data))();
+//     			console.log(json);
+//     	}
+//     	}
     </script>
 </body>
 </html>

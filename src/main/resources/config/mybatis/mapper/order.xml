@@ -96,41 +96,139 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		
 	</delete>
 	
-	<select id="orderList" resultType="order">
-	SELECT * FROM TB_ORDERHISTORY WHERE O_ID = #{u_id} ORDER BY O_ORDERNUM
+	<select id="moreCount" resultType="int">
+select count(*) 
+from(
+      select rownum, o_ordernum 
+      from(
+           select o_ordernum 
+           from tb_orderhistory
+           where o_id = #{u_id}
+           group by o_ordernum
+           )
+     )
 	</select>
 	
+	<select id="orderList" resultType="order">
+select * 
+from(
+      select rownum row_num, o_ordernum 
+      from(
+           select o_ordernum 
+           from tb_orderhistory
+           group by o_ordernum
+           )
+     )a,
+tb_orderhistory b 
+    where a.o_ordernum = b.O_ORDERNUM
+    and o_id = #{u_id}
+    and a.row_num between #{startnum} and #{endnum}
+    order by a.o_ordernum desc	
+	</select>
+	
+	
+	<select id="moreSearchcount" resultType="int">
+	select count(*) 
+from(
+      select rownum row_num, o_ordernum 
+      from(
+           select o_ordernum 
+           from tb_orderhistory
+           where o_id = #{userid}
+           <choose>
+		<when test="startdate != 11111111  and enddate != 11111111 and orderstatus != null">
+		AND O_ORDER_DATE BETWEEN TO_DATE(#{startdate},'YYYYMMDD') AND TO_DATE(#{enddate},'YYYYMMDD')
+			AND O_STATE = #{orderstatus}
+			group by o_ordernum
+			 )
+     )a
+		</when>
+		<when test="startdate != 11111111  and enddate != 11111111 and orderstatus == null">
+		AND O_ORDER_DATE BETWEEN TO_DATE(#{startdate},'YYYYMMDD') AND TO_DATE(#{enddate},'YYYYMMDD')
+			group by o_ordernum
+			
+			 )
+     )a
+		</when>
+		<when test="startdate != 11111111  and enddate == 11111111 and orderstatus == null">
+		AND O_ORDER_DATE >= TO_DATE(#{startdate},'YYYYMMDD')
+			group by o_ordernum
+			
+			 )
+     )a
+		</when>
+		<when test="startdate == 11111111  and enddate != 11111111 and orderstatus == null">
+		AND  TO_DATE(#{enddate},'YYYYMMDD')	>= O_ORDER_DATE
+			group by o_ordernum
+			
+			 )
+     )a
+		</when>
+		<when test="startdate == 11111111  and enddate == 11111111 and orderstatus != null">
+		AND O_STATE = #{orderstatus}
+			group by o_ordernum
+			
+			 )
+     )a
+		</when>
+		<when test="startdate == 11111111  and enddate == 11111111 and orderstatus == null">
+		group by o_ordernum
+		 )
+     )a
+		</when>
+	</choose>	
+
+         
+	</select>
+	
+	
+	
+	
 	<select id="orderSearch" resultType="order">
-		SELECT * FROM TB_ORDERHISTORY WHERE O_ID = #{userid}
+		select * 
+from(
+      select rownum row_num, o_ordernum 
+      from(
+           select o_ordernum 
+           from tb_orderhistory
+           group by o_ordernum
+           )
+     )a,
+tb_orderhistory b 
+    where a.o_ordernum = b.O_ORDERNUM
+    and o_id = #{userid}
+    and a.row_num between #{startnum} and #{endnum}
 	<choose>
 		<when test="startdate != 11111111  and enddate != 11111111 and orderstatus != null">
 		AND O_ORDER_DATE BETWEEN TO_DATE(#{startdate},'YYYYMMDD') AND TO_DATE(#{enddate},'YYYYMMDD')
 			AND O_STATE = #{orderstatus}
-			ORDER BY O_ORDERNUM
+			order by a.o_ordernum desc
 		</when>
 		<when test="startdate != 11111111  and enddate != 11111111 and orderstatus == null">
 		AND O_ORDER_DATE BETWEEN TO_DATE(#{startdate},'YYYYMMDD') AND TO_DATE(#{enddate},'YYYYMMDD')
-			ORDER BY O_ORDERNUM
+			order by a.o_ordernum desc
 		</when>
 		<when test="startdate != 11111111  and enddate == 11111111 and orderstatus == null">
 		AND O_ORDER_DATE >= TO_DATE(#{startdate},'YYYYMMDD')
-			ORDER BY O_ORDERNUM
+			order by a.o_ordernum desc
 		</when>
 		<when test="startdate == 11111111  and enddate != 11111111 and orderstatus == null">
 		AND  TO_DATE(#{enddate},'YYYYMMDD')	>= O_ORDER_DATE
-			ORDER BY O_ORDERNUM
+			order by a.o_ordernum desc
 		</when>
 		<when test="startdate == 11111111  and enddate == 11111111 and orderstatus != null">
 		AND O_STATE = #{orderstatus}
-			ORDER BY O_ORDERNUM
+			order by a.o_ordernum desc
 		</when>
 		<when test="startdate == 11111111  and enddate == 11111111 and orderstatus == null">
-		ORDER BY O_ORDERNUM
+		order by a.o_ordernum desc
 		</when>
 	</choose>	
 		
 		
 	</select>
+	
+
 	
 	<update id="updateTotal">
 	UPDATE TB_USER SET

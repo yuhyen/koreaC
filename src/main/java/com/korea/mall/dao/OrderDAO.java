@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.korea.mall.dto.BasketDTO;
+import com.korea.mall.dto.MoreDTO;
 import com.korea.mall.dto.OrderDTO;
 import com.korea.mall.dto.ProductDTO;
 import com.korea.mall.dto.SearchDTO;
@@ -29,8 +30,8 @@ public class OrderDAO {
 	 public int insert(OrderDTO dto) {
 		 return sqlSession.insert("order.orderhistory_insert", dto);
 	 }
-	 public List<OrderDTO> selectOrderList(String u_id){
-		 return sqlSession.selectList("order.orderList", u_id);
+	 public List<OrderDTO> selectOrderList(MoreDTO dto){
+		 return sqlSession.selectList("order.orderList", dto);
 	 }
 	 
 	 public List<OrderDTO> selectSearch(SearchDTO dto){
@@ -39,5 +40,12 @@ public class OrderDAO {
 	 public int updateTotal(UserDTO dto) {
 		 return sqlSession.update("order.updateTotal", dto);
 	 }
+	 public int selectCount(String u_id) {
+		 return sqlSession.selectOne("order.moreCount", u_id);
+	 }
+	 public int selectSearchCount(SearchDTO dto) {
+		 return sqlSession.selectOne("order.moreSearchcount", dto);
+	 }
+	 
 	 
 }

@@ -13,14 +13,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.korea.mall.dao.LoginDAO;
+import com.korea.mall.dao.OrderDAO;
 import com.korea.mall.dao.UserDAO;
 import com.korea.mall.dto.BasketDTO;
 import com.korea.mall.dto.OrderDTO;
+import com.korea.mall.dto.SearchDTO;
+import com.korea.mall.dto.SearchreDTO;
 import com.korea.mall.dto.UserDTO;
 import com.korea.mall.service.OrderService;
 
@@ -33,6 +37,8 @@ public class OrderController {
 	private final  OrderService orderService;
 	
 	private final UserDAO user_dao;
+	
+	private final OrderDAO orderDAO;
 	
 	
 	@Autowired
@@ -70,11 +76,13 @@ public class OrderController {
 	
 	@RequestMapping("orderhistory_page")
 	public String orderhistory_page(Model model) {
-			UserDTO uesrdto = (UserDTO)session.getAttribute("u_id");
-			List<OrderDTO> order = orderService.selectOrderList();
+			UserDTO userdto = (UserDTO)session.getAttribute("u_id");
+			int count = orderDAO.selectCount(userdto.getU_id());
+			List<OrderDTO> order = orderService.selectOrderList(count, userdto.getU_id());
 			
 			model.addAttribute("order", order);
-			model.addAttribute("user", uesrdto);	
+			model.addAttribute("user", userdto);
+			model.addAttribute("count", count - 4);
 		return "order/orderhistory_page";
 	}
 	
@@ -97,13 +105,62 @@ public class OrderController {
 	
 	@RequestMapping("history_search")
 	public String history_search(String orderstatus, String startdate, String enddate, String userid, Model model) {
-		List<OrderDTO> dto = orderService.selectSearch(orderstatus, startdate, enddate, userid);
+		int count = orderService.selectSearchCount(orderstatus, startdate, enddate, userid);
+		List<OrderDTO> dto = orderService.selectSearch(orderstatus, startdate, enddate, userid, count);
 		UserDTO uesrdto = (UserDTO)session.getAttribute("u_id");
+		SearchreDTO serdto = new SearchreDTO();
+		serdto.setEnddate(enddate);
+		serdto.setOrderstatus(orderstatus);
+		serdto.setStartdate(startdate);
 		
 		model.addAttribute("order", dto);
 		model.addAttribute("user", uesrdto);
+		model.addAttribute("count", count);
+		model.addAttribute("serdto", serdto);
 		return  "order/orderhistory_page";
 	}
+	
+
+	@RequestMapping("moreClick")
+	public String moreClick(int count,String orderstatus, String startdate, String enddate, Model model){//,ModelAndView mav) {
+		
+		System.out.println(orderstatus);
+		System.out.println(startdate);
+		System.out.println(enddate);
+		
+		UserDTO userdto = (UserDTO)session.getAttribute("u_id");
+		if(orderstatus == "--전체--" && startdate == "" && enddate == "") {
+			int countch = count -4;
+		List<OrderDTO> order = orderService.selectOrderList(countch, userdto.getU_id());
+		
+//		mav.addObject("orderadd", order);
+//		mav.setViewName("order/orderhistory_page");
+
+		model.addAttribute("order", order);
+		model.addAttribute("user", userdto);
+		model.addAttribute("count", countch);
+		}
+		else {
+			
+			int countch = count -4 ;
+			UserDTO user = (UserDTO)session.getAttribute("u_id");
+			String userid = user.getU_id();
+			List<OrderDTO> dto = orderService.selectSearch(orderstatus, startdate, enddate, userid, countch);
+			
+			SearchreDTO serdto = new SearchreDTO();
+			serdto.setEnddate(enddate);
+			serdto.setOrderstatus(orderstatus);
+			serdto.setStartdate(startdate);
+			
+			model.addAttribute("order", dto);
+			model.addAttribute("user", user);
+			model.addAttribute("count", countch);
+			model.addAttribute("serdto", serdto);
+		}
+		return "order/orderhistory_page";
+	}
+	
+	
 	
 	
 	
@@ -179,11 +236,6 @@ public class OrderController {
 
 
 	}
-	
-	
-	
-	
-	
 	
 	
 	

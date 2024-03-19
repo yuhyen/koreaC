@@ -8,5 +8,8 @@ public class SearchDTO {
 	private long enddate;
 	 private String orderstatus; 
 	 private String userid ;
+	 private int count;
+	 private int startnum;
+	 private int endnum;
 
 }
