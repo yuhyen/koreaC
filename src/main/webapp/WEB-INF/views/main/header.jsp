@@ -27,9 +27,9 @@
             <c:choose>
             	 <c:when test="${empty u_id}">
 		    		<nav class="flex space-x-4">
-		              <a href="#" class="text-gray-500 hover:text-gray-900">Notice</a>
-		              <a href="#" class="text-gray-500 hover:text-gray-900">Q & A</a>
-		              <a href="#" class="text-gray-500 hover:text-gray-900">Review</a>
+		              <a href="board_list?type=notice" class="text-gray-500 hover:text-gray-900">Notice</a>
+		              <a href="board_list?type=qna" class="text-gray-500 hover:text-gray-900">Q & A</a>
+		              <a href="board_list?type=review" class="text-gray-500 hover:text-gray-900">Review</a>
 		              <a href="delay" class="text-gray-500 hover:text-gray-900">Delay</a> <!-- 로그인이 안되어 있을 시 -->
 		              <a href="search" class="text-gray-500 hover:text-gray-900">Search</a>
 		              <a href="login_form" class="text-gray-500 hover:text-gray-900">Login</a>
@@ -40,9 +40,9 @@
 	         	
 	         	<c:when test="${u_id.u_id == 'admin'}">
             		<nav class="flex space-x-4">
-		               <a href="#" class="text-gray-500 hover:text-gray-900">Notice</a>
-		               <a href="#" class="text-gray-500 hover:text-gray-900">Q & A</a>
-		               <a href="#" class="text-gray-500 hover:text-gray-900">Review</a>
+		               <a href="board_list?type=notice" class="text-gray-500 hover:text-gray-900">Notice</a>
+		               <a href="board_list?type=qna" class="text-gray-500 hover:text-gray-900">Q & A</a>
+		               <a href="board_list?type=review" class="text-gray-500 hover:text-gray-900">Review</a>
 		               <a href="delay" class="text-gray-500 hover:text-gray-900">Delay</a> <!-- 관리자로 로그인 했을 시 -->
 		               <a href="search" class="text-gray-500 hover:text-gray-900">Search</a>
 		               <a href="logout" class="text-gray-500 hover:text-gray-900">Logout</a>
@@ -53,9 +53,9 @@
             	
             	<c:otherwise>
 	            	<nav class="flex space-x-4">
-		               <a href="#" class="text-gray-500 hover:text-gray-900">Notice</a>
-		               <a href="#" class="text-gray-500 hover:text-gray-900">Q & A</a>
-		               <a href="#" class="text-gray-500 hover:text-gray-900">Review</a>
+		               <a href="board_list?type=notice" class="text-gray-500 hover:text-gray-900">Notice</a>
+		               <a href="board_list?type=qna" class="text-gray-500 hover:text-gray-900">Q & A</a>
+		               <a href="board_list?type=review" class="text-gray-500 hover:text-gray-900">Review</a>
 		               <a href="delay" class="text-gray-500 hover:text-gray-900">Delay</a>	<!-- 로그인이 되어 있는 경우 -->
 		               <a href="search" class="text-gray-500 hover:text-gray-900">Search</a>
 		               <a href="logout" class="text-gray-500 hover:text-gray-900">Logout</a>
