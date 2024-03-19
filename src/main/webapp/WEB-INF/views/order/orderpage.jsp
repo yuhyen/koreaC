@@ -19,7 +19,7 @@
   <script src="resources/js/HttpRequest.js"></script>
 </head>
 <body class="bg-gray-50 p-8">
-
+<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
     <div class="max-w-4xl mx-auto">
         <h1 class="text-3xl font-semibold mb-6">Order</h1>
         <div class="bg-white shadow rounded-lg p-6 mb-6">
@@ -103,7 +103,7 @@
                     <option>토스</option>
                 </select>
             </div>
-            <button class="w-full bg-blue-600 text-white rounded-md py-3 font-semibold hover:bg-blue-700" id = "alltotalhtml2" onclick="pay()"></button>
+            <button class="w-full bg-black text-white rounded-md py-3 font-semibold hover:bg-gray-700" id = "alltotalhtml2" onclick="pay()"></button>
         </div>
     </div>
       <script type="text/javascript">

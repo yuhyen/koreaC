@@ -59,6 +59,7 @@
 </head>
 
 <body class="bg-gray-100">
+<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
     <div class="container mx-auto p-6">
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">
@@ -102,7 +103,7 @@
                     	</c:choose>
                     </div>
                     <input type="hidden" id="userid" value="${user.u_id }">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="search()">
+                    <button class="bg-black hover:bg-gray-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" onclick="search()">
                         조회
                     </button>
                 </div>
@@ -201,7 +202,9 @@
              		 
         </div>
         							<input type="hidden" id ="count" value="${count }">
-									<input type="button" value="더보기" id = "morebtn"  class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-100" onclick="more()">		    
+        							<div class="flex justify-center mt-4 space-x-2">
+									<input type="button" value="더보기" id = "morebtn"  class="px-10 py-2 bg-black text-white rounded hover:bg-gray-500" onclick="more()">		    
+    								</div>
     </div>
     
     <script type="text/javascript">

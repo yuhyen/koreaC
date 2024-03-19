@@ -18,6 +18,7 @@
 </style>
 </head>
 <body class="bg-gray-100">
+<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
 <form>
 <div id="app" class="container mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
   <div class="flex items-center mb-4">
@@ -69,8 +70,8 @@
     </div>
   </div>
   <div class="flex justify-end mt-4 space-x-2">
-    <input type="button" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700" value="전체 상품 구매" onclick="byall()">
-    <input type="button" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700" value="선택 상품 구매" onclick="checkby()">
+    <input type="button" class="px-4 py-2 bg-black text-white rounded hover:bg-gray-700" value="전체 상품 구매" onclick="byall()">
+    <input type="button" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700" value="선택 상품 구매" onclick="checkby()">
     
   </div>
 </div>

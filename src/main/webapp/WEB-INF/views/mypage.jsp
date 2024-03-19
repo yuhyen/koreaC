@@ -24,6 +24,7 @@
     </style>
 </head>
 <body class="bg-white text-gray-800">
+	<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
     <div class="container mx-auto px-4 py-8">
         <div class="flex justify-between items-center mb-6">
             <div class="text-lg font-semibold">마이페이지</div>
