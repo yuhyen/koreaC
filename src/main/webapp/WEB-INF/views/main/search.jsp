@@ -11,14 +11,14 @@
 <script type="text/javascript">
 	function search(){
 		let p_name = document.getElementById("p_name").value.trim();
-		let p_id = document.getElementById("p_id").value.trim();
+		
 		
 		if(p_name == ''){
 			alert("상품을 입력하세요")
 			return;
 		}
 		
-		location.href = "p_search?p_name="+p_name+"&p_id="+p_id
+		location.href = "p_search?p_name="+p_name
 	}
 </script>
 <style type="text/css">
@@ -43,7 +43,6 @@
        	<a href=""><button class="text-gray-700 font-semibold">Cart</button></a>
        </div>
   	</aside>
-  	
 	
 	<div class="flex overscroll-auto">
 		<div class="py-6 px-4 sm:px-6 lg:px-8">
