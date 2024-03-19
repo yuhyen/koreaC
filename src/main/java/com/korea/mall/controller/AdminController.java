@@ -171,4 +171,22 @@ public class AdminController {
 		
 		return "admin/user_list.jsp?page="+page;
 	}
+	
+	// 회원삭제
+	@RequestMapping("user_delete")
+	@ResponseBody
+	public String user_delete(int u_idx) {
+		
+		int res = user_dao.user_delete(u_idx);
+		
+		String result = "no";
+		
+		if(res == 1) {
+			result = "yes";
+		}
+		
+		String finRes = String.format("[{'del':'%s'}]", result);
+		
+		return finRes;
+	}
 }

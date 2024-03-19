@@ -23,8 +23,6 @@
 
 	.carousel-slide {
 	    display: flex;
-	    transition: transform 0.5s ease;
-	    white-space: nowrap; /* 이미지가 한 줄에 모두 나타나도록 설정 */
 	}
 
 	.carousel-slide img {
@@ -32,7 +30,6 @@
 	    max-height: 100%; /* 이미지의 최대 높이를 부모 요소의 높이에 맞춤 */
 	    width: auto; /* 가로 크기를 유지하면서 세로 크기에 맞춤 */
 	    height: auto; /* 세로 크기를 유지하면서 가로 크기에 맞춤 */
-	    margin-right: -4px; /* 이미지들 사이에 여백이 없도록 설정 */
 	}
 	
 	 /* 화살표 버튼 스타일 */
@@ -45,7 +42,6 @@
         background-color: rgba(0, 0, 0, 0.5); /* 배경색 지정 */
         color: white; /* 텍스트 색상 지정 */
         padding: 10px; /* 내부 여백 지정 */
-        border-radius: 50%; /* 원형 모양으로 설정 */
     }
 </style>
 </head>
@@ -74,7 +70,7 @@
         </aside>
         <main class="flex overscroll-auto">
             <div class="py-6 px-4 sm:px-6 lg:px-8">
-		       	<div class="grid grid-cols-4">
+		       	<div class="grid grid-cols-1">
 					<div class="carousel-container">
 					    <div class="arrow" onclick="moveSlide(-1)">&#10094;</div>
 							<div id="carousel" class="carousel-slide">
@@ -122,11 +118,13 @@
 
     function moveSlide(direction) {
         currentSlide += direction;
-        if (currentSlide < 0) {
-            currentSlide = totalSlides - 1; // 왼쪽으로 넘어갈 경우 마지막 이미지로 이동
-        } else if (currentSlide >= totalSlides) {
-            currentSlide = 0; // 마지막 이미지에서 오른쪽으로 넘어갈 경우 첫 번째 이미지로 이동
+        
+        if (currentSlide >= totalSlides) {
+            currentSlide = 0; // 마지막 이미지에서 다음 버튼을 클릭한 경우, 첫 번째 이미지로 이동
+        } else if (currentSlide < 0) {
+            currentSlide = totalSlides - 1; // 첫 번째 이미지에서 이전 버튼을 클릭한 경우, 마지막 이미지로 이동
         }
+        
         var displacement = -currentSlide * carouselWidth;
         
         document.getElementById('carousel').style.transition = 'transform 0.5s ease';

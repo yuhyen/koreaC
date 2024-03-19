@@ -18,8 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 카테고리별 검색 -->
 	<select id="category" parameterType="int" resultType="product">
-		select *
-		from TB_product
+		select * from TB_product
 		where p_id = #{p_id}
 	</select>
 	

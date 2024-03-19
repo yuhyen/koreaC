@@ -70,9 +70,9 @@
 				사이즈 : M, L, XL
 			</div>
 			<div class="flex mt-4 space-x-2">
-				<button id="basketBtn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">장바구니</button>
-		   		<button id="orderBtn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">구매하기</button>
-		   		<button id="backBtn" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">뒤로가기</button>
+				<button id="basketBtn" class="px-4 py-2 text-black text-white-500 hover:text-white-800">장바구니</button>
+		   		<button id="orderBtn" class="px-4 py-2 text-black text-white-500 hover:text-white-800">구매하기</button>
+		   		<button id="backBtn" class="px-4 py-2 text-black text-white-500 hover:text-white-800">뒤로가기</button>
 	   		</div>
 		</div>
 	</div>
