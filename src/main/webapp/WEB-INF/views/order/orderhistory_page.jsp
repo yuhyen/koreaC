@@ -58,7 +58,7 @@
     </script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100" id = "body">
 <jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
     <div class="container mx-auto p-6">
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -113,7 +113,7 @@
                     <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg" >
-                                <table class="min-w-full divide-y divide-gray-200">
+                                <table class="min-w-full divide-y divide-gray-200" id="table">
                                     <thead class="bg-gray-50">
                                         <tr>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -166,7 +166,7 @@
                                                 <div class="text-sm text-gray-900">${arr.o_price } 원</div>
                                             </td>
                                              <td class="px-6 py-4 whitespace-nowrap">
-                                                <div class="text-sm text-gray-900">${arr.o_addres } 원</div>
+                                                <div class="text-sm text-gray-900">${arr.o_addres }</div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900">${arr.o_order_date}</div>
@@ -179,16 +179,18 @@
                                         </tr>
                                     </tbody>
                                      <c:if test="${order[i.index].o_ordernum > order[i.index + 1].o_ordernum }">
-            							<thead class="bg-gray-50"> 
+            							<thead>     <!-- class="bg-gray-50"  --> 
                                         <tr>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" colspan="8">
+                                           	<br>
+                                           	<br>
                                            	<br>
                                             </th>
                                         </tr>
                                     </thead>
                               		</c:if>
                                     </c:forEach>
-                                   
+
                                 </table>
                             </div>
                         </div>
@@ -202,37 +204,190 @@
              		 
         </div>
         							<input type="hidden" id ="count" value="${count }">
-        							<div class="flex justify-center mt-4 space-x-2">
-									<input type="button" value="더보기" id = "morebtn"  class="px-10 py-2 bg-black text-white rounded hover:bg-gray-500" onclick="more()">		    
+        							<div class="flex justify-center mt-4 space-x-2" id="morebtndiv">
+									<input type="button" value="더보기" id = "morebtn"  class="px-10 py-2 bg-black text-white rounded hover:bg-gray-500">		    
     								</div>
     </div>
     
     <script type="text/javascript">
-    			
-    let count = document.getElementById('count').value.trim();
+
+  /*   let idNum = 0;
+	let newNode = null; */
+	
+	let morenum = 0;
+    
     let morebtn = document.getElementById('morebtn');
-    	function more(){
+    
+   	//만약 첫 조회가 4개 이상이 아닐떄 버튼 삭제
+    let countdel = document.getElementById('count').value.trim();
+    if(countdel <= 4){
+		morebtn.remove();
+	}
+    
+    
+   morebtn.addEventListener('click', function(){
+	   		
+	   	/* 	if(newNode != null){
+	   		 let testDiv = document.getElementById('body');
+	   		 testDiv.after(newNode);
+	   		 testDiv.remove();
+	   		} */
+	   
+	   		let count = document.getElementById('count').value.trim();
     		let orderstatus = document.getElementById('order-status').value;
 			let startdate = document.getElementById('start-date').value;
 			let enddate = document.getElementById('end-date').value;
 			
-    		location.href = "moreClick?count=" + count + "&orderstatus=" + orderstatus+"&startdate=" + startdate + "&enddate=" + enddate;
+			let jsonString = {
+					countjs : count,
+					orderstatusjs : orderstatus,
+					startdatejs : startdate,
+					enddatejs : enddate
+	    	}
+			
+			let param = JSON.stringify(jsonString);
+			let url = "moreClick";
+			
+    		//location.href = "moreClick?count=" + count + "&orderstatus=" + orderstatus+"&startdate=" + startdate + "&enddate=" + enddate;
     		
-//       	 	sendRequest(url, param, moreCallback, "POST");
-      	 
-    	}
+
+    		sendRequestContent(url, param, moreCallback, "POST" , false , "application/json");
+		
+   }); //클릭 이벤트 
+    	
+    	function moreCallback(){
+    		if(xhr.readyState == 4 && xhr.status == 200){
+    			let list = JSON.parse(xhr.response);
+        		let order = list.ordermore;
+    			
+    			
+    			
+    			//카운트 value바꾸기
+    			 let c = document.getElementById('count');
+    			 c.value = list.count;
+    			 
+				// 버튼 삭제 
+    	        	if(c.value <= 5){
+    	        		morebtn.remove();
+    	        	}
+    			
+    			// 구분선 
+    			let startorderadd = `
+        			<thead> 
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" colspan="8">
+                       	<br>
+                       	<br>
+                       	<br>
+                        </th>
+                    </tr>
+                </thead>
+        		`;
+    			
+        		document.querySelector("#table").insertAdjacentHTML("beforeend", startorderadd);
+    			
+        		
+    			if(morenum != 0){
+    				morenum++;
+    			}
+    			
     		
-    	if(count <= 4){
-    		morebtn.remove();	
-    	}
-//     	function moreCallback(){
-//     		if(xhr.readyState == 4 && xhr.status == 200){
-//         		let data = xhr.responseText;
-//     			let json = (new Function('return' + data))();
-//     			console.log(json);
-//     	}
-//     	}
+    		
+    		// 더보기 눌렀을떄 나올 태그들 
+    		for (let i = 0; i < order.length; i++) {
+    		
+    		let orderadd = `
+    			
+    			<tbody class="bg-white divide-y divide-gray-200" name="tbody">
+                <tr id="liad_id_list" class="load_list">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900" name = "ordernum"></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <img src="https://source.unsplash.com/random/128x128?clothes" alt="Product Image" class="h-12 w-12 rounded-full">
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900" name = "proname_size_pabrice">
+                        									
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900" name="quantity"></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900" name="price"></div>
+                    </td>
+                     <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900" name="addres"></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900" name="date"></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" name="state">
+                           
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+    		
+    		`;
+    		document.querySelector("#table").insertAdjacentHTML("beforeend", orderadd);
+			
+    		let ordernum = document.getElementsByName('ordernum')[morenum];
+    		let proname_size_pabrice = document.getElementsByName('proname_size_pabrice')[i];
+    		let quantity = document.getElementsByName('quantity')[morenum];
+    		let price = document.getElementsByName('price')[morenum];
+    		let addres = document.getElementsByName('addres')[morenum];
+    		let date = document.getElementsByName('date')[morenum];
+    		let state = document.getElementsByName('state')[morenum];
+    		
+    		ordernum.innerHTML = order[i].o_ordernum;
+    		proname_size_pabrice.innerHTML = order[i].o_proname + "<br>" + order[i].o_size + "<br>" + order[i].o_pabrice;
+    		quantity.innerHTML = order[i].o_quantity;
+    		price.innerHTML = order[i].o_price + " 원";
+    		addres.innerHTML = order[i].o_addres;
+    		date.innerHTML = order[i].o_order_date;
+    		state.innerHTML = order[i].o_state;
+    	
+    		//주문번호가 다를시 구분선 추가 
+    		if(order[i].o_ordernum != order[i+1].o_ordernum){
+    			let head = `
+    				<thead> 
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" colspan="8">
+                       	<br>
+                       	<br>
+                       	<br>
+                        </th>
+                    </tr>
+                </thead>
+    			`;
+    			document.getElementsByName('tbody')[morenum].insertAdjacentHTML("beforeend", head);
+    			
+    		} 
+   
+    		
+    	morenum++;	
+    		
+    	}//for문
+    		
+    }//xhr if
+
+    	/* 	 // 'test' node 선택
+  		  let testDiv = document.getElementById('body');
+  		  
+  		  // 노드 복사하기 (deep copy)
+  		  newNode = testDiv.cloneNode(true); */
+    		// 마지막일경우 삭제 로직
+  		  
+  		  
+  }//callback 
+    	
+    
     </script>
+    
 </body>
+<jsp:include page="/WEB-INF/views/main/footer.jsp"></jsp:include>
 </html>
 
