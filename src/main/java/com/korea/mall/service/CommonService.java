@@ -1,30 +1,20 @@
 package com.korea.mall.service;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.UriUtils;
 
 import com.korea.mall.common.Const;
-import com.korea.mall.dao.BoardDAO;
 import com.korea.mall.dao.FileDAO;
 import com.korea.mall.dto.FileDTO;
 import com.korea.mall.dto.UserDTO;
@@ -45,13 +35,13 @@ public class CommonService {
 	
 	private FileDTO fileUploadProc(MultipartFile multipartFile) {
 		
-		//요거쓰면 was주소가져옴.
+		//�슂嫄곗벐硫� was二쇱냼媛��졇�샂.
 		Resource resource = resourceLoader.getResource(Const.FILE_PATH);
 		String path ="";
 //	    String path = request.getServletContext().getRealPath(Const.FILE_PATH);
 	    String uuid = UUID.randomUUID().toString();
 	    UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY);
-	    //userDTO 더미 set mok test
+	    //userDTO �뜑誘� set mok test
 	    if(user == null) {
 	    	user = new UserDTO();
 	    	user.setU_idx(9999);
@@ -64,14 +54,14 @@ public class CommonService {
 	    file.setOrgFileName(multipartFile.getOriginalFilename());
 	    file.setFileSize(multipartFile.getSize());
 	    try {
-	    	//임시코딩
+	    	//�엫�떆肄붾뵫
 //	    	path = "C:\\Users\\admin\\git\\koreaC\\src\\main\\webapp\\resources\\file\\";
 	    	path = resource.getFile().getPath();
 	    	Files.createDirectories(Paths.get(path));
 	    	File saveFile = new File(path, file.getStriostoredFileName());
-	    	//서버저장
+	    	//�꽌踰꾩��옣
 			multipartFile.transferTo(saveFile);
-			//업로드 성공시 dao db넣기
+			//�뾽濡쒕뱶 �꽦怨듭떆 dao db�꽔湲�
 			fileDao.insert(file);
 			
 		}catch(Exception e) {
@@ -111,7 +101,7 @@ public class CommonService {
 //		
 //		FileDTO file = new FileDTO();
 //		file.setFileNo(fileNo);
-//		//dao 넣기
+//		//dao �꽔湲�
 //		try {
 //			
 //			
@@ -120,7 +110,7 @@ public class CommonService {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-//		//오류일경우
+//		//�삤瑜섏씪寃쎌슦
 //		return null;
 //	}
 //	
@@ -129,7 +119,7 @@ public class CommonService {
 //
 //		String uploadFileName = file.getOrgFileName();
 //	    String storeFileName = file.getStriostoredFileName();
-//	    UrlResource urlResource = new UrlResource("file 경로지정:");
+//	    UrlResource urlResource = new UrlResource("file 寃쎈줈吏��젙:");
 //
 //	    String encodeUploadFileName = UriUtils.encode(uploadFileName, StandardCharsets.UTF_8);
 //	    String contentDisposition = "attachment; filename=\"" + encodeUploadFileName + "\"";
