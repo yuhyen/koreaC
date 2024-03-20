@@ -245,6 +245,24 @@ public class LoginController {
 			//인증번호가 맞을 경우
 			return "[{'u_pwd':'"+u_pwd+"'}]";
 		}
+	 
+		/*
+		 * @RequestMapping("/kakaologin") public String kakaoLogin(@RequestParam String
+		 * code) { String accessToken = kakaoApi.getAccessToker(code);
+		 * 
+		 * Map<String,Object> userInfo = kakaoApi.getUserInfo(accessToken);
+		 * 
+		 * String email = (String)userInfo.get("email"); String nickname =
+		 * (String)userInfo.get("nickname");
+		 * 
+		 * System.out.println("email = " + email); System.out.println("nickname = " +
+		 * nickname); System.out.println("accessToken = " + accessToken);
+		 * 
+		 * return "redirect:/login";
+		 * 
+		 * }
+		 */
+	 
 }
 
 
