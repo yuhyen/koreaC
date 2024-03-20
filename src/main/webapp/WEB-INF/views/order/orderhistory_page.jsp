@@ -151,7 +151,7 @@
                                                 <div class="text-sm text-gray-900">${arr.o_ordernum }</div>
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                <img src="https://source.unsplash.com/random/128x128?clothes" alt="Product Image" class="h-12 w-12 rounded-full">
+                                                <img src="resources/product_img/${dto.p_picture}" class="h-12 w-12 rounded-full">
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="text-sm text-gray-900">${arr.o_proname }<br>
@@ -304,7 +304,7 @@
                         <div class="text-sm text-gray-900" name = "ordernum"></div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <img src="https://source.unsplash.com/random/128x128?clothes" alt="Product Image" class="h-12 w-12 rounded-full">
+                        <img src="https://source.unsplash.com/random/128x128?clothes"  class="h-12 w-12 rounded-full" name="imgg">
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm text-gray-900" name = "proname_size_pabrice">
@@ -334,6 +334,7 @@
     		`;
     		document.querySelector("#table").insertAdjacentHTML("beforeend", orderadd);
 			
+    		let img = document.getElementsByName('imgg')[morenum];
     		let ordernum = document.getElementsByName('ordernum')[morenum];
     		let proname_size_pabrice = document.getElementsByName('proname_size_pabrice')[i];
     		let quantity = document.getElementsByName('quantity')[morenum];
@@ -349,6 +350,7 @@
     		addres.innerHTML = order[i].o_addres;
     		date.innerHTML = order[i].o_order_date;
     		state.innerHTML = order[i].o_state;
+    		img.src = "resources/product_img/" + order[i].o_picture;
     	
     		//주문번호가 다를시 구분선 추가 
     		if(order[i].o_ordernum != order[i+1].o_ordernum){

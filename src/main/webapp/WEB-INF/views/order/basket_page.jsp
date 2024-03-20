@@ -50,7 +50,7 @@
           </span>
         </td>
         <td class="border px-4 py-2">
-          <img :src="item.image" alt="" class="h-16 mx-auto">
+          <img src="resources/product_img/${basket.p_picture}" class="h-16 mx-auto">
         </td>
         <td class="border px-4 py-2">${basket.p_name }</td>
         <td class="border px-4 py-2">${basket.p_price }원</td>
