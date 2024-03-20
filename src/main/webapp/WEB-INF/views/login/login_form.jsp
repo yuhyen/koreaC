@@ -137,9 +137,12 @@
              <hr class="mb-3">
   
             <button class="kakao-login-btn" onclick="kakaoLogin()">
-        <img src="https://commons.wikimedia.org/wiki/File:KakaoTalk_logo.svg" alt="KakaoTalk logo" width="20" height="20">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e3/KakaoTalk_logo.svg" alt="KakaoTalk logo" width="20" height="20">
         카카오톡으로 로그인하기
     </button>
+    
+    
+    
 	</form>
 	</div>
 	

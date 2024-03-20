@@ -63,7 +63,7 @@
     	console.log('인증번호전송완료')
     }
     
-    function check(){
+    function keycheck(){
     	var u_check = document.getElementById("u_check").value;
     	var u_id = document.getElementById("u_id").value;
     	var u_email = document.getElementById("u_email").value;
@@ -104,8 +104,8 @@
 </head>
 <body>
 
-	<!-- <h1 id="header" class="bg-gray-50 flex text-4xl font-bold"><a href="main">KoreaMall</a></h1> -->
-	<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include>
+<!-- <h1 id="header" class="bg-gray-50 flex text-4xl font-bold"><a href="main">KoreaMall</a></h1> -->
+	<jsp:include page="/WEB-INF/views/main/header.jsp"></jsp:include> 
 	
 	<div id="body"  class="bg-gray-50 flex items-center justify-center h-screen">
 
@@ -135,7 +135,7 @@
             
  
 			<div class="flex items-center justify-between mb-3">
-                <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="비밀번호찾기"  onclick="check()"/>
+                <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="비밀번호찾기"  onclick="keycheck()"/>
                 <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="뒤로가기"  onclick="location.href='login_form'"/>
             </div>
           
