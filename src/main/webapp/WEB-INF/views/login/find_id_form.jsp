@@ -12,6 +12,35 @@
         body {
             font-family: 'Noto Sans KR', sans-serif;
         }
+        
+         #find_id-btn {
+        background-color: #FFFFFF; /* 배경 색상 */
+        color: #000000; /* 글씨 색상 */
+       
+        border-radius: 4px; /* 모서리 둥글기 */
+        padding: 5px 10px; /* 내부 여백 */
+        font-weight: 700; /* 글씨 두께 */
+        cursor: pointer; /* 커서 모양 */
+        transition: background-color 0.3s ease; /* 배경색 변경시 효과 */
+    }
+    #find_id-btn:hover {
+        background-color: #F7F7F7; /* 호버시 배경 색상 변경 */
+    }
+    
+     #back-btn {
+        background-color: #FFFFFF; /* 배경 색상 */
+        color: #000000; /* 글씨 색상 */
+       
+        border-radius: 4px; /* 모서리 둥글기 */
+        padding: 5px 10px; /* 내부 여백 */
+        font-weight: 700; /* 글씨 두께 */
+        cursor: pointer; /* 커서 모양 */
+        transition: background-color 0.3s ease; /* 배경색 변경시 효과 */
+    }
+    #back-btn:hover {
+        background-color: #F7F7F7; /* 호버시 배경 색상 변경 */
+    }
+        
     </style>
     <script type="text/javascript">
 	function send(f){
@@ -71,8 +100,8 @@
                 <input type="text" id="u_email" name="u_email" placeholder="이메일을 입력하세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
             </div>
 			<div class="flex items-center justify-between mb-6">
-                <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="아이디찾기"  onclick="send(this.form)"/>
-                <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="뒤로가기"  onclick="location.href='login_form'"/>
+                <input id="find_id-btn" type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="아이디찾기"  onclick="send(this.form)"/>
+                <input id="back-btn" type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="뒤로가기"  onclick="location.href='login_form'"/>
             </div>
 	</form>
 	</div>

@@ -12,6 +12,46 @@
         body {
             font-family: 'Noto Sans KR', sans-serif;
         }
+        #button{
+        background-color: #FFFFFF; /* 배경 색상 */
+        color: #4D4D4D; /* 글씨 색상 */
+       border: 2px solid #666666;
+        border-radius: 4px; /* 모서리 둥글기 */
+        padding: 2px 5px; /* 내부 여백 */
+        font-weight: 700; /* 글씨 두께 */
+        cursor: pointer; /* 커서 모양 */
+        transition: background-color 0.3s ease; /* 배경색 변경시 효과 */
+    }
+    #button:hover {
+        background-color: #F7F7F7; /* 호버시 배경 색상 변경 */
+    }
+          #find_pwd-btn{
+        background-color: #FFFFFF; /* 배경 색상 */
+        color: #000000; /* 글씨 색상 */
+        border-radius: 4px; /* 모서리 둥글기 */
+        padding: 2px 5px; /* 내부 여백 */
+        font-weight: 700; /* 글씨 두께 */
+        cursor: pointer; /* 커서 모양 */
+        transition: background-color 0.3s ease; /* 배경색 변경시 효과 */
+    }
+    #find_pwd-btn:hover {
+        background-color: #F7F7F7; /* 호버시 배경 색상 변경 */
+    }
+    
+      #back-btn{
+        background-color: #FFFFFF; /* 배경 색상 */
+        color: #000000; /* 글씨 색상 */
+        border-radius: 4px; /* 모서리 둥글기 */
+        padding: 2px 5px; /* 내부 여백 */
+        font-weight: 700; /* 글씨 두께 */
+        cursor: pointer; /* 커서 모양 */
+        transition: background-color 0.3s ease; /* 배경색 변경시 효과 */
+    }
+    #back-btn:hover {
+        background-color: #F7F7F7; /* 호버시 배경 색상 변경 */
+    }
+        
+        
     </style>
     
     <script type="text/javascript">
@@ -135,8 +175,8 @@
             
  
 			<div class="flex items-center justify-between mb-3">
-                <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="비밀번호찾기"  onclick="keycheck()"/>
-                <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="뒤로가기"  onclick="location.href='login_form'"/>
+                <input id="find_pwd-btn" type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="비밀번호찾기"  onclick="keycheck()"/>
+                <input id="back-btn" type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" value="뒤로가기"  onclick="location.href='login_form'"/>
             </div>
           
       </div>  
