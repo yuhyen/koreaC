@@ -53,13 +53,17 @@
 	</servlet-mapping>
 	
 	<error-page>
-    <error-code>404</error-code>
-    <location>/error404</location>
+	    <error-code>400</error-code>
+	    <location>/error400</location>
 	</error-page>
 	<error-page>
-    <error-code>500</error-code>
-    <location>/error500</location>
-</error-page>
+	    <error-code>404</error-code>
+	    <location>/error404</location>
+	</error-page>
+	<error-page>
+	    <error-code>500</error-code>
+	    <location>/error500</location>
+	</error-page>
 
 
 	

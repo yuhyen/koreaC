@@ -70,7 +70,7 @@
         </aside>
         <main class="flex overscroll-auto">
             <div class="py-6 px-4 sm:px-6 lg:px-8">
-		       	<div class="grid grid-cols-1">
+		       	<div class="grid grid-cols-2">
 					<div class="carousel-container">
 					    <div class="arrow" onclick="moveSlide(-1)">&#10094;</div>
 							<div id="carousel" class="carousel-slide">
@@ -92,7 +92,7 @@
                 <c:forEach var="dto" items="${list}">
 					<form action="detail" name="f" method="post">
 						<input type="hidden" name="p_num" value="${dto.p_num}">
-		                <div class="grid gap-3 grid-cols-3 grid-rows-1">
+		                <div class="grid gap-3 grid-cols-3 grid-rows-2">
 							<button>
 			                    <div class="w-24 h-24 bg-gray-200" style="width: 280px; height: 230px;">
 			                        <img src="resources/product_img/${dto.p_picture}">

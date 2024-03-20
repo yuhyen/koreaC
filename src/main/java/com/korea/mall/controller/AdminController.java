@@ -22,6 +22,7 @@ import com.korea.mall.util.Paging;
 
 import lombok.RequiredArgsConstructor;
 
+
 @Controller
 @RequiredArgsConstructor
 public class AdminController {
@@ -43,6 +44,7 @@ public class AdminController {
 	@RequestMapping("p_add")
 	public String p_add(ProductDTO dto) {
 		productService.photo_upload(dto);
+		
 		int res = product_dao.p_add(dto);
 		
 		if(res > 0) {
