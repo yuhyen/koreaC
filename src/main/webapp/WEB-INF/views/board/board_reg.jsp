@@ -156,14 +156,15 @@
     
     	if(product != null){
     		console.log("상품조회");
-    		sendRequestContent("detail.json" , JSON.stringify({p_num : 123}) , "" ,"POST" , true , "application/json");
-    	    console.log(xhr.response);
-    	    product = JSON.parse(xhr.response).dto
-    	    document.getElementById("pNum").value = product.p_num;
-    	    document.getElementById("pName").textContent = product.p_name;
-    	    if(document.getElementById("pNum").value != ""){
-    		     	document.getElementById("pGrp").style.display = "";
-    	    }
+//     		let p_num = product;
+//     		sendRequestContent("detail.json" , JSON.stringify({p_num : 123}) , "" ,"POST" , true , "application/json");
+//     	    console.log(xhr.response);
+//     	    product = JSON.parse(xhr.response).dto
+//     	    document.getElementById("pNum").value = product.p_num;
+//     	    document.getElementById("pName").textContent = product.p_name;
+//     	    if(document.getElementById("pNum").value != ""){
+//     		     	document.getElementById("pGrp").style.display = "";
+//     	    }
     	}
     	
     	if(seq != null){
@@ -201,7 +202,7 @@
     	}
 //     	seq가 있고 reply가 없으면 seq reply가 둘다 없을때 등록버튼 활성화
 // 	   	btnReg
-		if(seq !=null  && reply == null){
+		if(reply == null){
 			document.getElementById("btnReg").style.display = ""; 
 		}
 	   	
@@ -211,10 +212,6 @@
 			document.getElementById("btnUpd").style.display = "";
 	   	}
 	   	
-	   	//또는 아무것도없을때도 등록버튼을 활성화
-	   	if(seq ==null  && reply == null){
-			document.getElementById("btnReg").style.display = ""; 
-		}
     }
     
     let sendObj = {
@@ -251,7 +248,7 @@
     	}
     	
 		nameEl.text = name;
-		nameEl.href = "mall/board_list?type="+type;
+		nameEl.href = "/mall/board_list?type="+type;
 		
 		return name;
     } 
@@ -321,7 +318,11 @@
               		let returnObj = JSON.parse(xhr.response);
               		console.log(returnObj.boardDTO)
 					alert("insert reply end")
-					history.back()
+// 					history.back()
+					let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+                  	let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+                  	let path = contextPath+"/board_list?type="+typeCategory;
+                  	location.href = path;
               	}else{
               		console.log("오류처리")
               		alert("insert reply 실패")
@@ -340,7 +341,11 @@
               		let returnObj = JSON.parse(xhr.response);
               		console.log(returnObj.boardDTO)
               		//성공시 페이지 이동
-              		history.back()
+              		//history.back()
+              		let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+                  	let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+                  	let path = contextPath+"/board_list?type="+typeCategory;
+                  	location.href = path;
               	}else{
               		alert("실패")
               	}
