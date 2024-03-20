@@ -18,7 +18,7 @@ public class CommonApplicationListener implements ApplicationListener<ContextRef
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		// TODO Auto-generated method stub
-		log.debug("application ½ÃÀÛÇÒ¶§ ½ÇÇàµÇ´ÂÅ¬·¡½º " );
+		log.debug("application ì–´í”Œë¦¬ì¼€ì´ì…˜ ì‹œìž‘ " );
 		
 		
 	}
