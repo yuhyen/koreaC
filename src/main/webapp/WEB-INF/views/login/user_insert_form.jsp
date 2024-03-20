@@ -17,9 +17,22 @@
         }
         
         #body{
-        	padding-top: 80px;
-        	
+        	min-height: 100vh; 
+        	padding-top: 20px;
         }
+        #white-box{
+        	min-height: 600px; /* 예시로 설정한 최소 높이 */
+    		padding-bottom: 80px; /
+    		  overflow-y: auto; /* 세로 스크롤 추가 */
+    		max-height: 95vh; /* 최대 높이 설정 */
+        }
+      input, label {
+    margin-bottom: 10px; /* 더 적은 여백을 적용 */
+}
+
+	#register{
+		margin-top: -20px;
+	}
     </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -191,11 +204,11 @@
 	
 	<div id="body" class="bg-gray-50 flex items-center justify-center h-screen">
 
-	<div class="bg-white shadow-lg rounded-lg p-8">
+	<div id="white-box" class="bg-white shadow-lg rounded-lg p-8">
 	
 	
 	
-        <h1 class="text-3xl font-bold mb-6 text-center">회원가입</h1>
+        <h1 id="register" class="text-3xl font-bold mb-5 text-center">회원가입</h1>
 	<form>
 	
 			<div class="mb-2">
@@ -242,8 +255,13 @@
                 <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" value="가입하기"  onclick="send(this.form)"/>
                 <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" value="취소"  onclick="location.href='login_form'"/>
             </div>
+            
+           
 	</div>
 	</form>
 	</div>
+	 <div class="mb-4">
+            </div>
 </body>
+<jsp:include page="/WEB-INF/views/main/footer.jsp"></jsp:include>
 </html>
