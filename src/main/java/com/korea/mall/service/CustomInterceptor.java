@@ -3,26 +3,33 @@ package com.korea.mall.service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.korea.mall.common.CommonUrlResource;
 import com.korea.mall.dto.UserDTO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class CustomInterceptor implements HandlerInterceptor {
+	
+	@Autowired
+	CommonUrlResource urlResoucre;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
-			
 		
 			String mainurl = "";
 
@@ -38,6 +45,12 @@ public class CustomInterceptor implements HandlerInterceptor {
 			
 			//pageURL경로 추가
 			resourceSrc += "resources/pageURL/pageURL";
+			
+			
+			//캐시용 클래스 호출
+			ArrayList<String> urlList = urlResoucre.getUrilList();
+			log.debug("캐시적용확인 ########## urlList");
+			log.debug(System.identityHashCode(urlList) + " 주소값");
 			
 			//세션이 null인경우
 			if(u_id == null) {

@@ -27,7 +27,9 @@ import com.korea.mall.service.BoardService;
 import com.korea.mall.service.CommonService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class BoardController {
@@ -48,6 +50,7 @@ public class BoardController {
 		Object output = service.selectPage(param);
 		mv.addObject("u_id", session.getAttribute(Const.U_SESSION_KEY));
 		mv.addObject("data", output);
+		
 		return mv;
 	} 
 	@RequestMapping(value = {"/board_list.json"})
@@ -62,7 +65,7 @@ public class BoardController {
 	@RequestMapping(value = {"/board_reg"})
 	public ModelAndView reg() {
  		ModelAndView mv = new ModelAndView("/board/board_reg");
- 		//세션 검사 필요함.
+ 		//�꽭�뀡 寃��궗 �븘�슂�븿.
 		return mv;
 	}
 	
@@ -78,14 +81,14 @@ public class BoardController {
 		UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY);
 		if(user == null) {
 			user = new UserDTO();
-			//임시
+			//�엫�떆
 			user.setU_idx(9999);
 		}
 		BoardDTO dto = new BoardDTO();
 		dto.setSeq((String) param.get("seq"));
 		List<HashMap<String, Object>> output = (List<HashMap<String, Object>>) service.selectDetail(dto);
 		
-		//마지막 글 수정 유무 판별
+		//留덉�留� 湲� �닔�젙 �쑀臾� �뙋蹂�
 		HashMap<String, Object> lastBoard = output.get(output.size()-1);
 		BigDecimal lastUser = (BigDecimal) lastBoard.get("B_REG_USER");
 		
@@ -104,11 +107,11 @@ public class BoardController {
 	public ModelAndView detail(@RequestBody HashMap<String, Object> param) {
 		ModelAndView mv = new ModelAndView("jsonView");
 		
-		//세션체크 필요함
+		//�꽭�뀡泥댄겕 �븘�슂�븿
 		UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY);
 		if(user == null) {
 			user = new UserDTO();
-			//임시
+			//�엫�떆
 			user.setU_idx(9999);
 		}
 		BoardDTO dto = new BoardDTO();
@@ -150,7 +153,7 @@ public class BoardController {
 	public ModelAndView update(@RequestBody HashMap<String, Object> param) {
 		ModelAndView mv = new ModelAndView("jsonView");
 		
-		//세션체크 필요함.
+		//�꽭�뀡泥댄겕 �븘�슂�븿.
 		UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY); 
 		if(user == null) {
 			user = new UserDTO();
@@ -176,7 +179,7 @@ public class BoardController {
 	public ModelAndView reply(@RequestBody HashMap<String, Object> param) {
 		ModelAndView mv = new ModelAndView("jsonView");
 		
-		//세션체크 필요함.
+		//�꽭�뀡泥댄겕 �븘�슂�븿.
 		UserDTO user = (UserDTO) session.getAttribute(Const.U_SESSION_KEY); 
 		if(user == null) {
 			user = new UserDTO();

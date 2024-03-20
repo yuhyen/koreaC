@@ -11,8 +11,7 @@ public class CommonCacheEventListener implements CacheEventListener<Object, Obje
 	@Override
 	public void onEvent(CacheEvent<? extends Object, ? extends Object> event) {
 		// TODO Auto-generated method stub
-		
-		log.debug("cache event logger start@@@@@@@@@@@");
+		log.error("cache event logger start@@@@@@@@@@@");
 		log.debug("cache event logger message. getKey: {} / getOldValue: {} / getNewValue:{}", event.getKey(), event.getOldValue(), event.getNewValue());
     }
 

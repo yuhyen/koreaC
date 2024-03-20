@@ -18,36 +18,10 @@ public class CommonApplicationListener implements ApplicationListener<ContextRef
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		// TODO Auto-generated method stub
-		System.out.println("############################");
-		System.out.println("############################");
-		System.out.println("############################");
-		
-		test();
-		System.out.println("############################");
-		System.out.println("############################");
-		System.out.println("############################");
-		System.out.println("############################");
+		log.debug("application 시작할때 실행되는클래스 " );
 		
 		
 	}
 	
-	@Cacheable(value="testCache")
-	public List<String> test(){
-		
-		List<String> out = new ArrayList<String>();
-		
-		out.add("1");
-		out.add("2");
-		out.add("3");
-		out.add("4");
-		out.add("5");
-		out.add("6");
-		out.add("7");
-		out.add("8");
-		log.debug(out.toString());
-		return out;
-	
-		
-	}
 	
 }

@@ -1,10 +1,12 @@
 package com.korea.mall.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.korea.mall.common.Common;
@@ -13,22 +15,23 @@ import com.korea.mall.dto.BoardDTO;
 import com.korea.mall.dto.pagingDTO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 
 	private final BoardDAO boardDao;
-	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
 
 	public Object selectPage(HashMap<String, Object> param) {
-
+		
 		HashMap<String, Object> output = new HashMap<String, Object>();
 		String category = (String) param.get("category");
 		int totalCnt;
 		int nowPage = param.get("pageNo") == null ? 0 : (int) param.get("pageNo");
 		int cntPerPage = param.get("cntPerPage") == null ? 0 : (int) param.get("cntPerPage");
-		//카테고리별 공지노출 로직
+		//移댄뀒怨좊━蹂� 怨듭��끂異� 濡쒖쭅
 		switch (category) {
 		case Common.BoardConst.Q_N_A:
 			param.put("showNotice", "A");
@@ -55,8 +58,8 @@ public class BoardService {
 
 		pagingDTO pagingDTO = new pagingDTO(totalCnt, nowPage, cntPerPage);
 
-//		searchKey 검색어
-//		searchType 검색 종류 SUBJECT , NAME ;
+//		searchKey 寃��깋�뼱
+//		searchType 寃��깋 醫낅쪟 SUBJECT , NAME ;
 
 		param.put("start", pagingDTO.getStart());
 		param.put("end", pagingDTO.getEnd());
@@ -64,6 +67,7 @@ public class BoardService {
 		output.put("list", boardDao.selectPage(param));
 		output.put("page", pagingDTO);
 
+		
 		return output;
 
 	}
