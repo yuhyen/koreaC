@@ -122,23 +122,33 @@ public class OrderController {
 	
 
 	@RequestMapping("moreClick")
-	public String moreClick(int count,String orderstatus, String startdate, String enddate, Model model){//,ModelAndView mav) {
+	@ResponseBody
+	public ModelAndView moreClick(@RequestBody HashMap<String, Object> jsonString, ModelAndView mav){ 
+		Object countjs = jsonString.get("countjs");
+		Object orderstatusjs = jsonString.get("orderstatusjs");
+		Object startdatejs = jsonString.get("startdatejs");
+		Object enddatejs = jsonString.get("enddatejs");
 		
-		System.out.println(orderstatus);
-		System.out.println(startdate);
-		System.out.println(enddate);
+		String countString = countjs.toString();
+		
+		int count = Integer.parseInt(countString);
+		String orderstatus = orderstatusjs.toString();
+		String startdate = startdatejs.toString();
+		String enddate = enddatejs.toString();
 		
 		UserDTO userdto = (UserDTO)session.getAttribute("u_id");
-		if(orderstatus == "--전체--" && startdate == "" && enddate == "") {
+	if(orderstatus == "--전체--" && startdate == "" && enddate == "") {
 			int countch = count -4;
 		List<OrderDTO> order = orderService.selectOrderList(countch, userdto.getU_id());
 		
-//		mav.addObject("orderadd", order);
-//		mav.setViewName("order/orderhistory_page");
-
-		model.addAttribute("order", order);
-		model.addAttribute("user", userdto);
-		model.addAttribute("count", countch);
+		 mav.addObject("ordermore", order);
+		 mav.addObject("user", userdto);
+		 mav.addObject("count", countch);
+		 mav.setViewName("jsonView");
+		
+//		model.addAttribute("order", order);
+//		model.addAttribute("user", userdto);
+//		model.addAttribute("count", countch);
 		}
 		else {
 			
@@ -152,12 +162,18 @@ public class OrderController {
 			serdto.setOrderstatus(orderstatus);
 			serdto.setStartdate(startdate);
 			
-			model.addAttribute("order", dto);
-			model.addAttribute("user", user);
-			model.addAttribute("count", countch);
-			model.addAttribute("serdto", serdto);
+			mav.addObject("ordermore", dto);
+			 mav.addObject("user", userdto);
+			 mav.addObject("count", countch);
+			 mav.addObject("serdto",serdto);
+			 mav.setViewName("jsonView");
+			
+//			model.addAttribute("order", dto);
+//			model.addAttribute("user", user);
+//			model.addAttribute("count", countch);
+//			model.addAttribute("serdto", serdto);
 		}
-		return "order/orderhistory_page";
+		return mav;
 	}
 	
 	
@@ -225,6 +241,7 @@ public class OrderController {
 	@RequestMapping("order_pay")
 	@ResponseBody
 	public String order_pay(@RequestBody HashMap<String, Object> jsonString) {
+		
 		
 		int res = orderService.insertorder(jsonString);
 		
