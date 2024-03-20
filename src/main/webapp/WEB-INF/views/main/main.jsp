@@ -70,7 +70,7 @@
         </aside>
         <main class="flex overscroll-auto">
             <div class="py-6 px-4 sm:px-6 lg:px-8">
-		       	<div class="grid grid-cols-2">
+		       	<div class="grid grid-cols-1">
 					<div class="carousel-container">
 					    <div class="arrow" onclick="moveSlide(-1)">&#10094;</div>
 							<div id="carousel" class="carousel-slide">
