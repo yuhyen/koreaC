@@ -50,7 +50,7 @@
             </div>
         </aside>
 		<input type="hidden" name="p_num" value="${dto.p_num}">
-	<div class="grid grid-cols-2 grid-rows-5">
+	<div class="grid grid-cols-2 grid-rows-2">
 		<img class="w-4/5 h-800" src="resources/product_img/${dto.p_picture}">
 		<div>
 			<strong>${dto.p_name}</strong><br>

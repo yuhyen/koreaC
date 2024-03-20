@@ -23,7 +23,7 @@ public class Common {
 	public static class pList{
 		
 		// �� �������� ������ �Խù� ��
-		public final static int BLOCKLIST = 20;
+		public final static int BLOCKLIST = 15;
 		
 		// ������ �޴� ��
 		public final static int BLOCKPAGE = 5;
