@@ -1,0 +1,41 @@
+<config
+	  xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+	  xmlns='http://www.ehcache.org/v3'
+	  xmlns:jsr107="http://www.ehcache.org/v3/jsr107"
+	  xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core.xsd
+        http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.0.xsd">
+<!-- config : XML 구성의 루트 요소이다. -->
+	<service>
+	    <jsr107:defaults enable-management="true" enable-statistics="true"/>
+	 </service>
+	<cache-template name="default">
+	    <listeners>
+	      <listener>
+	        <class>com.korea.mall.common.CommonCacheEventListener</class>
+	        <event-firing-mode>ASYNCHRONOUS</event-firing-mode>
+	        <event-ordering-mode>UNORDERED</event-ordering-mode>
+	        <events-to-fire-on>CREATED</events-to-fire-on>
+	        <events-to-fire-on>UPDATED</events-to-fire-on>
+	        <events-to-fire-on>EXPIRED</events-to-fire-on>
+	        <events-to-fire-on>REMOVED</events-to-fire-on>
+	        <events-to-fire-on>EVICTED</events-to-fire-on>
+	      </listener>
+	    </listeners>
+	    <resources>
+	      <heap>100</heap>
+	      <offheap unit="MB">1</offheap>
+	    </resources>
+	  </cache-template>
+
+	<cache alias="testCache" uses-template="default"> <!-- cache 요소는 CachceManager에 의해 작성되고 관리될 Cache 인스턴스를 나타낸다. Cache<k,v> 형태로 인스턴스가 생성된다. alias에는 캐시의 이름을 지정한다. -->
+        <expiry>
+      		<ttl unit="minutes">10</ttl>
+   		</expiry>
+    </cache>
+    
+    <cache alias="urlList" uses-template="default"> <!-- cache 요소는 CachceManager에 의해 작성되고 관리될 Cache 인스턴스를 나타낸다. Cache<k,v> 형태로 인스턴스가 생성된다. alias에는 캐시의 이름을 지정한다. -->
+        <expiry>
+      		<ttl unit="days">1</ttl>
+   		</expiry>
+    </cache>
+</config> 

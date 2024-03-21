@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+ 	
+ 	
+ 	<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="small_size">Small file input</label>
+	<input class="block w-full mb-5 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="small_size" type="file">
+	
+	<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="default_size">Default size</label>
+	<input class="block w-full mb-5 text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="default_size" type="file">
+	
+	<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="large_size">Large file input</label>
+	<input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="large_size" type="file">
+
+	
+	<div id="app" class="flex px-4 py-2 justify-center">
+		<div class="inline-flex items-center" v-for="index  in 10" :key="index">
+	        <button  class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4" @click="pageMove(startPage)">
+	        	{{ index }}
+	        </button>
+	    </div>
+    </div>
+	
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-6">
+            <div class="space-x-4">
+                <a href="#" class="text-lg font-semibold text-blue-600 hover:text-blue-800">회원관리</a>
+                <a href="#" class="text-lg font-semibold text-gray-600 hover:text-gray-800">주문관리</a>
+                <a href="#" class="text-lg font-semibold text-gray-600 hover:text-gray-800">상품관리</a>
+            </div>
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">신규등록</button>
+        </div>
+        <div class="bg-white shadow rounded-lg p-6">
+            <div class="mb-4">
+                <label for="search" class="block text-gray-700 text-sm font-semibold mb-2">검색조건</label>
+                <select id="search" class="block w-full bg-gray-50 border border-gray-300 text-gray-700 py-2 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <option>회원번호</option>
+                    <option>아이디</option>
+                    <option>이름</option>
+                </select>
+            </div>
+            <div class="overflow-x-auto">
+                <table id="t1" class="min-w-full leading-normal">
+                    <thead>
+                        <tr>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">회원번호</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">아이디</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">이름</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">전화번호</th>
+                            <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100"></th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">1</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">id1</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">이름1</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">010-0000-0000</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
+                                <button class="text-blue-600 hover:text-blue-800">수정</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">1</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">id1</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">이름1</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">010-0000-0000</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
+                                <button class="text-blue-600 hover:text-blue-800">수정</button>
+                            </td>
+                        </tr>
+                     </tbody>
+                     
+
+                     <tbody>
+                        <tr>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">2</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">id1</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">이름1</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">010-0000-0000</td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-right">
+                                <button class="text-blue-600 hover:text-blue-800">수정</button>
+                            </td>
+                        </tr>
+                        <!-- Repeat for other rows -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-between items-center pt-4">
+                <div>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" class="form-checkbox text-blue-600" checked>
+                        <span class="ml-2 text-gray-700 text-sm">검색조건</span>
+                    </label>
+                </div>
+                <div class="inline-flex">
+                    <button id="btn1" name="btn1" class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                        <<
+                    </button>
+                    <button id="btn2" name="btn1"class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4">
+                        1
+                    </button>
+                    <!-- Repeat for other page numbers -->
+                    <button id="btn3" name="btn1" class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                        >>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+new Vue({
+    el: '#app',
+    data: {
+      boardItems: []
+      , 
+      startPage : 0
+      , 
+      lastPage : 0
+      ,
+      endPage : 5
+      ,
+      nowPage : 0
+      ,
+      total: 0,
+    },
+    methods: {
+        subjectClicked :function () {
+        	alert("게시판 클릭");
+        },
+        searchBoard:function(){
+        	alert("검색 클릭");
+        },
+        registBoard:function(){
+          	alert("글쓰기 클릭");
+          	let hostIndex = location.href.indexOf( location.host ) + location.host.length;
+          	let contextPath = location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+          	let path = contextPath+"/board_reg"
+          	location.href=path;
+        },
+        prevPage:function(){
+          	if(vueObj.nowPage == 1 ){
+          		alert("첫번째 페이지 입니다.");
+          		return;
+          	}
+          	
+        },
+        nextPage:function(){
+        	
+        	
+//           	if(vueObj.lastPage == vueObj.nowPage ){
+//           		alert("마지막 페이지 입니다.");
+//           		return;
+//           	}
+			          	
+          	
+        },
+        pageMove:function(pageNo){
+        	console.log("현제 페이지 " , vueObj.nowPage )
+        	console.log("이동할페이지 " , pageNo )
+        	if(vueObj.nowPage == pageNo ){
+          		alert("현재 페이지 입니다.");
+          		return;
+          	}
+        	
+        	pageLoad(pageNo , typeCategory , "" , "");
+        	
+        	
+        }
+        
+      
+    }
+  });
+</script>
+
+</html>
