@@ -44,7 +44,7 @@
 		<div class="flex overscroll-auto">
 			<div class="py-6 px-4 sm:px-6 lg:px-8">
 				<h2 class="text-2xl font-bold text-gray-900 mb-6"></h2>
-				<div class="grid gap-3 grid-cols-4 grid-rows-4">
+				<div class="grid gap-4 grid-cols-3 grid-rows-3">
 				<c:forEach var="dto" items="${list}">
 					<form action="detail" method="post">
 					<input type="hidden" name="p_num" value="${dto.p_num}">

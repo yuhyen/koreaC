@@ -70,18 +70,26 @@
         </aside>
         <main class="flex overscroll-auto">
             <div class="py-6 px-4 sm:px-6 lg:px-8">
-		       	<div class="grid grid-cols-2">
+		       	<div class="grid grid-cols-1">
 					<div class="carousel-container">
 					    <div class="arrow" onclick="moveSlide(-1)">&#10094;</div>
 							<div id="carousel" class="carousel-slide">
 						      	<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
-			        			<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
-			        			<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
-				        		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg"> 
-				        		<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
-				        		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
-				        		<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
-				        		<img src="https://m.ycloset.com/web/product/big/202208/d64b176c305fd8b0417cced1e6b35bc1.jpg">
+			        			<img src="https://ycloset.com/web/product/medium/202302/57e3f543c138fbc8bc90cf5ebe5a4266.webp">
+						      	<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			        			<img src="https://ycloset.com/web/product/medium/202302/57e3f543c138fbc8bc90cf5ebe5a4266.webp">
+						      	<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			        			<img src="https://ycloset.com/web/product/medium/202302/57e3f543c138fbc8bc90cf5ebe5a4266.webp">
+						      	<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			        			<img src="https://ycloset.com/web/product/medium/202302/57e3f543c138fbc8bc90cf5ebe5a4266.webp">
+						      	<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			        			<img src="https://ycloset.com/web/product/medium/202302/57e3f543c138fbc8bc90cf5ebe5a4266.webp">
+						      	<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			        			<img src="https://ycloset.com/web/product/medium/202302/57e3f543c138fbc8bc90cf5ebe5a4266.webp">
+						      	<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			        			<img src="https://ycloset.com/web/product/medium/202302/57e3f543c138fbc8bc90cf5ebe5a4266.webp">
+						      	<img src="https://m.ycloset.com/web/product/big/202302/86b7ec1346401cc8539aaa2839d445ca.jpg">
+			        			<img src="https://ycloset.com/web/product/medium/202302/57e3f543c138fbc8bc90cf5ebe5a4266.webp">
 						    </div>
 					    <div class="arrow" onclick="moveSlide(1)">&#10095;</div>
 				  	</div>
