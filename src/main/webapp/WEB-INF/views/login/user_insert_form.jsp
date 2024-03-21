@@ -30,9 +30,48 @@
     margin-bottom: 10px; /* 더 적은 여백을 적용 */
 }
 
-	#register{
-		margin-top: -20px;
-	}
+
+	
+	  #button{
+        background-color: #FFFFFF; /* 배경 색상 */
+        color: #4D4D4D; /* 글씨 색상 */
+       border: 2px solid #666666;
+        border-radius: 4px; /* 모서리 둥글기 */
+        padding: 2px 5px; /* 내부 여백 */
+        font-weight: 700; /* 글씨 두께 */
+        cursor: pointer; /* 커서 모양 */
+        transition: background-color 0.3s ease; /* 배경색 변경시 효과 */
+    }
+    #button:hover {
+        background-color: #F7F7F7; /* 호버시 배경 색상 변경 */
+    }
+      #register{
+      margin-top: -8px;
+        background-color: #FFFFFF; /* 배경 색상 */
+        color: #000000; /* 글씨 색상 */
+        border-radius: 4px; /* 모서리 둥글기 */
+        padding: 2px 5px; /* 내부 여백 */
+        font-weight: 600; /* 글씨 두께 */
+        cursor: pointer; /* 커서 모양 */
+        transition: background-color 0.3s ease; /* 배경색 변경시 효과 */
+    }
+    #register:hover {
+        background-color: #F7F7F7; /* 호버시 배경 색상 변경 */
+    
+    
+    }
+	  #back{
+        background-color: #FFFFFF; /* 배경 색상 */
+        color: #000000; /* 글씨 색상 */
+        border-radius: 4px; /* 모서리 둥글기 */
+        padding: 2px 5px; /* 내부 여백 */
+        font-weight: 700; /* 글씨 두께 */
+        cursor: pointer; /* 커서 모양 */
+        transition: background-color 0.3s ease; /* 배경색 변경시 효과 */
+    }
+    #back:hover {
+        background-color: #F7F7F7; /* 호버시 배경 색상 변경 */
+    }
     </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -233,7 +272,7 @@
              <div class="mb-2">
              <div class="flex items-center justify-between mb-1">
                 <label for="u_email" class="block text-gray-700 text-sm font-bold mb-2">이메일</label>
-                <input type="button" id="button2" value="중복체크" class="bg-white-500 hover:bg-white-700 text-black font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline" onclick="check_email(this.form)">
+                <input type="button" id="button" value="중복체크" class="bg-white-500 hover:bg-white-700 text-black font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline" onclick="check_email(this.form)">
              </div>   
                 <input type="text" id="u_email" name="u_email" placeholder="이메일를 입력하세요" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
             </div>
@@ -246,14 +285,14 @@
              <div class="mb-2">
              <div class="flex items-center justify-between mb-1">
                 <label for="u_ip" class="block text-gray-700 text-sm font-bold mb-2">주소</label>
-               <input type="button" value="우편번호검색" class="bg-white-500 hover:bg-white-700 text-black font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline" onclick="ipsearch(this.form)">
+               <input type="button" id="button" value="우편번호검색" class="bg-white-500 hover:bg-white-700 text-black font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline" onclick="ipsearch(this.form)">
              </div>  
                 <input type="text" id="u_ip" name="u_ip" placeholder="주소" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline">
                  <input type="text" id="u_ipExtraAddr" name="u_ipExtraAddr" placeholder="상세주소" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
             </div>
-			<div class="flex items-center justify-between mb-4">
-                <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" value="가입하기"  onclick="send(this.form)"/>
-                <input type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" value="취소"  onclick="location.href='login_form'"/>
+			<div class="flex items-center justify-between mb-5">
+                <input id="register" type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" value="가입하기"  onclick="send(this.form)"/>
+                <input id="back" type="button" class="bg-white-500 hover:bg-white-700 text-black font-bold py-2 px-2 rounded focus:outline-none focus:shadow-outline" value="취소"  onclick="location.href='login_form'"/>
             </div>
             
            
